@@ -3,256 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خرســـانة | المرجع الشامل</title>
+    <title>ENG Concrete | الخرسانة للمهندسين</title>
     <style>
-        /* CSS هنا تم دمج */
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-gray: #ecf0f1;
-            --dark-gray: #7f8c8d;
-            --font-primary: 'Tajawal', sans-serif;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-
-        body {
-            font-family: var(--font-primary);
+        /* Reset */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
+            box-sizing: border-box;
         }
-
+        
+        /* الألوان والخطوط */
+        :root {
+            --primary: #1E3A8A; /* أزرق داكن (لون رئيسي) */
+            --secondary: #3B82F6; /* أزرق فاتح */
+            --accent: #EF4444; /* أحمر (لون التنبيه) */
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --gray: #6B7280;
+            --font: 'Tajawal', sans-serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: var(--font);
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* التخطيط العام */
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
-
+        
         /* الشريط العلوي */
-        .navbar {
+        header {
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-
-        .navbar .container {
+        
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 0;
         }
-
+        
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
         }
-
+        
         .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
-            margin: 0;
-            padding: 0;
         }
-
+        
         .nav-links a {
             text-decoration: none;
-            color: var(--primary-color);
+            color: var(--dark);
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
         }
-
+        
         .nav-links a:hover {
-            color: var(--secondary-color);
+            color: var(--primary);
         }
-
-        .cta-button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
         }
-
-        .cta-button:hover {
-            background-color: #2980b9;
+        
+        .nav-links a:hover::after {
+            width: 100%;
         }
-
-        /* الهيرو */
+        
+        /* القسم الرئيسي */
         .hero {
+            background: linear-gradient(135deg, #E6EFF9 0%, #B8D4F0 100%);
             padding: 5rem 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            text-align: center;
         }
-
-        .hero .container {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .hero-text h2 {
+        
+        .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            line-height: 1.3;
+            color: var(--primary);
         }
-
-        .hero-text h2 span {
-            color: var(--secondary-color);
-        }
-
-        .hero-text p {
+        
+        .hero p {
             font-size: 1.2rem;
-            color: var(--dark-gray);
-            margin-bottom: 2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
         }
-
-        .hero-image img {
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* الأقسام */
-        .sections {
+        
+        /* أقسام المحتوى */
+        .section {
             padding: 4rem 0;
         }
-
+        
         .section-title {
             text-align: center;
-            font-size: 2rem;
             margin-bottom: 3rem;
-            color: var(--primary-color);
+            position: relative;
         }
-
-        .grid-container {
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            display: inline-block;
+            background: var(--light);
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gray);
+            z-index: 0;
+        }
+        
+        /* بطاقات الأقسام */
+        .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
-
-        .card {
+        
+        .feature-card {
             background: white;
             border-radius: 8px;
             padding: 2rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
+            border-top: 4px solid var(--primary);
         }
-
-        .card:hover {
+        
+        .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-
-        .card-icon {
-            font-size: 2.5rem;
+        
+        .feature-card h3 {
+            color: var(--primary);
             margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
-
-        .card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
+        
+        .feature-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
         }
-
+        
+        /* أزرار */
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
         /* فوتر */
         footer {
-            background-color: var(--primary-color);
+            background: var(--dark);
             color: white;
+            padding: 2rem 0;
             text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 3rem;
         }
-
+        
+        footer p {
+            margin-bottom: 0;
+        }
+        
         /* التكيف مع الجوال */
         @media (max-width: 768px) {
-            .navbar .container {
+            nav {
                 flex-direction: column;
                 gap: 1rem;
             }
-
-            .hero .container {
-                flex-direction: column;
-                text-align: center;
-            }
-
+            
             .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- شريط التنقل -->
-    <header class="navbar">
+    <!-- الشريط العلوي -->
+    <header>
         <div class="container">
-            <h1 class="logo">خـرسـانـة</h1>
             <nav>
-                <ul class="nav-links">
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#basics">الأساسيات</a></li>
-                    <li><a href="#academia">للأكاديميين</a></li>
-                    <li><a href="#contractors">للمقاولين</a></li>
-                    <li><a href="#tools">الأدوات</a></li>
-                    <li><a href="#community">المجتمع</a></li>
-                </ul>
+                <div class="logo">ENG Concrete</div>
+                <div class="nav-links">
+                    <a href="#home">الرئيسية</a>
+                    <a href="#materials">المواد</a>
+                    <a href="#design">التصميم</a>
+                    <a href="#execution">التنفيذ</a>
+                    <a href="#tools">الأدوات</a>
+                    <a href="#contact">اتصل بنا</a>
+                </div>
+                <a href="#login" class="btn">تسجيل الدخول</a>
             </nav>
-            <button class="cta-button">تسجيل الدخول</button>
         </div>
     </header>
 
-    <!-- قسم الهيرو -->
+    <!-- القسم الرئيسي -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="hero-text">
-                <h2>كل ما تحتاجه عن <span>الخرسانة</span> في مكان واحد</h2>
-                <p>مرجع شامل للمهندسين، الطلاب، والمقاولين — من النظرية إلى التطبيق.</p>
-                <button class="cta-button">ابدأ التعلم</button>
-            </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="خرسانة">
+            <h1>المرجع الشامل لخرسانة البناء</h1>
+            <p>منصة متكاملة للمهندسين والمقاولين تغطي جميع جوانب الخرسانة من التصميم إلى التنفيذ</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#start" class="btn">ابدأ الآن</a>
+                <a href="#learn" class="btn btn-outline">تعرف أكثر</a>
             </div>
         </div>
     </section>
 
-    <!-- الأقسام -->
-    <section class="sections" id="basics">
+    <!-- قسم المواد -->
+    <section class="section" id="materials">
         <div class="container">
-            <h2 class="section-title">استكشف الأقسام</h2>
-            <div class="grid-container">
-                <div class="card">
-                    <div class="card-icon">📚</div>
-                    <h3>الأساسيات</h3>
-                    <p>تعريف الخرسانة، أنواعها، ومكوناتها.</p>
-                    <a href="#" class="cta-button" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem;">المزيد</a>
+            <div class="section-title">
+                <h2>المواد والمكونات</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>الأسمنت والركام</h3>
+                    <p>كل ما تحتاج معرفته عن أنواع الأسمنت والركام وخصائصها</p>
+                    <a href="#" class="btn">استكشف</a>
                 </div>
-                <div class="card">
-                    <div class="card-icon">🎓</div>
-                    <h3>للأكاديميين</h3>
-                    <p>أبحاث، كودات بناء، ونماذج حسابية.</p>
-                    <a href="#" class="cta-button" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem;">المزيد</a>
+                <div class="feature-card">
+                    <h3>الإضافات الكيميائية</h3>
+                    <p>دليل شامل للإضافات وتحسين خواص الخرسانة</p>
+                    <a href="#" class="btn">استكشف</a>
                 </div>
-                <div class="card">
-                    <div class="card-icon">👷</div>
-                    <h3>للمقاولين</h3>
-                    <p>حلول عملية وتقنيات تنفيذ.</p>
-                    <a href="#" class="cta-button" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem;">المزيد</a>
+                <div class="feature-card">
+                    <h3>خلطات التصميم</h3>
+                    <p>طرق تصميم الخلطات الخرسانية حسب المواصفات</p>
+                    <a href="#" class="btn">استكشف</a>
                 </div>
-                <div class="card">
-                    <div class="card-icon">🧮</div>
-                    <h3>أدوات</h3>
-                    <p>حاسبات الكميات والتكاليف.</p>
-                    <a href="#" class="cta-button" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem;">المزيد</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التصميم -->
+    <section class="section" id="design" style="background: #F0F4F8;">
+        <div class="container">
+            <div class="section-title">
+                <h2>تصميم الخرسانة</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>التحليل الإنشائي</h3>
+                    <p>أساليب تحليل العناصر الخرسانية المسلحة</p>
+                    <a href="#" class="btn">استكشف</a>
+                </div>
+                <div class="feature-card">
+                    <h3>الكودات والمعايير</h3>
+                    <p>ACI, Eurocode والمواصفات العربية</p>
+                    <a href="#" class="btn">استكشف</a>
+                </div>
+                <div class="feature-card">
+                    <h3>نماذج حسابية</h3>
+                    <p>أمثلة عملية لحسابات الخرسانة المسلحة</p>
+                    <a href="#" class="btn">استكشف</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التنفيذ -->
+    <section class="section" id="execution">
+        <div class="container">
+            <div class="section-title">
+                <h2>تنفيذ الخرسانة</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>الصب والمعالجة</h3>
+                    <p>أفضل ممارسات الصب والمعالجة والوقاية من العيوب</p>
+                    <a href="#" class="btn">استكشف</a>
+                </div>
+                <div class="feature-card">
+                    <h3>ضبط الجودة</h3>
+                    <p>اختبارات الخرسانة وضبط جودة التنفيذ</p>
+                    <a href="#" class="btn">استكشف</a>
+                </div>
+                <div class="feature-card">
+                    <h3>حلول المشاكل</h3>
+                    <p>تشخيص وعلاج عيوب الخرسانة الشائعة</p>
+                    <a href="#" class="btn">استكشف</a>
                 </div>
             </div>
         </div>
@@ -261,30 +354,30 @@
     <!-- فوتر -->
     <footer>
         <div class="container">
-            <p>© 2024 خرسانة. جميع الحقوق محفوظة.</p>
+            <p>© 2024 ENG Concrete. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
-    <!-- JavaScript هنا تم دمج -->
     <script>
-        // تأثير التمرير السلس للروابط
+        // تأثير التمرير السلس
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
         });
-
+        
         // تغيير لون الشريط عند التمرير
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
+            const header = document.querySelector('header');
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.backdropFilter = 'blur(5px)';
             } else {
-                navbar.style.background = 'white';
+                header.style.background = 'white';
+                header.style.backdropFilter = 'none';
             }
         });
     </script>
