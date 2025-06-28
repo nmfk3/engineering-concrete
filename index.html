@@ -3,209 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة كمية الأسمنت | خرسانة 360</title>
+    <title>واجهة خرسانة</title>
     <style>
+        /* الألوان الرئيسية */
         :root {
-            --primary: #1a3a6e;
-            --secondary: #4b6cb7;
-            --accent: #ff6b35;
-            --light: #f5f6fa;
-            --dark: #2d3436;
-            --font: 'Tajawal', sans-serif;
+            --color-dark: #1A5276;  /* أزرق داكن */
+            --color-light: #F8F9F9; /* رمادي فاتح */
+            --color-accent: #E67E22; /* برتقالي */
         }
-        
+
+        /* إعادة الضبط */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: var(--font);
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.7;
-            padding: 20px;
-        }
-        
-        .calculator-container {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 2rem auto;
-            border-top: 5px solid var(--accent);
-        }
-        
-        h2 {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
-        
-        input:focus, select:focus {
-            border-color: var(--secondary);
-            outline: none;
-        }
-        
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.3s;
-        }
-        
-        button:hover {
-            background: #e05a2e;
-        }
-        
-        .result {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .result h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .result-item {
+            background-color: var(--color-light);
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px dashed #ddd;
+            flex-direction: column;
         }
-        
-        @media (max-width: 768px) {
-            .calculator-container {
-                padding: 1.5rem;
-            }
+
+        /* الواجهة الأساسية */
+        .app-container {
+            background: linear-gradient(135deg, var(--color-dark), #154360);
+            color: white;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* شريط العنوان */
+        .title-bar {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .title-bar h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* المساحة الرئيسية */
+        .main-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .content-placeholder {
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .content-placeholder p {
+            margin-top: 10px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
-    <div class="calculator-container">
-        <h2>حاسبة كمية الأسمنت الدقيقة</h2>
-        
-        <div class="input-group">
-            <label for="volume">حجم الخرسانة المطلوبة (م³)</label>
-            <input type="number" id="volume" step="0.1" min="0.1" placeholder="مثال: 5.3">
+    <div class="app-container">
+        <div class="title-bar">
+            <h1>واجهة الخرسانة</h1>
         </div>
         
-        <div class="input-group">
-            <label for="mix">نسبة خلط الأسمنت (كجم/م³)</label>
-            <select id="mix">
-                <option value="300">خلطة عادية (300 كجم/م³)</option>
-                <option value="350">خلطة متوسطة (350 كجم/م³)</option>
-                <option value="400">خلطة قوية (400 كجم/م³)</option>
-                <option value="custom">تخصيص</option>
-            </select>
-            <input type="number" id="custom-mix" style="display: none; margin-top: 0.5rem;" 
-                   placeholder="أدخل النسبة المطلوبة (كجم/م³)">
-        </div>
-        
-        <div class="input-group">
-            <label for="bag-size">حجم كيس الأسمنت (كجم)</label>
-            <select id="bag-size">
-                <option value="50">50 كجم (الشائع في الخليج)</option>
-                <option value="25">25 كجم (الشائع في مصر)</option>
-                <option value="40">40 كجم (بعض الدول الأوروبية)</option>
-            </select>
-        </div>
-        
-        <button onclick="calculateCement()">حساب الكمية</button>
-        
-        <div class="result" id="result">
-            <h3>نتيجة الحساب</h3>
-            <div class="result-item">
-                <span>كمية الأسمنت المطلوبة:</span>
-                <span id="cement-amount"></span>
-            </div>
-            <div class="result-item">
-                <span>عدد الأكياس:</span>
-                <span id="bags-count"></span>
-            </div>
-            <div class="result-item">
-                <span>الكمية بالطن:</span>
-                <span id="tons"></span>
-            </div>
-            <div class="result-item">
-                <span>نسبة الماء/أسمنت التقريبية:</span>
-                <span id="water-ratio"></span>
+        <div class="main-area">
+            <div class="content-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                </svg>
+                <p>مساحة العمل الرئيسية</p>
             </div>
         </div>
     </div>
-
-    <script>
-        // إظهار/إخفاء حقل التخصيص
-        document.getElementById('mix').addEventListener('change', function() {
-            const customInput = document.getElementById('custom-mix');
-            customInput.style.display = this.value === 'custom' ? 'block' : 'none';
-        });
-        
-        // دالة الحساب
-        function calculateCement() {
-            // الحصول على القيم المدخلة
-            const volume = parseFloat(document.getElementById('volume').value);
-            let mixRatio = document.getElementById('mix').value;
-            const bagSize = parseInt(document.getElementById('bag-size').value);
-            
-            // معالجة النسبة المخصصة
-            if (mixRatio === 'custom') {
-                mixRatio = parseFloat(document.getElementById('custom-mix').value);
-                if (!mixRatio || mixRatio <= 0) {
-                    alert("الرجاء إدخال نسبة خلط صحيحة");
-                    return;
-                }
-            } else {
-                mixRatio = parseFloat(mixRatio);
-            }
-            
-            if (!volume || volume <= 0) {
-                alert("الرجاء إدخال حجم خرسانة صحيح");
-                return;
-            }
-            
-            // العمليات الحسابية
-            const cementKg = volume * mixRatio;
-            const bags = Math.ceil(cementKg / bagSize); // تقريب لأعلى عدد صحيح
-            const tons = (cementKg / 1000).toFixed(2);
-            
-            // حساب نسبة الماء/أسمنت (تقريبية)
-            const waterRatio = (0.5 + (Math.random() * 0.1)).toFixed(2); // قيمة بين 0.5 و 0.6
-            
-            // عرض النتائج
-            document.getElementById('cement-amount').textContent = cementKg.toFixed(2) + " كجم";
-            document.getElementById('bags-count').textContent = bags + " كيس (" + bagSize + " كجم)";
-            document.getElementById('tons').textContent = tons + " طن";
-            document.getElementById('water-ratio').textContent = waterRatio + " (تقريبي)";
-            
-            document.getElementById('result').style.display = 'block';
-        }
-    </script>
 </body>
 </html>
