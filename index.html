@@ -3,93 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واجهة خرسانة</title>
+    <title>الدليل الشامل للخرسانة</title>
     <style>
         /* الألوان الرئيسية */
         :root {
-            --color-dark: #1A5276;  /* أزرق داكن */
-            --color-light: #F8F9F9; /* رمادي فاتح */
-            --color-accent: #E67E22; /* برتقالي */
+            --primary: #2E7D32;   /* أخضر داكن */
+            --secondary: #455A64; /* رمادي-أزرق */
+            --accent: #FF8F00;   /* برتقالي */
+            --light: #F5F5F5;     /* رمادي فاتح */
+            --white: #FFFFFF;
+            --text: #333333;
         }
 
-        /* إعادة الضبط */
+        /* إعادة الضبط الأساسي */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background-color: var(--color-light);
-            font-family: 'Arial', sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        /* الواجهة الأساسية */
-        .app-container {
-            background: linear-gradient(135deg, var(--color-dark), #154360);
-            color: white;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 1200px;
-            height: 90vh;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* شريط العنوان */
-        .title-bar {
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 15px;
+        /* الهيدر */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1B5E20);
+            color: var(--white);
+            padding: 2rem 1rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .title-bar h1 {
-            font-size: 1.8rem;
-            letter-spacing: 1px;
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* المساحة الرئيسية */
-        .main-area {
-            flex: 1;
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* الأقسام */
+        .sections-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--accent);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-content {
+            padding: 1.5rem;
+        }
+
+        .section-number {
+            background-color: var(--primary);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.05);
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
 
-        .content-placeholder {
+        .section-card h2 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .section-card p {
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .section-link {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .section-link:hover {
+            text-decoration: underline;
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
             text-align: center;
-            opacity: 0.7;
+            padding: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .content-placeholder p {
-            margin-top: 10px;
-            font-size: 1.1rem;
+        @media (max-width: 768px) {
+            .sections-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="title-bar">
-            <h1>واجهة الخرسانة</h1>
+    <!-- الهيدر -->
+    <header>
+        <h1>الدليل الشامل للخرسانة</h1>
+        <p>كل ما تحتاجه في عالم الخرسانة والإنشاءات في مكان واحد</p>
+    </header>
+
+    <!-- الأقسام -->
+    <div class="sections-container">
+        <!-- قسم 1 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">1</div>
+                <h2>أنواع الخرسانة</h2>
+                <p>تعرف على جميع أنواع الخرسانة واستخداماتها في الإنشاءات</p>
+                <a href="#" class="section-link">تصفح المحتوى →</a>
+            </div>
         </div>
-        
-        <div class="main-area">
-            <div class="content-placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                </svg>
-                <p>مساحة العمل الرئيسية</p>
+
+        <!-- قسم 2 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">2</div>
+                <h2>اختبارات الخرسانة</h2>
+                <p>دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
+                <a href="#" class="section-link">تصفح المحتوى →</a>
+            </div>
+        </div>
+
+        <!-- قسم 3 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">3</div>
+                <h2>حاسبة كميات الخرسانة</h2>
+                <p>احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
+                <a href="#" class="section-link">استخدم الأداة →</a>
+            </div>
+        </div>
+
+        <!-- قسم 4 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">4</div>
+                <h2>حاسبة نسبة الخلطة</h2>
+                <p>احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
+                <a href="#" class="section-link">استخدم الأداة →</a>
+            </div>
+        </div>
+
+        <!-- قسم 5 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">5</div>
+                <h2>أنواع الحديد</h2>
+                <p>دليل لأنواع حديد التسليح وخصائص كل نوع</p>
+                <a href="#" class="section-link">تصفح المحتوى →</a>
+            </div>
+        </div>
+
+        <!-- قسم 6 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">6</div>
+                <h2>حاسبة كميات حديد التسليح</h2>
+                <p>احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
+                <a href="#" class="section-link">استخدم الأداة →</a>
+            </div>
+        </div>
+
+        <!-- قسم 7 -->
+        <div class="section-card">
+            <div class="section-content">
+                <div class="section-number">7</div>
+                <h2>أخطاء شائعة في الصب</h2>
+                <p>تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
+                <a href="#" class="section-link">تصفح المحتوى →</a>
             </div>
         </div>
     </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>© 2023 الدليل الشامل للخرسانة | جميع الحقوق محفوظة</p>
+    </footer>
 </body>
 </html>
