@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENG Concrete | الخرسانة للمهندسين</title>
+    <title>CONCRETE PRO | للمهندسين المحترفين</title>
     <style>
         /* Reset */
         * {
@@ -12,14 +12,17 @@
             box-sizing: border-box;
         }
         
-        /* الألوان والخطوط */
+        /* نظام الألوان الجديد */
         :root {
-            --primary: #1E3A8A; /* أزرق داكن (لون رئيسي) */
-            --secondary: #3B82F6; /* أزرق فاتح */
-            --accent: #EF4444; /* أحمر (لون التنبيه) */
-            --dark: #1F2937;
-            --light: #F9FAFB;
-            --gray: #6B7280;
+            --primary: #2b5876; /* أزرق حديدي - يعكس متانة الخرسانة */
+            --secondary: #4e4376; /* بنفسجي مائل للأزرق */
+            --accent: #ff7e5f; /* برتقالي محمر - للتنبيهات */
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --concrete-light: #e9ecef; /* لون خرسانة فاتح */
+            --concrete-dark: #adb5bd; /* لون خرسانة غامق */
+            --steel: #495057; /* لون حديد التسليح */
             --font: 'Tajawal', sans-serif;
         }
         
@@ -30,48 +33,68 @@
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
+            padding-top: 70px; /* لمنع تداخل المحتوى مع الشريط */
         }
         
-        /* التخطيط العام */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        /* الشريط العلوي */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
+        /* شريط العنوان العلوي */
+        .title-bar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.8rem 0;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
         
+        .title-bar h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        /* شريط التنقل */
         nav {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 55px; /* يتناسب مع ارتفاع شريط العنوان */
+            z-index: 999;
+        }
+        
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 0.8rem 0;
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-left: 0.5rem;
+            color: var(--accent);
         }
         
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         
         .nav-links a {
             text-decoration: none;
             color: var(--dark);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            padding: 0.3rem 0;
             position: relative;
         }
         
@@ -82,57 +105,46 @@
         .nav-links a::after {
             content: '';
             position: absolute;
+            bottom: 0;
+            right: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
-            bottom: -5px;
-            left: 0;
+            background-color: var(--accent);
             transition: width 0.3s;
         }
         
         .nav-links a:hover::after {
             width: 100%;
+            left: 0;
         }
         
-        /* القسم الرئيسي */
-        .hero {
-            background: linear-gradient(135deg, #E6EFF9 0%, #B8D4F0 100%);
-            padding: 5rem 0;
-            text-align: center;
+        /* المحتوى الرئيسي */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 0;
         }
         
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-        
-        /* أقسام المحتوى */
+        /* بطاقات الأقسام */
         .section {
-            padding: 4rem 0;
+            margin: 2rem 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             position: relative;
         }
         
         .section-title h2 {
-            font-size: 2rem;
-            color: var(--primary);
             display: inline-block;
-            background: var(--light);
-            padding: 0 1rem;
+            background: white;
+            padding: 0 1.5rem;
             position: relative;
             z-index: 1;
+            color: var(--primary);
+            font-size: 1.8rem;
         }
         
         .section-title::after {
@@ -142,24 +154,23 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: var(--gray);
+            background: linear-gradient(to right, transparent, var(--concrete-dark), transparent);
             z-index: 0;
         }
         
-        /* بطاقات الأقسام */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
         }
         
         .feature-card {
             background: white;
             border-radius: 8px;
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 4px solid var(--primary);
+            transition: all 0.3s;
+            border-top: 3px solid var(--accent);
         }
         
         .feature-card:hover {
@@ -170,7 +181,6 @@
         .feature-card h3 {
             color: var(--primary);
             margin-bottom: 1rem;
-            font-size: 1.3rem;
         }
         
         .feature-card p {
@@ -178,206 +188,150 @@
             margin-bottom: 1.5rem;
         }
         
-        /* أزرار */
+        /* الأزرار */
         .btn {
             display: inline-block;
-            padding: 0.7rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             background: var(--primary);
             color: white;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 500;
-            transition: background 0.3s;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         
         .btn:hover {
             background: var(--secondary);
+            transform: translateY(-2px);
         }
         
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+        .btn-accent {
+            background: var(--accent);
         }
         
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* فوتر */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        
-        footer p {
-            margin-bottom: 0;
+        .btn-accent:hover {
+            background: #ff6b4a;
         }
         
         /* التكيف مع الجوال */
         @media (max-width: 768px) {
-            nav {
+            .nav-container {
                 flex-direction: column;
                 gap: 1rem;
             }
             
             .nav-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
-            .hero {
-                padding: 3rem 0;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
+            .features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- الشريط العلوي -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">ENG Concrete</div>
-                <div class="nav-links">
-                    <a href="#home">الرئيسية</a>
-                    <a href="#materials">المواد</a>
-                    <a href="#design">التصميم</a>
-                    <a href="#execution">التنفيذ</a>
-                    <a href="#tools">الأدوات</a>
-                    <a href="#contact">اتصل بنا</a>
-                </div>
-                <a href="#login" class="btn">تسجيل الدخول</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- القسم الرئيسي -->
-    <section class="hero" id="home">
-        <div class="container">
-            <h1>المرجع الشامل لخرسانة البناء</h1>
-            <p>منصة متكاملة للمهندسين والمقاولين تغطي جميع جوانب الخرسانة من التصميم إلى التنفيذ</p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
-                <a href="#start" class="btn">ابدأ الآن</a>
-                <a href="#learn" class="btn btn-outline">تعرف أكثر</a>
+    <!-- شريط العنوان العلوي -->
+    <div class="title-bar">
+        <h1>CONCRETE PRO | نظام إدارة الخرسانة الشامل</h1>
+    </div>
+    
+    <!-- شريط التنقل -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                <span>خرسانة برو</span>
             </div>
+            <div class="nav-links">
+                <a href="#home">الرئيسية</a>
+                <a href="#design">التصميم</a>
+                <a href="#materials">المواد</a>
+                <a href="#execution">التنفيذ</a>
+                <a href="#tests">الاختبارات</a>
+                <a href="#contact">اتصل بنا</a>
+            </div>
+            <a href="#login" class="btn btn-accent">تسجيل الدخول</a>
         </div>
-    </section>
+    </nav>
 
-    <!-- قسم المواد -->
-    <section class="section" id="materials">
-        <div class="container">
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- قسم المواد -->
+        <section class="section" id="materials">
             <div class="section-title">
-                <h2>المواد والمكونات</h2>
+                <h2>نظام إدارة المواد</h2>
             </div>
             <div class="features">
                 <div class="feature-card">
-                    <h3>الأسمنت والركام</h3>
-                    <p>كل ما تحتاج معرفته عن أنواع الأسمنت والركام وخصائصها</p>
-                    <a href="#" class="btn">استكشف</a>
+                    <h3>تحليل مكونات الخرسانة</h3>
+                    <p>تحليل دقيق لنسب الخلط وخصائص المواد المستخدمة في الخلطات الخرسانية</p>
+                    <a href="#" class="btn">استعراض الأدوات</a>
                 </div>
                 <div class="feature-card">
-                    <h3>الإضافات الكيميائية</h3>
-                    <p>دليل شامل للإضافات وتحسين خواص الخرسانة</p>
-                    <a href="#" class="btn">استكشف</a>
+                    <h3>قاعدة بيانات المواد</h3>
+                    <p>سجل كامل لجميع المواد المستخدمة مع خصائصها الفنية وشهادات الجودة</p>
+                    <a href="#" class="btn">استعراض القاعدة</a>
                 </div>
                 <div class="feature-card">
-                    <h3>خلطات التصميم</h3>
-                    <p>طرق تصميم الخلطات الخرسانية حسب المواصفات</p>
-                    <a href="#" class="btn">استكشف</a>
+                    <h3>نظام تتبع الموردين</h3>
+                    <p>تقييم أداء الموردين ومتابعة جودة المواد الواردة</p>
+                    <a href="#" class="btn">فتح النظام</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- قسم التصميم -->
-    <section class="section" id="design" style="background: #F0F4F8;">
-        <div class="container">
+        </section>
+        
+        <!-- قسم التصميم -->
+        <section class="section" id="design">
             <div class="section-title">
-                <h2>تصميم الخرسانة</h2>
+                <h2>أدوات التصميم الإنشائي</h2>
             </div>
             <div class="features">
                 <div class="feature-card">
-                    <h3>التحليل الإنشائي</h3>
-                    <p>أساليب تحليل العناصر الخرسانية المسلحة</p>
-                    <a href="#" class="btn">استكشف</a>
+                    <h3>حسابات الخرسانة المسلحة</h3>
+                    <p>أدوات متقدمة لحساب الأبعاد وكميات الحديد حسب الكودات العالمية</p>
+                    <a href="#" class="btn">بدء الحسابات</a>
                 </div>
                 <div class="feature-card">
-                    <h3>الكودات والمعايير</h3>
-                    <p>ACI, Eurocode والمواصفات العربية</p>
-                    <a href="#" class="btn">استكشف</a>
+                    <h3>مكتبة الكودات</h3>
+                    <p>مرجع شامل لجميع الكودات الدولية والمحلية مع شرح التطبيق</p>
+                    <a href="#" class="btn">استعراض المكتبة</a>
                 </div>
                 <div class="feature-card">
-                    <h3>نماذج حسابية</h3>
-                    <p>أمثلة عملية لحسابات الخرسانة المسلحة</p>
-                    <a href="#" class="btn">استكشف</a>
+                    <h3>نماذج جاهزة</h3>
+                    <p>نماذج تصميمية جاهزة للعناصر الإنشائية المختلفة</p>
+                    <a href="#" class="btn">استعراض النماذج</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- قسم التنفيذ -->
-    <section class="section" id="execution">
-        <div class="container">
-            <div class="section-title">
-                <h2>تنفيذ الخرسانة</h2>
-            </div>
-            <div class="features">
-                <div class="feature-card">
-                    <h3>الصب والمعالجة</h3>
-                    <p>أفضل ممارسات الصب والمعالجة والوقاية من العيوب</p>
-                    <a href="#" class="btn">استكشف</a>
-                </div>
-                <div class="feature-card">
-                    <h3>ضبط الجودة</h3>
-                    <p>اختبارات الخرسانة وضبط جودة التنفيذ</p>
-                    <a href="#" class="btn">استكشف</a>
-                </div>
-                <div class="feature-card">
-                    <h3>حلول المشاكل</h3>
-                    <p>تشخيص وعلاج عيوب الخرسانة الشائعة</p>
-                    <a href="#" class="btn">استكشف</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- فوتر -->
-    <footer>
-        <div class="container">
-            <p>© 2024 ENG Concrete. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
+        </section>
+    </div>
 
     <script>
         // تأثير التمرير السلس
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
         
-        // تغيير لون الشريط عند التمرير
+        // إضافة ظل لشريط التنقل عند التمرير
         window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.backdropFilter = 'blur(5px)';
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
             } else {
-                header.style.background = 'white';
-                header.style.backdropFilter = 'none';
+                nav.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
             }
         });
     </script>
