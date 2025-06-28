@@ -4,15 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الدليل الشامل للخرسانة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* الألوان الرئيسية */
         :root {
-            --primary: #2E7D32;   /* أخضر داكن */
+            --primary: #2E7D32;   /* أخضر إنشائي */
             --secondary: #455A64; /* رمادي-أزرق */
-            --accent: #FF8F00;   /* برتقالي */
+            --accent: #FF8F00;    /* برتقالي معدني */
             --light: #F5F5F5;     /* رمادي فاتح */
             --white: #FFFFFF;
             --text: #333333;
+            --card-bg: #FFFFFF;
+        }
+
+        /* النسخة الداكنة */
+        body.dark-mode {
+            background-color: #121212;
+            --light: #1E1E1E;
+            --white: #252525;
+            --text: #E0E0E0;
+            --card-bg: #2D2D2D;
+            --secondary: #78909C;
         }
 
         /* إعادة الضبط الأساسي */
@@ -20,7 +32,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         body {
@@ -36,6 +49,7 @@
             padding: 2rem 1rem;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         header h1 {
@@ -48,44 +62,233 @@
             opacity: 0.9;
         }
 
-        /* الأقسام */
+        /* زر النسخة الداكنة */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* القائمة الرئيسية */
+        nav {
+            background-color: var(--secondary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 0.5rem;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* قسم أنواع الخرسانة */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* بطاقات أنواع الخرسانة */
+        .types-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .type-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--accent);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .type-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .type-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .type-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .type-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .type-card:hover .type-image img {
+            transform: scale(1.1);
+        }
+
+        .type-content {
+            padding: 1.5rem;
+        }
+
+        .type-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .type-content h3 i {
+            color: var(--accent);
+        }
+
+        .type-content p {
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .type-features {
+            margin-top: 1rem;
+        }
+
+        .type-features h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* الأقسام الأخرى */
         .sections-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            margin: 3rem 0;
         }
 
         .section-card {
-            background: var(--white);
+            background: var(--card-bg);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
             border-top: 4px solid var(--accent);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .section-card.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
         .section-content {
             padding: 1.5rem;
         }
 
-        .section-number {
-            background-color: var(--primary);
-            color: var(--white);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
+        .section-icon {
+            font-size: 1.8rem;
+            color: var(--accent);
             margin-bottom: 1rem;
+            display: inline-block;
         }
 
         .section-card h2 {
@@ -101,11 +304,13 @@
         }
 
         .section-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             color: var(--accent);
             font-weight: bold;
             text-decoration: none;
             font-size: 0.9rem;
+            gap: 0.5rem;
         }
 
         .section-link:hover {
@@ -121,14 +326,46 @@
             margin-top: 2rem;
         }
 
+        /* الأزرار */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 1rem 0;
+            text-align: center;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #1B5E20;
+        }
+
+        .btn i {
+            margin-right: 0.5rem;
+        }
+
         @media (max-width: 768px) {
-            .sections-container {
+            .types-container, .sections-container {
                 grid-template-columns: 1fr;
-                padding: 1rem;
             }
             
             header h1 {
                 font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0;
             }
         }
     </style>
@@ -136,86 +373,236 @@
 <body>
     <!-- الهيدر -->
     <header>
+        <button class="dark-mode-toggle" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
         <h1>الدليل الشامل للخرسانة</h1>
         <p>كل ما تحتاجه في عالم الخرسانة والإنشاءات في مكان واحد</p>
     </header>
 
-    <!-- الأقسام -->
-    <div class="sections-container">
-        <!-- قسم 1 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">1</div>
-                <h2>أنواع الخرسانة</h2>
-                <p>تعرف على جميع أنواع الخرسانة واستخداماتها في الإنشاءات</p>
-                <a href="#" class="section-link">تصفح المحتوى →</a>
-            </div>
-        </div>
+    <!-- القائمة -->
+    <nav>
+        <ul>
+            <li><a href="#types"><i class="fas fa-concrete-mixer"></i> أنواع الخرسانة</a></li>
+            <li><a href="#tests"><i class="fas fa-flask"></i> اختبارات الخرسانة</a></li>
+            <li><a href="#calculators"><i class="fas fa-calculator"></i> الحاسبات</a></li>
+            <li><a href="#steel"><i class="fas fa-ruler-combined"></i> حديد التسليح</a></li>
+        </ul>
+    </nav>
 
-        <!-- قسم 2 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">2</div>
-                <h2>اختبارات الخرسانة</h2>
-                <p>دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
-                <a href="#" class="section-link">تصفح المحتوى →</a>
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <!-- قسم أنواع الخرسانة -->
+        <section id="types">
+            <div class="section-header">
+                <h2><i class="fas fa-concrete-mixer"></i> أنواع الخرسانة</h2>
+                <p>تعرف على الأنواع الرئيسية للخرسانة واستخداماتها في البناء والإنشاءات</p>
             </div>
-        </div>
 
-        <!-- قسم 3 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">3</div>
-                <h2>حاسبة كميات الخرسانة</h2>
-                <p>احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
-                <a href="#" class="section-link">استخدم الأداة →</a>
-            </div>
-        </div>
+            <div class="types-container">
+                <!-- النوع 1 -->
+                <div class="type-card">
+                    <div class="type-image">
+                        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="خرسانة عادية">
+                    </div>
+                    <div class="type-content">
+                        <h3><i class="fas fa-cube"></i> خرسانة عادية</h3>
+                        <p>الخرسانة الأساسية المستخدمة في الأعمال الإنشائية العامة.</p>
+                        
+                        <div class="type-features">
+                            <h4>المميزات:</h4>
+                            <ul class="features-list">
+                                <li>قوة ضغط: 20-40 MPa</li>
+                                <li>نسبة خلط: 1:2:4 (أسمنت:رمل:زلط)</li>
+                                <li>مناسبة للأساسات والأرضيات</li>
+                                <li>اقتصادية وسهلة التحضير</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- قسم 4 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">4</div>
-                <h2>حاسبة نسبة الخلطة</h2>
-                <p>احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
-                <a href="#" class="section-link">استخدم الأداة →</a>
-            </div>
-        </div>
+                <!-- النوع 2 -->
+                <div class="type-card">
+                    <div class="type-image">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="خرسانة مسلحة">
+                    </div>
+                    <div class="type-content">
+                        <h3><i class="fas fa-rebar"></i> خرسانة مسلحة</h3>
+                        <p>خرسانة مدعمة بقضبان حديد التسليح لمقاومة الشد.</p>
+                        
+                        <div class="type-features">
+                            <h4>المميزات:</h4>
+                            <ul class="features-list">
+                                <li>تحتوي على حديد تسليح</li>
+                                <li>تستخدم في الأعمدة والكمرات</li>
+                                <li>قوة شد عالية</li>
+                                <li>متانة طويلة الأجل</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- قسم 5 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">5</div>
-                <h2>أنواع الحديد</h2>
-                <p>دليل لأنواع حديد التسليح وخصائص كل نوع</p>
-                <a href="#" class="section-link">تصفح المحتوى →</a>
+                <!-- النوع 3 -->
+                <div class="type-card">
+                    <div class="type-image">
+                        <img src="https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="خرسانة سابقة الإجهاد">
+                    </div>
+                    <div class="type-content">
+                        <h3><i class="fas fa-bolt"></i> خرسانة سابقة الإجهاد</h3>
+                        <p>خرسانة معالجة مسبقًا بقوى ضغط لتحسين الأداء.</p>
+                        
+                        <div class="type-features">
+                            <h4>المميزات:</h4>
+                            <ul class="features-list">
+                                <li>أقل سماكة من الخرسانة التقليدية</li>
+                                <li>تستخدم في الجسور والكبارى</li>
+                                <li>مقاومة عالية للانحناء</li>
+                                <li>تقلل التشققات</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- قسم 6 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">6</div>
-                <h2>حاسبة كميات حديد التسليح</h2>
-                <p>احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
-                <a href="#" class="section-link">استخدم الأداة →</a>
-            </div>
-        </div>
+        <!-- الأقسام الأخرى -->
+        <section id="sections">
+            <div class="sections-container">
+                <!-- قسم 2 -->
+                <div class="section-card" id="tests">
+                    <div class="section-content">
+                        <div class="section-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h2>اختبارات الخرسانة</h2>
+                        <p>دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
+                        <a href="#" class="section-link">
+                            تصفح المحتوى
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
 
-        <!-- قسم 7 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-number">7</div>
-                <h2>أخطاء شائعة في الصب</h2>
-                <p>تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
-                <a href="#" class="section-link">تصفح المحتوى →</a>
+                <!-- قسم 3 -->
+                <div class="section-card" id="calculators">
+                    <div class="section-content">
+                        <div class="section-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h2>حاسبة كميات الخرسانة</h2>
+                        <p>احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
+                        <a href="#" class="section-link">
+                            استخدم الأداة
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- قسم 4 -->
+                <div class="section-card">
+                    <div class="section-content">
+                        <div class="section-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <h2>حاسبة نسبة الخلطة</h2>
+                        <p>احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
+                        <a href="#" class="section-link">
+                            استخدم الأداة
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- قسم 5 -->
+                <div class="section-card" id="steel">
+                    <div class="section-content">
+                        <div class="section-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <h2>أنواع الحديد</h2>
+                        <p>دليل لأنواع حديد التسليح وخصائص كل نوع</p>
+                        <a href="#" class="section-link">
+                            تصفح المحتوى
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- قسم 6 -->
+                <div class="section-card">
+                    <div class="section-content">
+                        <div class="section-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h2>حاسبة كميات حديد التسليح</h2>
+                        <p>احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
+                        <a href="#" class="section-link">
+                            استخدم الأداة
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- قسم 7 -->
+                <div class="section-card">
+                    <div class="section-content">
+                        <div class="section-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h2>أخطاء شائعة في الصب</h2>
+                        <p>تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
+                        <a href="#" class="section-link">
+                            تصفح المحتوى
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <!-- الفوتر -->
     <footer>
-        <p>© 2025 الدليل الشامل للخرسانة | جميع الحقوق محفوظة</p>
+        <p>© 2023 الدليل الشامل للخرسانة | جميع الحقوق محفوظة</p>
     </footer>
+
+    <script>
+        // تأثير التمرير
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.type-card, .section-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // النسخة الداكنة
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // تحميل تفضيل المستخدم
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+    </script>
 </body>
 </html>
