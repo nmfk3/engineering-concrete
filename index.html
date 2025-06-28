@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONCRETE HQ | مركز الخرسانة المتكامل</title>
+    <title>خرسانة 360 | الدليل الشامل</title>
     <style>
         /* Reset */
         * {
@@ -34,15 +34,38 @@
         /* التخطيط العام */
         .main-container {
             display: grid;
-            grid-template-rows: auto 1fr;
+            grid-template-rows: auto auto 1fr;
             min-height: 100vh;
+        }
+        
+        /* شريط العنوان العلوي */
+        .title-bar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .title-bar h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .title-bar p {
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
         
         /* شريط الأقسام الرئيسي */
         .nav-panel {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 1.5rem 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            background: white;
+            padding: 1.2rem 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .section-buttons {
@@ -56,10 +79,8 @@
         }
         
         .section-btn {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: var(--light);
+            color: var(--primary);
             padding: 0.8rem 1.8rem;
             border-radius: 50px;
             font-size: 1.1rem;
@@ -68,17 +89,20 @@
             transition: all 0.3s ease;
             text-align: center;
             min-width: 150px;
+            border: 2px solid var(--primary);
         }
         
         .section-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: var(--primary);
+            color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .section-btn.active {
             background: var(--accent);
             border-color: var(--accent);
+            color: white;
             font-weight: 700;
         }
         
@@ -129,16 +153,25 @@
             .welcome-card {
                 padding: 1.5rem;
             }
+            
+            .title-bar h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="main-container">
+        <!-- شريط العنوان العلوي -->
+        <div class="title-bar">
+            <h1>خرسانة 360</h1>
+            <p>دليلك الشامل في عالم الخرسانة الهندسية</p>
+        </div>
+        
         <!-- شريط الأقسام -->
         <div class="nav-panel">
             <div class="section-buttons">
-                <button class="section-btn active">الرئيسية</button>
-                <button class="section-btn">التصميم الإنشائي</button>
+                <button class="section-btn active">التصميم الإنشائي</button>
                 <button class="section-btn">المواد الأولية</button>
                 <button class="section-btn">تنفيذ المشاريع</button>
                 <button class="section-btn">ضبط الجودة</button>
@@ -150,7 +183,7 @@
         <!-- مساحة المحتوى -->
         <div class="content-area">
             <div class="welcome-card">
-                <h1>CONCRETE HQ</h1>
+                <h1>خرسانة 360</h1>
                 <p>المنصة المتكاملة لإدارة مشاريع الخرسانة - أدوات احترافية للمهندسين والمقاولين</p>
             </div>
         </div>
