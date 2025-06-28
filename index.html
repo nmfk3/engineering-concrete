@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>الخرسانة 360 - دليلك الشامل في عالم الخرسانة</title>
   <style>
-    /* ---------- Fonts & Reset ---------- */
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
     * {
       margin: 0; padding: 0; box-sizing: border-box;
@@ -27,7 +26,6 @@
       list-style: none;
     }
 
-    /* ---------- Navbar ---------- */
     nav {
       background-color: #0D47A1;
       color: white;
@@ -50,6 +48,7 @@
     nav ul {
       display: flex;
       gap: 1.8rem;
+      flex-wrap: wrap;
     }
     nav ul li {
       font-weight: 600;
@@ -60,14 +59,13 @@
       color: #FFA000;
     }
 
-    /* ---------- Hero Section ---------- */
     .hero {
-      background: linear-gradient(rgba(13, 71, 161, 0.8), rgba(13, 71, 161, 0.8)), 
+      width: 100vw;
+      background: linear-gradient(rgba(13, 71, 161, 0.85), rgba(13, 71, 161, 0.85)), 
                   url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
       color: white;
       text-align: center;
       padding: 5rem 1rem 6rem;
-      flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -104,7 +102,6 @@
       background-color: #cc8400;
     }
 
-    /* ---------- Quick Links Section ---------- */
     .quick-links {
       max-width: 1100px;
       margin: 3rem auto 5rem;
@@ -138,7 +135,6 @@
       line-height: 1.4;
     }
 
-    /* ---------- Footer ---------- */
     footer {
       background-color: #37474F;
       color: #ddd;
@@ -152,10 +148,8 @@
       font-weight: 600;
     }
 
-    /* ---------- Responsive ---------- */
     @media (max-width: 768px) {
       nav ul {
-        flex-wrap: wrap;
         justify-content: center;
         gap: 1rem;
       }
