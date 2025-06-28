@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONCRETE PRO | الخرسانة الشامل</title>
+    <title>CONCRETE HQ | مركز الخرسانة المتكامل</title>
     <style>
         /* Reset */
         * {
@@ -12,191 +12,159 @@
             box-sizing: border-box;
         }
         
-        /* الألوان والخطوط */
+        /* نظام الألوان القوي */
         :root {
-            --primary: #2c3e50; /* أزرق داكن */
-            --secondary: #3498db; /* أزرق فاتح */
-            --accent: #e74c3c; /* أحمر */
-            --dark: #333;
-            --light: #f9f9f9;
-            --gray: #7f8c8d;
+            --primary: #1a3a6e; /* أزرق معدني عميق */
+            --secondary: #4b6cb7; /* أزرق فاتح ديناميكي */
+            --accent: #ff6b35; /* برتقالي محفز */
+            --dark: #2d3436;
+            --light: #f5f6fa;
             --font: 'Tajawal', sans-serif;
         }
         
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700&display=swap');
         
         body {
             font-family: var(--font);
             background-color: var(--light);
             color: var(--dark);
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
         /* التخطيط العام */
-        .container {
-            width: 90%;
+        .main-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            min-height: 100vh;
+        }
+        
+        /* شريط الأقسام الرئيسي */
+        .nav-panel {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 1.5rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 1rem;
         }
         
-        /* شريط العنوان العلوي */
-        .title-bar {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        .section-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 1.5rem 0;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .title-bar h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .title-bar p {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
             font-size: 1.1rem;
-            opacity: 0.9;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 150px;
         }
         
-        /* شريط التنقل */
-        nav {
-            background-color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        .section-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
+        .section-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
             font-weight: 700;
-            color: var(--primary);
         }
         
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
+        /* مساحة المحتوى */
+        .content-area {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
         
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--secondary);
-        }
-        
-        .login-btn {
-            background-color: var(--accent);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-        
-        /* المحتوى الرئيسي */
-        .main-content {
-            padding: 2rem 0;
-        }
-        
-        .section-title {
+        /* بطاقة الترحيب */
+        .welcome-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             text-align: center;
             margin-bottom: 2rem;
-            color: var(--primary);
+            border-top: 5px solid var(--accent);
         }
         
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-top: 3px solid var(--accent);
-        }
-        
-        .feature-card h3 {
+        .welcome-card h1 {
+            font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 1rem;
         }
         
-        .feature-card p {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--secondary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
+        .welcome-card p {
+            font-size: 1.1rem;
+            color: var(--dark);
+            max-width: 700px;
+            margin: 0 auto;
         }
         
         /* التكيف مع الجوال */
         @media (max-width: 768px) {
-            .nav-container {
+            .section-buttons {
                 flex-direction: column;
-                gap: 1rem;
+                align-items: center;
             }
             
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
+            .section-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .welcome-card {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- شريط العنوان العلوي -->
-    <div class="title-bar">
-        <div class="container">
-            <h1>CONCRETE PRO</h1>
-            <p>الخرسانة الشامل</p>
-        </div>
-    </div>
-    
-    <!-- شريط التنقل -->
-    <nav>
-        <div class="container nav-container">
-            <div class="logo">حرسه برو</div>
-            <div class="nav-links">
-                <a href="#">الرئيسية</a>
-                <a href="#">التصميم</a>
-                <a href="#">المواد</a>
-                <a href="#">التنفيذ</a>
-                <a href="#">الاختبارات</a>
-                <a href="#">اتصال بنا</a>
+    <div class="main-container">
+        <!-- شريط الأقسام -->
+        <div class="nav-panel">
+            <div class="section-buttons">
+                <button class="section-btn active">الرئيسية</button>
+                <button class="section-btn">التصميم الإنشائي</button>
+                <button class="section-btn">المواد الأولية</button>
+                <button class="section-btn">تنفيذ المشاريع</button>
+                <button class="section-btn">ضبط الجودة</button>
+                <button class="section-btn">الأدوات الحسابية</button>
+                <button class="section-btn">المكتبة الفنية</button>
             </div>
-            <a href="#" class="login-btn">تسجيل الدخول</a>
         </div>
-    </nav>
-
-    <!-- المحتوى الرئيسي -->
-    <div class="container main-content">
-        <h2 class="section-title">نظام إدارة المواد</h2>
         
-        <div class="features">
-            <div class="feature-card">
-                <h3>تحليل مكونات الخرسانة</h3>
-                <p>تحليل دقيق لنسب الخلط وخصائص المواد المستخدمة في الخلطات الخرسانية</p>
-                <a href="#" class="btn">استعراض الأدوات</a>
+        <!-- مساحة المحتوى -->
+        <div class="content-area">
+            <div class="welcome-card">
+                <h1>CONCRETE HQ</h1>
+                <p>المنصة المتكاملة لإدارة مشاريع الخرسانة - أدوات احترافية للمهندسين والمقاولين</p>
             </div>
         </div>
     </div>
+
+    <script>
+        // تفعيل الأزرار
+        const buttons = document.querySelectorAll('.section-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
