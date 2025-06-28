@@ -63,9 +63,16 @@
         .control-buttons {
             position: absolute;
             top: 1rem;
-            left: 1rem;
             display: flex;
             gap: 0.5rem;
+        }
+
+        .language-toggle {
+            left: 1rem;
+        }
+
+        .dark-mode-toggle {
+            right: 1rem;
         }
 
         .dark-mode-toggle, .language-toggle {
@@ -80,6 +87,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            position: absolute;
         }
 
         /* الأقسام */
@@ -174,14 +182,12 @@
 <body>
     <!-- الهيدر -->
     <header>
-        <div class="control-buttons">
-            <button class="dark-mode-toggle" id="darkModeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
-            <button class="language-toggle" id="languageToggle">
-                <i class="fas fa-language"></i>
-            </button>
-        </div>
+        <button class="language-toggle" id="languageToggle">
+            <i class="fas fa-language"></i>
+        </button>
+        <button class="dark-mode-toggle" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
         <h1 class="title-ar">الخرسانة 360</h1>
         <h1 class="title-en" style="display:none;">Concrete 360</h1>
         <p class="subtitle-ar">كل ما تحتاجه في عالم الخرسانة والإنشاءات في مكان واحد</p>
