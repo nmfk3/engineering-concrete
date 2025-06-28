@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخرسانة 360</title>
+    <title>الخرسانة 360 | Concrete 360</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* الألوان الرئيسية */
@@ -59,11 +59,16 @@
             opacity: 0.9;
         }
 
-        /* زر النسخة الداكنة */
-        .dark-mode-toggle {
+        /* أزرار التحكم */
+        .control-buttons {
             position: absolute;
             top: 1rem;
             left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dark-mode-toggle, .language-toggle {
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
@@ -169,11 +174,18 @@
 <body>
     <!-- الهيدر -->
     <header>
-        <button class="dark-mode-toggle" id="darkModeToggle">
-            <i class="fas fa-moon"></i>
-        </button>
-        <h1></h1> الخرسانة 360 </h1>
-        <p>كل ما تحتاجه في عالم الخرسانة والإنشاءات في مكان واحد</p>
+        <div class="control-buttons">
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="language-toggle" id="languageToggle">
+                <i class="fas fa-language"></i>
+            </button>
+        </div>
+        <h1 class="title-ar">الخرسانة 360</h1>
+        <h1 class="title-en" style="display:none;">Concrete 360</h1>
+        <p class="subtitle-ar">كل ما تحتاجه في عالم الخرسانة والإنشاءات في مكان واحد</p>
+        <p class="subtitle-en" style="display:none;">All you need in concrete and construction in one place</p>
     </header>
 
     <!-- الأقسام -->
@@ -184,11 +196,14 @@
                 <div class="section-icon">
                     <i class="fas fa-concrete-mixer"></i>
                 </div>
-                <h2>أنواع الخرسانة</h2>
-                <p>تعرف على جميع أنواع الخرسانة واستخداماتها في الإنشاءات</p>
+                <h2 class="section-title-ar">أنواع الخرسانة</h2>
+                <h2 class="section-title-en" style="display:none;">Concrete Types</h2>
+                <p class="section-desc-ar">تعرف على جميع أنواع الخرسانة واستخداماتها في الإنشاءات</p>
+                <p class="section-desc-en" style="display:none;">Learn about all types of concrete and their uses in construction</p>
                 <a href="#" class="section-link">
-                    تصفح المحتوى
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">تصفح المحتوى</span>
+                    <span class="link-text-en" style="display:none;">Browse Content</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -199,11 +214,14 @@
                 <div class="section-icon">
                     <i class="fas fa-flask"></i>
                 </div>
-                <h2>اختبارات الخرسانة</h2>
-                <p>دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
+                <h2 class="section-title-ar">اختبارات الخرسانة</h2>
+                <h2 class="section-title-en" style="display:none;">Concrete Tests</h2>
+                <p class="section-desc-ar">دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
+                <p class="section-desc-en" style="display:none;">Comprehensive guide to concrete quality and strength tests</p>
                 <a href="#" class="section-link">
-                    تصفح المحتوى
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">تصفح المحتوى</span>
+                    <span class="link-text-en" style="display:none;">Browse Content</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -214,11 +232,14 @@
                 <div class="section-icon">
                     <i class="fas fa-calculator"></i>
                 </div>
-                <h2>حاسبة كميات الخرسانة</h2>
-                <p>احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
+                <h2 class="section-title-ar">حاسبة كميات الخرسانة</h2>
+                <h2 class="section-title-en" style="display:none;">Concrete Calculator</h2>
+                <p class="section-desc-ar">احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
+                <p class="section-desc-en" style="display:none;">Calculate the required amount of concrete for your project accurately</p>
                 <a href="#" class="section-link">
-                    استخدم الأداة
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">استخدم الأداة</span>
+                    <span class="link-text-en" style="display:none;">Use Tool</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -229,11 +250,14 @@
                 <div class="section-icon">
                     <i class="fas fa-percentage"></i>
                 </div>
-                <h2>حاسبة نسبة الخلطة</h2>
-                <p>احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
+                <h2 class="section-title-ar">حاسبة نسبة الخلطة</h2>
+                <h2 class="section-title-en" style="display:none;">Mix Ratio Calculator</h2>
+                <p class="section-desc-ar">احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
+                <p class="section-desc-en" style="display:none;">Calculate concrete mix ratios based on usage type</p>
                 <a href="#" class="section-link">
-                    استخدم الأداة
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">استخدم الأداة</span>
+                    <span class="link-text-en" style="display:none;">Use Tool</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -244,11 +268,14 @@
                 <div class="section-icon">
                     <i class="fas fa-ruler-combined"></i>
                 </div>
-                <h2>أنواع الحديد</h2>
-                <p>دليل لأنواع حديد التسليح وخصائص كل نوع</p>
+                <h2 class="section-title-ar">أنواع الحديد</h2>
+                <h2 class="section-title-en" style="display:none;">Steel Types</h2>
+                <p class="section-desc-ar">دليل لأنواع حديد التسليح وخصائص كل نوع</p>
+                <p class="section-desc-en" style="display:none;">Guide to rebar types and their characteristics</p>
                 <a href="#" class="section-link">
-                    تصفح المحتوى
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">تصفح المحتوى</span>
+                    <span class="link-text-en" style="display:none;">Browse Content</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -259,11 +286,14 @@
                 <div class="section-icon">
                     <i class="fas fa-calculator"></i>
                 </div>
-                <h2>حاسبة كميات حديد التسليح</h2>
-                <p>احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
+                <h2 class="section-title-ar">حاسبة كميات حديد التسليح</h2>
+                <h2 class="section-title-en" style="display:none;">Rebar Calculator</h2>
+                <p class="section-desc-ar">احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
+                <p class="section-desc-en" style="display:none;">Calculate required rebar quantity for slabs and columns</p>
                 <a href="#" class="section-link">
-                    استخدم الأداة
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">استخدم الأداة</span>
+                    <span class="link-text-en" style="display:none;">Use Tool</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -274,11 +304,14 @@
                 <div class="section-icon">
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                <h2>أخطاء شائعة في الصب</h2>
-                <p>تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
+                <h2 class="section-title-ar">أخطاء شائعة في الصب</h2>
+                <h2 class="section-title-en" style="display:none;">Common Pouring Mistakes</h2>
+                <p class="section-desc-ar">تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
+                <p class="section-desc-en" style="display:none;">Learn about common mistakes and how to avoid them</p>
                 <a href="#" class="section-link">
-                    تصفح المحتوى
-                    <i class="fas fa-arrow-left"></i>
+                    <span class="link-text-ar">تصفح المحتوى</span>
+                    <span class="link-text-en" style="display:none;">Browse Content</span>
+                    <i class="fas fa-arrow-left arrow-icon"></i>
                 </a>
             </div>
         </div>
@@ -286,7 +319,8 @@
 
     <!-- الفوتر -->
     <footer>
-        <p>© 2025  الخرسانة 360 | جميع الحقوق محفوظة</p>
+        <p class="footer-text-ar">© 2025 الخرسانة 360 | جميع الحقوق محفوظة</p>
+        <p class="footer-text-en" style="display:none;">© 2025 Concrete 360 | All Rights Reserved</p>
     </footer>
 
     <script>
@@ -313,15 +347,64 @@
             
             if (document.body.classList.contains('dark-mode')) {
                 darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('darkMode', 'enabled');
             } else {
                 darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('darkMode', 'disabled');
             }
         });
 
-        // تحميل تفضيل المستخدم
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // تحميل تفضيل المستخدم للوضع الداكن
+        if (localStorage.getItem('darkMode') === 'enabled' || 
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.body.classList.add('dark-mode');
             darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // تبديل اللغة
+        const languageToggle = document.getElementById('languageToggle');
+        let currentLanguage = 'ar';
+        
+        languageToggle.addEventListener('click', () => {
+            if (currentLanguage === 'ar') {
+                // التبديل إلى الإنجليزية
+                document.querySelectorAll('.title-ar, .subtitle-ar, .section-title-ar, .section-desc-ar, .link-text-ar, .footer-text-ar').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.title-en, .subtitle-en, .section-title-en, .section-desc-en, .link-text-en, .footer-text-en').forEach(el => {
+                    el.style.display = 'block';
+                });
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+                document.querySelectorAll('.arrow-icon').forEach(icon => {
+                    icon.classList.remove('fa-arrow-left');
+                    icon.classList.add('fa-arrow-right');
+                });
+                currentLanguage = 'en';
+            } else {
+                // التبديل إلى العربية
+                document.querySelectorAll('.title-en, .subtitle-en, .section-title-en, .section-desc-en, .link-text-en, .footer-text-en').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.title-ar, .subtitle-ar, .section-title-ar, .section-desc-ar, .link-text-ar, .footer-text-ar').forEach(el => {
+                    el.style.display = 'block';
+                });
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                document.querySelectorAll('.arrow-icon').forEach(icon => {
+                    icon.classList.remove('fa-arrow-right');
+                    icon.classList.add('fa-arrow-left');
+                });
+                currentLanguage = 'ar';
+            }
+            
+            // حفظ تفضيل اللغة
+            localStorage.setItem('preferredLanguage', currentLanguage);
+        });
+
+        // تحميل تفضيل اللغة
+        if (localStorage.getItem('preferredLanguage') === 'en') {
+            languageToggle.click(); // تبديل إلى الإنجليزية إذا كان محفوظًا
         }
     </script>
 </body>
