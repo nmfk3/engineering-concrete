@@ -877,4 +877,210 @@
             // عرض النتائج
             document.getElementById('concreteVolume').textContent = volume.toFixed(2);
             document.getElementById('cementQuantity').textContent = Math.ceil(cement);
-            document.getElementById('sandQuantity').textContent
+            document.getElementById('sandQuantity').textContent = sand.toFixed(2);
+            document.getElementById('gravelQuantity').textContent = gravel.toFixed(2);
+            document.getElementById('basicResults').style.display = 'block';
+        });
+
+        // تبويب المشاريع الكبيرة
+        let elementCounter = 0;
+        const elementsContainer = document.getElementById('elementsContainer');
+        const addElementBtn = document.getElementById('addElementBtn');
+
+        addElementBtn.addEventListener('click', function() {
+            elementCounter++;
+            const elementDiv = document.createElement('div');
+            elementDiv.className = 'element-item';
+            elementDiv.innerHTML = `
+                <div class="input-group">
+                    <label>
+                        <span class="label-text-ar">عنصر #${elementCounter}:</span>
+                        <span class="label-text-en" style="display:none;">Element #${elementCounter}:</span>
+                    </label>
+                    <select class="element-shape">
+                        <option value="slab">
+                            <span class="option-text-ar">بلاطة/سقف</span>
+                            <span class="option-text-en" style="display:none;">Slab/Ceiling</span>
+                        </option>
+                        <option value="column">
+                            <span class="option-text-ar">عمود</span>
+                            <span class="option-text-en" style="display:none;">Column</span>
+                        </option>
+                        <option value="beam">
+                            <span class="option-text-ar">كمرة</span>
+                            <span class="option-text-en" style="display:none;">Beam</span>
+                        </option>
+                        <option value="wall">
+                            <span class="option-text-ar">حائط</span>
+                            <span class="option-text-en" style="display:none;">Wall</span>
+                        </option>
+                    </select>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-group" style="flex: 1;">
+                        <label><span class="label-text-ar">الطول:</span><span class="label-text-en" style="display:none;">Length:</span></label>
+                        <input type="number" class="element-length" min="0.01" step="0.01" placeholder="5.0">
+                    </div>
+                    
+                    <div class="input-group" style="flex: 1;">
+                        <label><span class="label-text-ar">العرض:</span><span class="label-text-en" style="display:none;">Width:</span></label>
+                        <input type="number" class="element-width" min="0.01" step="0.01" placeholder="3.0">
+                    </div>
+                    
+                    <div class="input-group" style="flex: 1;">
+                        <label><span class="label-text-ar">السماكة/الارتفاع:</span><span class="label-text-en" style="display:none;">Thickness/Height:</span></label>
+                        <input type="number" class="element-thickness" min="0.01" step="0.01" placeholder="0.2">
+                    </div>
+                    
+                    <button class="control-btn remove-element" style="margin-top: 1.5rem; background: var(--error);">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            elementsContainer.appendChild(elementDiv);
+            
+            // إضافة حدث لحذف العنصر
+            elementDiv.querySelector('.remove-element').addEventListener('click', function() {
+                elementsContainer.removeChild(elementDiv);
+                elementCounter--;
+            });
+        });
+
+        document.getElementById('calculateLargeBtn').addEventListener('click', function() {
+            const elements = document.querySelectorAll('.element-item');
+            if (elements.length === 0) {
+                alert(currentLanguage === 'ar' ? 'الرجاء إضافة عنصر واحد على الأقل' : 'Please add at least one element');
+                return;
+            }
+            
+            let totalVolume = 0;
+            let currentUnit = document.querySelector('#largeUnitToggle .unit-btn.active').dataset.unit;
+            
+            elements.forEach(element => {
+                const length = parseFloat(element.querySelector('.element-length').value) || 0;
+                const width = parseFloat(element.querySelector('.element-width').value) || 0;
+                const thickness = parseFloat(element.querySelector('.element-thickness').value) || 0;
+                
+                let elementVolume = length * width * thickness;
+                
+                if (currentUnit === 'centimeter') {
+                    elementVolume = elementVolume / 1000000; // تحويل من سم³ إلى م³
+                }
+                
+                totalVolume += elementVolume;
+            });
+            
+            const mixRatio = document.getElementById('largeMix').value;
+            let cement, sand, gravel;
+            
+            switch(mixRatio) {
+                case '1:2:4':
+                    cement = totalVolume * 7.5;
+                    sand = totalVolume * 0.5;
+                    gravel = totalVolume * 1;
+                    break;
+                case '1:1.5:3':
+                    cement = totalVolume * 8.5;
+                    sand = totalVolume * 0.45;
+                    gravel = totalVolume * 0.9;
+                    break;
+                case '1:1:2':
+                    cement = totalVolume * 10;
+                    sand = totalVolume * 0.4;
+                    gravel = totalVolume * 0.8;
+                    break;
+            }
+            
+            document.getElementById('totalConcreteVolume').textContent = totalVolume.toFixed(2);
+            document.getElementById('totalCementQuantity').textContent = Math.ceil(cement);
+            document.getElementById('totalSandQuantity').textContent = sand.toFixed(2);
+            document.getElementById('totalGravelQuantity').textContent = gravel.toFixed(2);
+            document.getElementById('largeResults').style.display = 'block';
+        });
+
+        // تبويب مراقبة الجودة
+        document.getElementById('calculateStrengthBtn').addEventListener('click', function() {
+            const age = parseInt(document.getElementById('testAge').value);
+            const load = parseFloat(document.getElementById('testLoad').value);
+            const area = parseFloat(document.getElementById('testArea').value);
+            
+            if (isNaN(load) || load <= 0 || isNaN(area) || area <= 0) {
+                alert(currentLanguage === 'ar' ? 'الرجاء إدخال قيم صحيحة' : 'Please enter valid values');
+                return;
+            }
+            
+            const strength = (load * 1000) / area; // تحويل kN إلى N ثم القسمة على المساحة
+            
+            document.getElementById('compressiveStrength').textContent = strength.toFixed(2);
+            
+            let status, statusTextAr, statusTextEn;
+            if (age === 28) {
+                if (strength >= 25) {
+                    status = 'success';
+                    statusTextAr = 'جيدة (مقاومة كافية)';
+                    statusTextEn = 'Good (Adequate Strength)';
+                } else {
+                    status = 'error';
+                    statusTextAr = 'ضعيفة (تحتاج تحسين)';
+                    statusTextEn = 'Weak (Needs Improvement)';
+                }
+            } else {
+                status = 'warning';
+                statusTextAr = 'تحتاج اختبار عند 28 يوم';
+                statusTextEn = 'Needs testing at 28 days';
+            }
+            
+            const statusElement = document.getElementById('strengthStatus');
+            statusElement.textContent = currentLanguage === 'ar' ? statusTextAr : statusTextEn;
+            statusElement.style.color = status === 'success' ? 'var(--primary)' : 
+                                      status === 'error' ? 'var(--error)' : 'var(--accent)';
+            
+            document.getElementById('strengthResults').style.display = 'block';
+        });
+
+        document.getElementById('calculateRatioBtn').addEventListener('click', function() {
+            const water = parseFloat(document.getElementById('waterAmount').value);
+            const cement = parseFloat(document.getElementById('cementAmount').value);
+            
+            if (isNaN(water) || water <= 0 || isNaN(cement) || cement <= 0) {
+                alert(currentLanguage === 'ar' ? 'الرجاء إدخال قيم صحيحة' : 'Please enter valid values');
+                return;
+            }
+            
+            const ratio = water / cement;
+            document.getElementById('wcRatio').textContent = ratio.toFixed(2);
+            
+            let evaluation, evalTextAr, evalTextEn;
+            if (ratio < 0.35) {
+                evaluation = 'error';
+                evalTextAr = 'قليل جداً (قد يؤثر على التشغيلية)';
+                evalTextEn = 'Too low (may affect workability)';
+            } else if (ratio >= 0.35 && ratio <= 0.5) {
+                evaluation = 'success';
+                evalTextAr = 'ممتاز (نسبة مثالية)';
+                evalTextEn = 'Excellent (ideal ratio)';
+            } else if (ratio > 0.5 && ratio <= 0.6) {
+                evaluation = 'warning';
+                evalTextAr = 'مقبول (ولكن قد تقل المقاومة)';
+                evalTextEn = 'Acceptable (but may reduce strength)';
+            } else {
+                evaluation = 'error';
+                evalTextAr = 'مرتفع جداً (سيقلل المقاومة بشدة)';
+                evalTextEn = 'Too high (will greatly reduce strength)';
+            }
+            
+            const evalElement = document.getElementById('ratioEvaluation');
+            evalElement.textContent = currentLanguage === 'ar' ? evalTextAr : evalTextEn;
+            evalElement.style.color = evaluation === 'success' ? 'var(--primary)' : 
+                                     evaluation === 'error' ? 'var(--error)' : 'var(--accent)';
+            
+            document.getElementById('ratioResults').style.display = 'block';
+        });
+
+        // تحديث وحدات القياس عند التحميل
+        updateUnitDisplay();
+    </script>
+</body>
+</html>
