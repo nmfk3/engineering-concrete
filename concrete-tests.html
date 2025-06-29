@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات الخرسانة | Concrete Tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #333333;
+            --error: #D32F2F;
+            --success: #388E3C;
+            --warning: #FFA000;
+        }
+
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .concrete-tests-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .test-header {
+            background: linear-gradient(135deg, var(--primary), #1B5E20);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .test-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .test-card {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .test-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-title i {
+            color: var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .calculate-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background-color: #E65100;
+        }
+
+        .result-section {
+            background: rgba(46, 125, 50, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .result-value {
+            font-weight: bold;
+        }
+
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
+        .text-error { color: var(--error); }
+
+        @media (max-width: 768px) {
+            .concrete-tests-container {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="concrete-tests-container">
+        <div class="test-header">
+            <h1><i class="fas fa-flask"></i> اختبارات الخرسانة</h1>
+        </div>
+
+        <!-- اختبار مقاومة الضغط -->
+        <div class="test-card">
+            <div class="test-title">
+                <i class="fas fa-weight-hanging"></i>
+                <h2>اختبار مقاومة الضغط</h2>
+            </div>
+            
+            <div class="input-group">
+                <label>عمر العينة (أيام):</label>
+                <input type="number" id="test-age" min="1" value="28">
+            </div>
+            
+            <div class="input-group">
+                <label>أقصى حمل (kN):</label>
+                <input type="number" id="test-load" placeholder="مثال: 500">
+            </div>
+            
+            <button class="calculate-btn" id="calculate-strength">
+                حساب المقاومة
+            </button>
+            
+            <div class="result-section" id="strength-result">
+                <div class="result-item">
+                    <span class="result-label">مقاومة الضغط:</span>
+                    <span class="result-value" id="compressive-strength">0</span> N/mm²
+                </div>
+                <div class="result-item">
+                    <span class="result-label">الحالة:</span>
+                    <span class="result-value" id="strength-status"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- اختبار نسبة الماء/أسمنت -->
+        <div class="test-card">
+            <div class="test-title">
+                <i class="fas fa-tint"></i>
+                <h2>اختبار نسبة الماء/أسمنت</h2>
+            </div>
+            
+            <div class="input-group">
+                <label>كمية الماء (لتر):</label>
+                <input type="number" id="water-amount" min="1">
+            </div>
+            
+            <div class="input-group">
+                <label>كمية الأسمنت (كجم):</label>
+                <input type="number" id="cement-amount" min="1">
+            </div>
+            
+            <button class="calculate-btn" id="calculate-ratio">
+                حساب النسبة
+            </button>
+            
+            <div class="result-section" id="ratio-result">
+                <div class="result-item">
+                    <span class="result-label">النسبة:</span>
+                    <span class="result-value" id="wc-ratio">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">التقييم:</span>
+                    <span class="result-value" id="ratio-evaluation"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // اختبار مقاومة الضغط
+        document.getElementById('calculate-strength').addEventListener('click', function() {
+            const age = parseInt(document.getElementById('test-age').value);
+            const load = parseFloat(document.getElementById('test-load').value);
+            const area = 22500; // مساحة العينة القياسية (150x150mm)
+            
+            if (!load || isNaN(load)) {
+                alert('الرجاء إدخال حمل صحيح');
+                return;
+            }
+            
+            const strength = (load * 1000) / area;
+            document.getElementById('compressive-strength').textContent = strength.toFixed(2);
+            
+            let status, statusClass;
+            if (age === 28) {
+                if (strength >= 25) {
+                    status = '✔️ مطابق للمواصفات';
+                    statusClass = 'text-success';
+                } else {
+                    status = '✖️ غير مطابق';
+                    statusClass = 'text-error';
+                }
+            } else {
+                status = 'ℹ️ قارن مع منحنى النمو';
+                statusClass = 'text-warning';
+            }
+            
+            document.getElementById('strength-status').textContent = status;
+            document.getElementById('strength-status').className = 'result-value ' + statusClass;
+            document.getElementById('strength-result').style.display = 'block';
+        });
+
+        // اختبار نسبة الماء/أسمنت
+        document.getElementById('calculate-ratio').addEventListener('click', function() {
+            const water = parseFloat(document.getElementById('water-amount').value);
+            const cement = parseFloat(document.getElementById('cement-amount').value);
+            
+            if (!water || !cement || isNaN(water) || isNaN(cement)) {
+                alert('الرجاء إدخال قيم صحيحة');
+                return;
+            }
+            
+            const ratio = (water / cement).toFixed(2);
+            document.getElementById('wc-ratio').textContent = ratio;
+            
+            let evaluation, evalClass;
+            if (ratio < 0.35) {
+                evaluation = 'نسبة منخفضة جدًا';
+                evalClass = 'text-error';
+            } else if (ratio <= 0.5) {
+                evaluation = 'نسبة ممتازة';
+                evalClass = 'text-success';
+            } else {
+                evaluation = 'نسبة عالية';
+                evalClass = 'text-warning';
+            }
+            
+            document.getElementById('ratio-evaluation').textContent = evaluation;
+            document.getElementById('ratio-evaluation').className = 'result-value ' + evalClass;
+            document.getElementById('ratio-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
