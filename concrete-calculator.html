@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة متقدمة للخرسانة | Concrete 360</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* الأنماط الأساسية السابقة تبقى كما هي */
+        
+        /* أنماط جديدة للتبويبات */
+        .tab-container {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--secondary);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* أنماط قسم المشاريع الكبيرة */
+        .large-project-input {
+            margin-bottom: 1rem;
+        }
+        
+        /* أنماط قسم مراقبة الجودة */
+        .quality-test {
+            background: rgba(69, 90, 100, 0.05);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .test-title {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر يبقى كما هو -->
+    
+    <div class="calculator-container">
+        <div class="calculator-card">
+            <div class="tab-container">
+                <button class="tab-btn active" data-tab="basic"><i class="fas fa-calculator"></i> <span class="tab-text-ar">حاسبة أساسية</span><span class="tab-text-en" style="display:none;">Basic Calculator</span></button>
+                <button class="tab-btn" data-tab="large"><i class="fas fa-building"></i> <span class="tab-text-ar">مشاريع كبيرة</span><span class="tab-text-en" style="display:none;">Large Projects</span></button>
+                <button class="tab-btn" data-tab="quality"><i class="fas fa-clipboard-check"></i> <span class="tab-text-ar">مراقبة الجودة</span><span class="tab-text-en" style="display:none;">Quality Control</span></button>
+            </div>
+            
+            <!-- تبويب الحاسبة الأساسية -->
+            <div class="tab-content active" id="basic-tab">
+                <!-- محتوى الحاسبة الأساسية السابق -->
+            </div>
+            
+            <!-- تبويب المشاريع الكبيرة (الفكرة 5) -->
+            <div class="tab-content" id="large-tab">
+                <h2 class="calculator-title"><i class="fas fa-building"></i> <span class="calc-title-ar">حاسبة المشاريع الكبيرة</span><span class="calc-title-en" style="display:none;">Large Projects Calculator</span></h2>
+                
+                <div class="input-group">
+                    <label for="project-area"><span class="label-text-ar">مساحة المشروع:</span><span class="label-text-en" style="display:none;">Project Area:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="project-area" min="0.1" step="0.01" placeholder="مثال: 5000">
+                        <span class="unit-display"><span class="unit-text-ar">م²</span><span class="unit-text-en" style="display:none;">m²</span></span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="avg-thickness"><span class="label-text-ar">متوسط السماكة:</span><span class="label-text-en" style="display:none;">Average Thickness:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="avg-thickness" min="0.05" step="0.01" placeholder="مثال: 0.2">
+                        <span class="unit-display"><span class="unit-text-ar">متر</span><span class="unit-text-en" style="display:none;">m</span></span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="truck-capacity"><span class="label-text-ar">سعة الشاحنة:</span><span class="label-text-en" style="display:none;">Truck Capacity:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="truck-capacity" min="1" step="0.5" value="7" placeholder="مثال: 7">
+                        <span class="unit-display"><span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span></span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="working-hours"><span class="label-text-ar">ساعات العمل اليومية:</span><span class="label-text-en" style="display:none;">Daily Working Hours:</span></label>
+                    <input type="number" id="working-hours" min="1" max="24" value="8">
+                </div>
+                
+                <button class="calculate-btn" id="calculateLargeBtn">
+                    <span class="btn-text-ar">حساب المشروع</span>
+                    <span class="btn-text-en" style="display:none;">Calculate Project</span>
+                </button>
+                
+                <div class="result-section" id="largeResults" style="display: none;">
+                    <h3 class="result-title"><i class="fas fa-chart-bar"></i> <span class="result-title-ar">نتائج المشروع الكبير</span><span class="result-title-en" style="display:none;">Large Project Results</span></h3>
+                    
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">حجم الخرسانة الإجمالي:</span><span class="result-label-en" style="display:none;">Total Concrete Volume:</span></span>
+                        <span class="result-value" id="totalVolume">0</span> <span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">عدد الشاحنات المطلوبة:</span><span class="result-label-en" style="display:none;">Required Trucks:</span></span>
+                        <span class="result-value" id="trucksRequired">0</span> <span class="unit-text-ar">شاحنة</span><span class="unit-text-en" style="display:none;">trucks</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">المدة التقديرية للصب:</span><span class="result-label-en" style="display:none;">Estimated Pouring Duration:</span></span>
+                        <span class="result-value" id="pouringDuration">0</span> <span class="unit-text-ar">يوم عمل</span><span class="unit-text-en" style="display:none;">working days</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">الكمية اليومية المطلوبة:</span><span class="result-label-en" style="display:none;">Daily Required Quantity:</span></span>
+                        <span class="result-value" id="dailyQuantity">0</span> <span class="unit-text-ar">م³/يوم</span><span class="unit-text-en" style="display:none;">m³/day</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تبويب مراقبة الجودة (الفكرة 12) -->
+            <div class="tab-content" id="quality-tab">
+                <h2 class="calculator-title"><i class="fas fa-clipboard-check"></i> <span class="calc-title-ar">مراقبة جودة الخرسانة</span><span class="calc-title-en" style="display:none;">Concrete Quality Control</span></h2>
+                
+                <div class="input-group">
+                    <label for="project-volume"><span class="label-text-ar">حجم المشروع:</span><span class="label-text-en" style="display:none;">Project Volume:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="project-volume" min="1" step="1" placeholder="مثال: 100">
+                        <span class="unit-display"><span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span></span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="concrete-grade"><span class="label-text-ar">مقاومة الخرسانة:</span><span class="label-text-en" style="display:none;">Concrete Grade:</span></label>
+                    <select id="concrete-grade">
+                        <option value="25">25 MPa</option>
+                        <option value="30">30 MPa</option>
+                        <option value="35">35 MPa</option>
+                        <option value="40">40 MPa</option>
+                    </select>
+                </div>
+                
+                <div class="quality-test">
+                    <div class="test-title"><i class="fas fa-cube"></i> <span class="test-text-ar">اختبارات المكعبات:</span><span class="test-text-en" style="display:none;">Cube Tests:</span></div>
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">عدد المكعبات المطلوبة:</span><span class="result-label-en" style="display:none;">Required Cubes:</span></span>
+                        <span class="result-value" id="cubesCount">0</span> <span class="unit-text-ar">مكعب</span><span class="unit-text-en" style="display:none;">cubes</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">مواعيد الاختبار:</span><span class="result-label-en" style="display:none;">Test Dates:</span></span>
+                        <span class="result-value" id="testDates">7 أيام - 28 يوم</span>
+                    </div>
+                </div>
+                
+                <div class="quality-test">
+                    <div class="test-title"><i class="fas fa-vial"></i> <span class="test-text-ar">اختبار الهبوط (Slump Test):</span><span class="test-text-en" style="display:none;">Slump Test:</span></div>
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">عدد الاختبارات:</span><span class="result-label-en" style="display:none;">Test Count:</span></span>
+                        <span class="result-value" id="slumpTests">0</span> <span class="unit-text-ar">اختبار</span><span class="unit-text-en" style="display:none;">tests</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">مدى الهبوط المقبول:</span><span class="result-label-en" style="display:none;">Acceptable Slump Range:</span></span>
+                        <span class="result-value" id="slumpRange">75-100 مم</span>
+                    </div>
+                </div>
+                
+                <div class="quality-test">
+                    <div class="test-title"><i class="fas fa-check-circle"></i> <span class="test-text-ar">نسب الفشل المقبولة:</span><span class="test-text-en" style="display:none;">Acceptable Failure Rates:</span></div>
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">اختبار 7 أيام:</span><span class="result-label-en" style="display:none;">7-day Test:</span></span>
+                        <span class="result-value" id="failure7days">≤ 10%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label"><span class="result-label-ar">اختبار 28 يوم:</span><span class="result-label-en" style="display:none;">28-day Test:</span></span>
+                        <span class="result-value" id="failure28days">≤ 5%</span>
+                    </div>
+                </div>
+                
+                <button class="calculate-btn" id="calculateQualityBtn">
+                    <span class="btn-text-ar">حساب متطلبات الجودة</span>
+                    <span class="btn-text-en" style="display:none;">Calculate Quality Requirements</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر يبقى كما هو -->
+
+    <script>
+        // الكود السابق للوضع الداكن وتبديل اللغة
+        
+        // كود التبويبات الجديدة
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                
+                // إخفاء جميع المحتويات
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // إلغاء تنشيط جميع الأزرار
+                tabBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // عرض المحتوى المحدد
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+
+        // كود حاسبة المشاريع الكبيرة
+        document.getElementById('calculateLargeBtn').addEventListener('click', function() {
+            const area = parseFloat(document.getElementById('project-area').value) || 0;
+            const thickness = parseFloat(document.getElementById('avg-thickness').value) || 0;
+            const truckCapacity = parseFloat(document.getElementById('truck-capacity').value) || 7;
+            const workingHours = parseInt(document.getElementById('working-hours').value) || 8;
+            
+            // الحسابات
+            const totalVolume = area * thickness;
+            const trucksRequired = Math.ceil(totalVolume / truckCapacity);
+            
+            // افتراض أن كل شاحنة تحتاج ساعة واحدة للتفريغ (يمكن تعديلها)
+            const dailyTrucks = workingHours;
+            const pouringDays = Math.ceil(trucksRequired / dailyTrucks);
+            const dailyQuantity = (totalVolume / pouringDays).toFixed(2);
+            
+            // عرض النتائج
+            document.getElementById('totalVolume').textContent = totalVolume.toFixed(2);
+            document.getElementById('trucksRequired').textContent = trucksRequired;
+            document.getElementById('pouringDuration').textContent = pouringDays;
+            document.getElementById('dailyQuantity').textContent = dailyQuantity;
+            
+            document.getElementById('largeResults').style.display = 'block';
+        });
+
+        // كود حاسبة مراقبة الجودة
+        document.getElementById('calculateQualityBtn').addEventListener('click', function() {
+            const volume = parseFloat(document.getElementById('project-volume').value) || 0;
+            const grade = document.getElementById('concrete-grade').value;
+            
+            // حساب عدد المكعبات (6 مكعبات لكل 100 م³)
+            const cubes = Math.max(6, Math.ceil(volume / 100 * 6));
+            
+            // حساب اختبارات الهبوط (اختبار لكل 50 م³)
+            const slumpTests = Math.max(1, Math.ceil(volume / 50));
+            
+            // تحديد مدى الهبوط حسب مقاومة الخرسانة
+            let slumpRange = "75-100 مم";
+            if (grade >= 35) slumpRange = "50-75 مم";
+            if (grade >= 40) slumpRange = "25-50 مم";
+            
+            // عرض النتائج
+            document.getElementById('cubesCount').textContent = cubes;
+            document.getElementById('slumpTests').textContent = slumpTests;
+            document.getElementById('slumpRange').textContent = slumpRange;
+        });
+    </script>
+</body>
+                          </html>
