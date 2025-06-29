@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1E88E5;
-            --secondary: #455A64;
-            --accent: #FF8F00;
+            --primary: #2E7D32; /* أخضر - كما في اختبارات الخرسانة */
+            --secondary: #455A64; /* رمادي مزرق - كما في اختبارات الخرسانة */
+            --accent: #FF8F00; /* برتقالي - كما في اختبارات الخرسانة */
             --light: #F5F5F5;
             --white: #FFFFFF;
             --text: #333333;
@@ -48,7 +48,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary), #0D47A1);
+            background: linear-gradient(135deg, var(--primary), #1B5E20); /* درجات خضراء كما في السابق */
             color: var(--white);
             padding: 1.5rem;
             text-align: center;
@@ -95,7 +95,7 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--accent);
+            border-top: 4px solid var(--accent); /* البرتقالي المميز كما في السابق */
             margin-bottom: 2rem;
         }
 
@@ -109,7 +109,7 @@
         }
 
         .section-title {
-            color: var(--primary);
+            color: var(--primary); /* اللون الأخضر الأساسي */
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -118,7 +118,7 @@
         }
 
         .section-title i {
-            color: var(--accent);
+            color: var(--accent); /* البرتقالي المميز */
             font-size: 1.6rem;
         }
 
@@ -132,7 +132,7 @@
         }
 
         .steel-table th {
-            background-color: var(--primary);
+            background-color: var(--primary); /* اللون الأخضر الأساسي */
             color: white;
             padding: 1rem;
             text-align: center;
@@ -146,11 +146,11 @@
         }
 
         .steel-table tr:nth-child(even) {
-            background-color: rgba(30, 136, 229, 0.05);
+            background-color: rgba(46, 125, 50, 0.05); /* أخضر فاتح - نفس السابق */
         }
 
         .steel-table tr:hover {
-            background-color: rgba(30, 136, 229, 0.1);
+            background-color: rgba(46, 125, 50, 0.1); /* أخضر فاتح - نفس السابق */
         }
 
         .steel-type {
@@ -164,7 +164,7 @@
         .steel-icon {
             width: 50px;
             height: 50px;
-            background: linear-gradient(45deg, #B0BEC5, #78909C);
+            background: linear-gradient(45deg, #B0BEC5, #78909C); /* درجات رمادية - محايدة */
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -175,13 +175,13 @@
 
         .steel-name {
             font-weight: bold;
-            color: var(--primary);
+            color: var(--primary); /* اللون الأخضر الأساسي */
             font-size: 1.2rem;
         }
 
         .steel-code {
             font-size: 0.9rem;
-            color: var(--secondary);
+            color: var(--secondary); /* الرمادي المزرق الثانوي */
         }
 
         .steel-property {
@@ -189,11 +189,11 @@
         }
 
         .steel-value {
-            color: var(--primary);
+            color: var(--primary); /* اللون الأخضر الأساسي */
         }
 
         footer {
-            background-color: var(--secondary);
+            background-color: var(--secondary); /* الرمادي المزرق الثانوي - نفس السابق */
             color: var(--white);
             text-align: center;
             padding: 1.5rem;
@@ -203,14 +203,14 @@
 
         .steel-description {
             margin-top: 2rem;
-            background: rgba(30, 136, 229, 0.1);
+            background: rgba(46, 125, 50, 0.1); /* أخضر فاتح - نفس السابق */
             padding: 1.5rem;
             border-radius: 8px;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--primary); /* اللون الأخضر الأساسي */
         }
 
         .steel-description h3 {
-            color: var(--primary);
+            color: var(--primary); /* اللون الأخضر الأساسي */
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -232,7 +232,7 @@
 
         .steel-description li:before {
             content: "•";
-            color: var(--primary);
+            color: var(--accent); /* البرتقالي المميز */
             font-weight: bold;
             position: absolute;
             right: 0;
@@ -314,13 +314,19 @@
             }
         }
 
-        /* تحسينات للوضع الداكن */
+        /* تحسينات للوضع الداكن - نفس السابق */
         body.dark-mode .steel-table tr:nth-child(even) {
-            background-color: rgba(30, 136, 229, 0.08);
+            background-color: rgba(46, 125, 50, 0.08);
         }
         
         body.dark-mode .steel-description {
-            background: rgba(30, 136, 229, 0.15);
+            background: rgba(46, 125, 50, 0.15);
+        }
+        
+        body.dark-mode .input-group input,
+        body.dark-mode .input-group select {
+            background-color: #333;
+            border-color: #555;
         }
         
         /* تحسينات عامة للتوافق */
