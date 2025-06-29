@@ -3,43 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخرسانة 360 | Concrete 360</title>
+    <title>الدليل الشامل لأنواع الخرسانة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* الألوان الرئيسية */
         :root {
-            --primary: #2E7D32;   /* أخضر داكن */
-            --secondary: #455A64; /* رمادي-أزرق */
-            --accent: #FF8F00;    /* برتقالي */
-            --light: #F5F5F5;     /* رمادي فاتح */
+            --primary: #2E7D32;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
             --white: #FFFFFF;
             --text: #333333;
+            --card-bg: #FFFFFF;
         }
 
-        /* النسخة الداكنة */
         body.dark-mode {
             background-color: #121212;
             --light: #1E1E1E;
             --white: #252525;
             --text: #E0E0E0;
+            --card-bg: #2D2D2D;
         }
 
-        /* إعادة الضبط الأساسي */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
         }
 
         body {
             background-color: var(--light);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
-        /* الهيدر */
         header {
             background: linear-gradient(135deg, var(--primary), #1B5E20);
             color: var(--white);
@@ -59,7 +57,6 @@
             opacity: 0.9;
         }
 
-        /* أزرار التحكم */
         .control-buttons {
             position: absolute;
             top: 1rem;
@@ -90,7 +87,6 @@
             position: absolute;
         }
 
-        /* الأقسام */
         .sections-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -109,6 +105,8 @@
             border-top: 4px solid var(--accent);
             opacity: 0;
             transform: translateY(20px);
+            text-decoration: none;
+            display: block;
         }
 
         .section-card.show {
@@ -158,7 +156,6 @@
             text-decoration: underline;
         }
 
-        /* الفوتر */
         footer {
             background-color: var(--secondary);
             color: var(--white);
@@ -197,7 +194,7 @@
     <!-- الأقسام -->
     <div class="sections-container">
         <!-- قسم 1 -->
-        <div class="section-card">
+        <a href="concrete-types.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-concrete-mixer"></i>
@@ -206,16 +203,16 @@
                 <h2 class="section-title-en" style="display:none;">Concrete Types</h2>
                 <p class="section-desc-ar">تعرف على جميع أنواع الخرسانة واستخداماتها في الإنشاءات</p>
                 <p class="section-desc-en" style="display:none;">Learn about all types of concrete and their uses in construction</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">تصفح المحتوى</span>
                     <span class="link-text-en" style="display:none;">Browse Content</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- قسم 2 -->
-        <div class="section-card">
+        <a href="concrete-tests.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-flask"></i>
@@ -224,16 +221,16 @@
                 <h2 class="section-title-en" style="display:none;">Concrete Tests</h2>
                 <p class="section-desc-ar">دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
                 <p class="section-desc-en" style="display:none;">Comprehensive guide to concrete quality and strength tests</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">تصفح المحتوى</span>
                     <span class="link-text-en" style="display:none;">Browse Content</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- قسم 3 -->
-        <div class="section-card">
+        <a href="concrete-calculator.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-calculator"></i>
@@ -242,16 +239,16 @@
                 <h2 class="section-title-en" style="display:none;">Concrete Calculator</h2>
                 <p class="section-desc-ar">احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
                 <p class="section-desc-en" style="display:none;">Calculate the required amount of concrete for your project accurately</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">استخدم الأداة</span>
                     <span class="link-text-en" style="display:none;">Use Tool</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- قسم 4 -->
-        <div class="section-card">
+        <a href="mix-ratio-calculator.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-percentage"></i>
@@ -260,16 +257,16 @@
                 <h2 class="section-title-en" style="display:none;">Mix Ratio Calculator</h2>
                 <p class="section-desc-ar">احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
                 <p class="section-desc-en" style="display:none;">Calculate concrete mix ratios based on usage type</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">استخدم الأداة</span>
                     <span class="link-text-en" style="display:none;">Use Tool</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- قسم 5 -->
-        <div class="section-card">
+        <a href="steel-types.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-ruler-combined"></i>
@@ -278,16 +275,16 @@
                 <h2 class="section-title-en" style="display:none;">Steel Types</h2>
                 <p class="section-desc-ar">دليل لأنواع حديد التسليح وخصائص كل نوع</p>
                 <p class="section-desc-en" style="display:none;">Guide to rebar types and their characteristics</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">تصفح المحتوى</span>
                     <span class="link-text-en" style="display:none;">Browse Content</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- قسم 6 -->
-        <div class="section-card">
+        <a href="rebar-calculator.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-calculator"></i>
@@ -296,16 +293,16 @@
                 <h2 class="section-title-en" style="display:none;">Rebar Calculator</h2>
                 <p class="section-desc-ar">احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
                 <p class="section-desc-en" style="display:none;">Calculate required rebar quantity for slabs and columns</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">استخدم الأداة</span>
                     <span class="link-text-en" style="display:none;">Use Tool</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
 
         <!-- قسم 7 -->
-        <div class="section-card">
+        <a href="common-mistakes.html" class="section-card">
             <div class="section-content">
                 <div class="section-icon">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -314,13 +311,13 @@
                 <h2 class="section-title-en" style="display:none;">Common Pouring Mistakes</h2>
                 <p class="section-desc-ar">تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
                 <p class="section-desc-en" style="display:none;">Learn about common mistakes and how to avoid them</p>
-                <a href="#" class="section-link">
+                <div class="section-link">
                     <span class="link-text-ar">تصفح المحتوى</span>
                     <span class="link-text-en" style="display:none;">Browse Content</span>
                     <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- الفوتر -->
@@ -345,16 +342,14 @@
             observer.observe(card);
         });
 
-        // إعدادات الوضع الداكن (محدثة حسب طلبك)
+        // إعدادات الوضع الداكن
         const darkModeToggle = document.getElementById('darkModeToggle');
         
         // 1. نضمن أن الوضع الافتراضي فاتح دائماً
         document.body.classList.remove('dark-mode');
         darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
         
-        // 2. لا نتحقق من أي إعدادات سابقة للوضع الداكن
-        
-        // 3. تفعيل الوضع الداكن فقط عند الضغط على الأيقونة
+        // تفعيل الوضع الداكن فقط عند الضغط على الأيقونة
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             
@@ -363,8 +358,6 @@
             } else {
                 darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
             }
-            
-            // 4. لا نحفظ التفضيل في localStorage (حسب طلبك)
         });
 
         // تبديل اللغة
