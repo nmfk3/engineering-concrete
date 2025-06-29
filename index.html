@@ -3,43 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخرسانة 360 | Concrete 360</title>
+    <title>الدليل الشامل لأنواع الخرسانة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* الألوان الرئيسية */
         :root {
-            --primary: #2E7D32;   /* أخضر داكن */
-            --secondary: #455A64; /* رمادي-أزرق */
-            --accent: #FF8F00;    /* برتقالي */
-            --light: #F5F5F5;     /* رمادي فاتح */
+            --primary: #2E7D32;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
             --white: #FFFFFF;
             --text: #333333;
+            --card-bg: #FFFFFF;
         }
 
-        /* النسخة الداكنة */
         body.dark-mode {
             background-color: #121212;
             --light: #1E1E1E;
             --white: #252525;
             --text: #E0E0E0;
+            --card-bg: #2D2D2D;
         }
 
-        /* إعادة الضبط الأساسي */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
         }
 
         body {
             background-color: var(--light);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
-        /* الهيدر */
         header {
             background: linear-gradient(135deg, var(--primary), #1B5E20);
             color: var(--white);
@@ -59,7 +57,6 @@
             opacity: 0.9;
         }
 
-        /* أزرار التحكم */
         .control-buttons {
             position: absolute;
             top: 1rem;
@@ -90,97 +87,167 @@
             position: absolute;
         }
 
-        /* الأقسام */
-        .sections-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
         }
 
-        .section-card {
-            background: var(--white);
+        .filter-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent);
+        }
+
+        .concrete-types-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .type-card {
+            background: var(--card-bg);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
             border-top: 4px solid var(--accent);
             opacity: 0;
             transform: translateY(20px);
         }
 
-        .section-card.show {
+        .type-card.show {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .section-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        .type-card:hover {
+            transform: translateY(-10px) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
-        .section-content {
+        .type-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .type-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .type-card:hover .type-image img {
+            transform: scale(1.1);
+        }
+
+        .type-content {
             padding: 1.5rem;
         }
 
-        .section-icon {
-            font-size: 1.8rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        .section-card h2 {
+        .type-content h2 {
             color: var(--primary);
-            margin-bottom: 0.8rem;
-            font-size: 1.4rem;
-        }
-
-        .section-card p {
-            color: var(--secondary);
-            margin-bottom: 1.2rem;
-            font-size: 0.95rem;
-        }
-
-        .section-link {
-            display: inline-flex;
+            margin-bottom: 1rem;
+            display: flex;
             align-items: center;
-            color: var(--accent);
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 0.9rem;
             gap: 0.5rem;
         }
 
-        .section-link:hover {
-            text-decoration: underline;
+        .type-content h2 i {
+            color: var(--accent);
         }
 
-        /* الفوتر */
+        .type-content p {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .type-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .spec-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .spec-item i {
+            color: var(--accent);
+        }
+
+        .spec-label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .type-features h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .type-features ul {
+            padding-right: 1.5rem;
+        }
+
+        .type-features li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .type-features li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            right: -1rem;
+        }
+
         footer {
             background-color: var(--secondary);
             color: var(--white);
             text-align: center;
             padding: 1.5rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         @media (max-width: 768px) {
-            .sections-container {
+            .types-grid {
                 grid-template-columns: 1fr;
-                padding: 1rem;
             }
             
             header h1 {
                 font-size: 2rem;
             }
+            
+            .type-specs {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- الهيدر -->
     <header>
         <button class="language-toggle" id="languageToggle">
             <i class="fas fa-language"></i>
@@ -188,230 +255,511 @@
         <button class="dark-mode-toggle" id="darkModeToggle">
             <i class="fas fa-moon"></i>
         </button>
-        <h1 class="title-ar">الخرسانة 360</h1>
-        <h1 class="title-en" style="display:none;">Concrete 360</h1>
-        <p class="subtitle-ar">كل ما تحتاجه في عالم الخرسانة والإنشاءات في مكان واحد</p>
-        <p class="subtitle-en" style="display:none;">All you need in concrete and construction in one place</p>
+        <h1 class="title-ar"><i class="fas fa-concrete-mixer"></i> الدليل الشامل لأنواع الخرسانة</h1>
+        <h1 class="title-en" style="display:none;"><i class="fas fa-concrete-mixer"></i> Comprehensive Guide to Concrete Types</h1>
+        <p class="subtitle-ar">اكتشف 15 نوعاً من الخرسانة وخصائصها الفريدة</p>
+        <p class="subtitle-en" style="display:none;">Discover 15 types of concrete and their unique properties</p>
     </header>
 
-    <!-- الأقسام -->
-    <div class="sections-container">
-        <!-- قسم 1 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-concrete-mixer"></i>
+    <div class="controls">
+        <button class="filter-btn active" data-filter="all">
+            <span class="filter-text-ar">الكل</span>
+            <span class="filter-text-en" style="display:none;">All</span>
+        </button>
+        <button class="filter-btn" data-filter="structural">
+            <span class="filter-text-ar">إنشائية</span>
+            <span class="filter-text-en" style="display:none;">Structural</span>
+        </button>
+        <button class="filter-btn" data-filter="special">
+            <span class="filter-text-ar">خاصة</span>
+            <span class="filter-text-en" style="display:none;">Special</span>
+        </button>
+        <button class="filter-btn" data-filter="lightweight">
+            <span class="filter-text-ar">خفيفة الوزن</span>
+            <span class="filter-text-en" style="display:none;">Lightweight</span>
+        </button>
+    </div>
+
+    <div class="concrete-types-container">
+        <div class="types-grid">
+            <!-- الخرسانة العادية -->
+            <div class="type-card" data-category="structural">
+                <div class="type-image">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e" alt="خرسانة عادية">
                 </div>
-                <h2 class="section-title-ar">أنواع الخرسانة</h2>
-                <h2 class="section-title-en" style="display:none;">Concrete Types</h2>
-                <p class="section-desc-ar">تعرف على جميع أنواع الخرسانة واستخداماتها في الإنشاءات</p>
-                <p class="section-desc-en" style="display:none;">Learn about all types of concrete and their uses in construction</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">تصفح المحتوى</span>
-                    <span class="link-text-en" style="display:none;">Browse Content</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                <div class="type-content">
+                    <h2><i class="fas fa-cube"></i> <span class="type-title-ar">الخرسانة العادية</span><span class="type-title-en" style="display:none;">Normal Concrete</span></h2>
+                    <p class="type-desc-ar">خرسانة بدون حديد تسليح تستخدم في الأعمال غير الإنشائية والأساسات البسيطة</p>
+                    <p class="type-desc-en" style="display:none;">Concrete without reinforcement used in non-structural works and simple foundations</p>
+                    
+                    <div class="type-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">قوة الضغط:</span><span class="spec-text-en" style="display:none;">Compressive Strength:</span></span>
+                                <span>20-40 MPa</span>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">نسبة الخلط:</span><span class="spec-text-en" style="display:none;">Mix Ratio:</span></span>
+                                <span>1:2:4 (أسمنت:رمل:زلط)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="type-features">
+                        <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                        <ul class="features-list-ar">
+                            <li>الأساسات البسيطة</li>
+                            <li>الأرضيات الخرسانية</li>
+                            <li>أعمال الردم الخرساني</li>
+                        </ul>
+                        <ul class="features-list-en" style="display:none;">
+                            <li>Simple foundations</li>
+                            <li>Concrete floors</li>
+                            <li>Concrete filling works</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الخرسانة المسلحة -->
+            <div class="type-card" data-category="structural">
+                <div class="type-image">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="خرسانة مسلحة">
+                </div>
+                <div class="type-content">
+                    <h2><i class="fas fa-rebar"></i> <span class="type-title-ar">الخرسانة المسلحة</span><span class="type-title-en" style="display:none;">Reinforced Concrete</span></h2>
+                    <p class="type-desc-ar">خرسانة مدعمة بقضبان حديد التسليح لمقاومة الشد والقص</p>
+                    <p class="type-desc-en" style="display:none;">Concrete reinforced with steel bars to resist tension and shear</p>
+                    
+                    <div class="type-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">قوة الضغط:</span><span class="spec-text-en" style="display:none;">Compressive Strength:</span></span>
+                                <span>25-50 MPa</span>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-percentage"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">نسبة الحديد:</span><span class="spec-text-en" style="display:none;">Steel Ratio:</span></span>
+                                <span>1-2% من الحجم</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="type-features">
+                        <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                        <ul class="features-list-ar">
+                            <li>الأعمدة والكمرات</li>
+                            <li>الأسقف الخرسانية</li>
+                            <li>الجسور والأنفاق</li>
+                        </ul>
+                        <ul class="features-list-en" style="display:none;">
+                            <li>Columns and beams</li>
+                            <li>Concrete ceilings</li>
+                            <li>Bridges and tunnels</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الخرسانة سابقة الإجهاد -->
+            <div class="type-card" data-category="structural">
+                <div class="type-image">
+                    <img src="https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8" alt="خرسانة سابقة الإجهاد">
+                </div>
+                <div class="type-content">
+                    <h2><i class="fas fa-bolt"></i> <span class="type-title-ar">خرسانة سابقة الإجهاد</span><span class="type-title-en" style="display:none;">Prestressed Concrete</span></h2>
+                    <p class="type-desc-ar">خرسانة معالجة مسبقاً بقوى ضغط لتحسين الأداء الإنشائي</p>
+                    <p class="type-desc-en" style="display:none;">Concrete treated with pre-compression forces to improve structural performance</p>
+                    
+                    <div class="type-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">قوة الضغط:</span><span class="spec-text-en" style="display:none;">Compressive Strength:</span></span>
+                                <span>40-80 MPa</span>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-cable-car"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">نوع الكابلات:</span><span class="spec-text-en" style="display:none;">Cable Type:</span></span>
+                                <span>أسلاك فولاذية عالية المقاومة</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="type-features">
+                        <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                        <ul class="features-list-ar">
+                            <li>الجسور الطويلة</li>
+                            <li>مواقف السيارات متعددة الطوابق</li>
+                            <li>الصناعات الخرسانية سابقة الصب</li>
+                        </ul>
+                        <ul class="features-list-en" style="display:none;">
+                            <li>Long bridges</li>
+                            <li>Multi-story parking lots</li>
+                            <li>Precast concrete industries</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الخرسانة ذاتية الدمك -->
+            <div class="type-card" data-category="special">
+                <div class="type-image">
+                    <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6a8" alt="خرسانة ذاتية الدمك">
+                </div>
+                <div class="type-content">
+                    <h2><i class="fas fa-fill-drip"></i> <span class="type-title-ar">الخرسانة ذاتية الدمك</span><span class="type-title-en" style="display:none;">Self-Compacting Concrete</span></h2>
+                    <p class="type-desc-ar">خرسانة متطورة تنتشر تحت تأثير وزنها الذاتي دون الحاجة للدمك</p>
+                    <p class="type-desc-en" style="display:none;">Advanced concrete that spreads under its own weight without the need for compaction</p>
+                    
+                    <div class="type-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-tint"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">القوام:</span><span class="spec-text-en" style="display:none;">Consistency:</span></span>
+                                <span>سائل ذاتي الاستواء</span>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-vial"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">الإضافات:</span><span class="spec-text-en" style="display:none;">Additives:</span></span>
+                                <span>مواد فائقة الميوعة</span>
+                                                        </div>
+                    </div>
+                </div>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>العناصر ذات التسليح الكثيف</li>
+                        <li>الأشكال المعقدة</li>
+                        <li>الأماكن صعبة الوصول</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Elements with dense reinforcement</li>
+                        <li>Complex shapes</li>
+                        <li>Hard-to-reach areas</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- قسم 2 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-flask"></i>
+        <!-- الخرسانة المسلحة بالألياف -->
+        <div class="type-card" data-category="special">
+            <div class="type-image">
+                <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9" alt="خرسانة مسلحة بالألياف">
+            </div>
+            <div class="type-content">
+                <h2><i class="fas fa-network-wired"></i> <span class="type-title-ar">الخرسانة المسلحة بالألياف</span><span class="type-title-en" style="display:none;">Fiber Reinforced Concrete</span></h2>
+                <p class="type-desc-ar">تحتوي على ألياف متناهية الصغر لزيادة المتانة ومقاومة التشقق</p>
+                <p class="type-desc-en" style="display:none;">Contains microfibers to increase durability and crack resistance</p>
+                
+                <div class="type-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-atom"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">نوع الألياف:</span><span class="spec-text-en" style="display:none;">Fiber Type:</span></span>
+                            <span>فولاذية/زجاجية/بولي بروبيلين</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-ruler-combined"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">طول الألياف:</span><span class="spec-text-en" style="display:none;">Fiber Length:</span></span>
+                            <span>6-40 مم</span>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="section-title-ar">اختبارات الخرسانة</h2>
-                <h2 class="section-title-en" style="display:none;">Concrete Tests</h2>
-                <p class="section-desc-ar">دليل شامل لاختبارات الجودة والقوة للخرسانة</p>
-                <p class="section-desc-en" style="display:none;">Comprehensive guide to concrete quality and strength tests</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">تصفح المحتوى</span>
-                    <span class="link-text-en" style="display:none;">Browse Content</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>الأرضيات الصناعية</li>
+                        <li>الأنفاق والمنشآت تحت الأرض</li>
+                        <li>المناطق المعرضة للاهتزازات</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Industrial floors</li>
+                        <li>Tunnels and underground structures</li>
+                        <li>Vibration-prone areas</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- قسم 3 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-calculator"></i>
+        <!-- الخرسانة الشفافة -->
+        <div class="type-card" data-category="special">
+            <div class="type-image">
+                <img src="https://images.unsplash.com/photo-1618221118493-9cfa5a1b2108" alt="خرسانة شفافة">
+            </div>
+            <div class="type-content">
+                <h2><i class="fas fa-lightbulb"></i> <span class="type-title-ar">الخرسانة الشفافة</span><span class="type-title-en" style="display:none;">Transparent Concrete</span></h2>
+                <p class="type-desc-ar">تسمح بمرور الضوء عبر ألياف بصرية مدمجة في الخلطة</p>
+                <p class="type-desc-en" style="display:none;">Allows light to pass through optical fibers embedded in the mix</p>
+                
+                <div class="type-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-percentage"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">نسبة الألياف:</span><span class="spec-text-en" style="display:none;">Fiber Ratio:</span></span>
+                            <span>4-5% من الحجم</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-sun"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">نفاذية الضوء:</span><span class="spec-text-en" style="display:none;">Light Transmittance:</span></span>
+                            <span>حتى 20%</span>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="section-title-ar">حاسبة كميات الخرسانة</h2>
-                <h2 class="section-title-en" style="display:none;">Concrete Calculator</h2>
-                <p class="section-desc-ar">احسب الكمية المطلوبة من الخرسانة لمشروعك بدقة</p>
-                <p class="section-desc-en" style="display:none;">Calculate the required amount of concrete for your project accurately</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">استخدم الأداة</span>
-                    <span class="link-text-en" style="display:none;">Use Tool</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>واجهات المباني الفنية</li>
+                        <li>التصميمات الداخلية الحديثة</li>
+                        <li>عناصر الديكور الإضاءة</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Artistic building facades</li>
+                        <li>Modern interior designs</li>
+                        <li>Lighting decor elements</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- قسم 4 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-percentage"></i>
+        <!-- الخرسانة المطبوعة -->
+        <div class="type-card" data-category="special">
+            <div class="type-image">
+                <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115" alt="خرسانة مطبوعة">
+            </div>
+            <div class="type-content">
+                <h2><i class="fas fa-stamp"></i> <span class="type-title-ar">الخرسانة المطبوعة</span><span class="type-title-en" style="display:none;">Stamped Concrete</span></h2>
+                <p class="type-desc-ar">خرسانة سطحية مطبوعة بأنماط تشبه المواد الطبيعية</p>
+                <p class="type-desc-en" style="display:none;">Surface concrete stamped with patterns resembling natural materials</p>
+                
+                <div class="type-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-layer-group"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">الطبقات:</span><span class="spec-text-en" style="display:none;">Layers:</span></span>
+                            <span>طبقة أساس + طبقة لونية</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-palette"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">الألوان:</span><span class="spec-text-en" style="display:none;">Colors:</span></span>
+                            <span>متعددة حسب الطلب</span>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="section-title-ar">حاسبة نسبة الخلطة</h2>
-                <h2 class="section-title-en" style="display:none;">Mix Ratio Calculator</h2>
-                <p class="section-desc-ar">احسب نسب مكونات الخرسانة حسب نوع الاستخدام</p>
-                <p class="section-desc-en" style="display:none;">Calculate concrete mix ratios based on usage type</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">استخدم الأداة</span>
-                    <span class="link-text-en" style="display:none;">Use Tool</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>ممرات الحدائق</li>
+                        <li>أرضيات المطاعم</li>
+                        <li>مناطق المسابح</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Garden walkways</li>
+                        <li>Restaurant floors</li>
+                        <li>Pool areas</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- قسم 5 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-ruler-combined"></i>
+        <!-- الخرسانة خفيفة الوزن -->
+        <div class="type-card" data-category="lightweight">
+            <div class="type-image">
+                <img src="https://images.unsplash.com/photo-1605152276897-4f618f831968" alt="خرسانة خفيفة الوزن">
+            </div>
+            <div class="type-content">
+                <h2><i class="fas fa-feather-alt"></i> <span class="type-title-ar">الخرسانة خفيفة الوزن</span><span class="type-title-en" style="display:none;">Lightweight Concrete</span></h2>
+                <p class="type-desc-ar">تتميز بكثافة أقل من الخرسانة التقليدية مما يقلل الأحمال الإنشائية</p>
+                <p class="type-desc-en" style="display:none;">Features lower density than traditional concrete, reducing structural loads</p>
+                
+                <div class="type-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-weight"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">الكثافة:</span><span class="spec-text-en" style="display:none;">Density:</span></span>
+                            <span>300-1850 kg/m³</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-cubes"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">الركام:</span><span class="spec-text-en" style="display:none;">Aggregate:</span></span>
+                            <span>طين ممتد، خفاف، مواد صناعية</span>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="section-title-ar">أنواع الحديد</h2>
-                <h2 class="section-title-en" style="display:none;">Steel Types</h2>
-                <p class="section-desc-ar">دليل لأنواع حديد التسليح وخصائص كل نوع</p>
-                <p class="section-desc-en" style="display:none;">Guide to rebar types and their characteristics</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">تصفح المحتوى</span>
-                    <span class="link-text-en" style="display:none;">Browse Content</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>الأسقف والجدران</li>
+                        <li>العزل الحراري والصوتي</li>
+                        <li>المنشآت العالية</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Roofs and walls</li>
+                        <li>Thermal and sound insulation</li>
+                        <li>High-rise structures</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- قسم 6 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-calculator"></i>
+        <!-- الخرسانة عالية المقاومة -->
+        <div class="type-card" data-category="structural">
+            <div class="type-image">
+                <img src="https://images.unsplash.com/photo-1605152276897-4f618f831968" alt="خرسانة عالية المقاومة">
+            </div>
+            <div class="type-content">
+                <h2><i class="fas fa-shield-alt"></i> <span class="type-title-ar">الخرسانة عالية المقاومة</span><span class="type-title-en" style="display:none;">High-Strength Concrete</span></h2>
+                <p class="type-desc-ar">تتميز بقوة ضغط عالية تفوق 50 ميجا باسكال</p>
+                <p class="type-desc-en" style="display:none;">Features compressive strength exceeding 50 MPa</p>
+                
+                <div class="type-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">قوة الضغط:</span><span class="spec-text-en" style="display:none;">Compressive Strength:</span></span>
+                            <span>50-140 MPa</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-flask"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">الإضافات:</span><span class="spec-text-en" style="display:none;">Additives:</span></span>
+                            <span>سيليكا فيوم، مواد فائقة النعومة</span>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="section-title-ar">حاسبة كميات حديد التسليح</h2>
-                <h2 class="section-title-en" style="display:none;">Rebar Calculator</h2>
-                <p class="section-desc-ar">احسب كمية الحديد المطلوبة للأسقف والأعمدة</p>
-                <p class="section-desc-en" style="display:none;">Calculate required rebar quantity for slabs and columns</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">استخدم الأداة</span>
-                    <span class="link-text-en" style="display:none;">Use Tool</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>ناطحات السحاب</li>
+                        <li>الجسور الطويلة</li>
+                        <li>المنشآت الخاصة</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Skyscrapers</li>
+                        <li>Long bridges</li>
+                        <li>Special structures</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- قسم 7 -->
-        <div class="section-card">
-            <div class="section-content">
-                <div class="section-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
+        <!-- الخرسانة سريعة التصلب -->
+        <div class="type-card" data-category="special">
+            <div class="type-image">
+                <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9" alt="خرسانة سريعة التصلب">
+            </div>
+            <div class="type-content">
+                <h2><i class="fas fa-stopwatch"></i> <span class="type-title-ar">الخرسانة سريعة التصلب</span><span class="type-title-en" style="display:none;">Rapid-Setting Concrete</span></h2>
+                <p class="type-desc-ar">تصلب في وقت قصير (1-3 ساعات) مقارنة بالخرسانة العادية</p>
+                <p class="type-desc-en" style="display:none;">Sets in short time (1-3 hours) compared to normal concrete</p>
+                
+                <div class="type-specs">
+                    <div class="spec-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">وقت التصلب:</span><span class="spec-text-en" style="display:none;">Setting Time:</span></span>
+                            <span>1-3 ساعات</span>
+                        </div>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-vial"></i>
+                        <div>
+                            <span class="spec-label"><span class="spec-text-ar">الإضافات:</span><span class="spec-text-en" style="display:none;">Additives:</span></span>
+                            <span>مسرعات التصلب</span>
+                        </div>
+                    </div>
                 </div>
-                <h2 class="section-title-ar">أخطاء شائعة في الصب</h2>
-                <h2 class="section-title-en" style="display:none;">Common Pouring Mistakes</h2>
-                <p class="section-desc-ar">تعرف على الأخطاء الشائعة وكيفية تجنبها</p>
-                <p class="section-desc-en" style="display:none;">Learn about common mistakes and how to avoid them</p>
-                <a href="#" class="section-link">
-                    <span class="link-text-ar">تصفح المحتوى</span>
-                    <span class="link-text-en" style="display:none;">Browse Content</span>
-                    <i class="fas fa-arrow-left arrow-icon"></i>
-                </a>
+                
+                <div class="type-features">
+                    <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                    <ul class="features-list-ar">
+                        <li>إصلاحات الطوارئ</li>
+                        <li>أعمال الطرق السريعة</li>
+                        <li>الأجواء الباردة</li>
+                    </ul>
+                    <ul class="features-list-en" style="display:none;">
+                        <li>Emergency repairs</li>
+                        <li>Highway works</li>
+                        <li>Cold weather conditions</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- الفوتر -->
-    <footer>
-        <p class="footer-text-ar">برمجة وتطوير :م.علي عبد الرحيم محي الدين </p>
-        <p class="footer-text-en" style="display:none;">© 2025 Concrete 360 | All Rights Reserved</p>
-    </footer>
+<footer>
+    <p class="footer-text-ar">برمجة وتطوير :م.علي عبد الرحيم محي الدين</p>
+    <p class="footer-text-en" style="display:none;">© 2025 Concrete 360 | All Rights Reserved</p>
+</footer>
 
-    <script>
-        // تأثير التمرير
-        const cards = document.querySelectorAll('.section-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
+<script>
+    // تأثير التمرير
+    const cards = document.querySelectorAll('.type-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // تصفية أنواع الخرسانة
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // إزالة النشاط من جميع الأزرار
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // إضافة النشاط للزر المحدد
+            button.classList.add('active');
+            
+            const filterValue = button.getAttribute('data-filter');
+            const concreteCards = document.querySelectorAll('.type-card');
+            
+            concreteCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
                 }
             });
-        }, { threshold: 0.1 });
-
-        cards.forEach(card => {
-            observer.observe(card);
         });
+    });
 
-        // إعدادات الوضع الداكن (محدثة حسب طلبك)
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        
-        // 1. نضمن أن الوضع الافتراضي فاتح دائماً
-        document.body.classList.remove('dark-mode');
-        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        
-        // 2. لا نتحقق من أي إعدادات سابقة للوضع الداكن
-        
-        // 3. تفعيل الوضع الداكن فقط عند الضغط على الأيقونة
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            
-            if (document.body.classList.contains('dark-mode')) {
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-            
-            // 4. لا نحفظ التفضيل في localStorage (حسب طلبك)
-        });
-
-        // تبديل اللغة
-        const languageToggle = document.getElementById('languageToggle');
-        let currentLanguage = 'ar';
-        
-        languageToggle.addEventListener('click', () => {
-            if (currentLanguage === 'ar') {
-                // التبديل إلى الإنجليزية
-                document.querySelectorAll('.title-ar, .subtitle-ar, .section-title-ar, .section-desc-ar, .link-text-ar, .footer-text-ar').forEach(el => {
-                    el.style.display = 'none';
-                });
-                document.querySelectorAll('.title-en, .subtitle-en, .section-title-en, .section-desc-en, .link-text-en, .footer-text-en').forEach(el => {
-                    el.style.display = 'block';
-                });
-                document.documentElement.lang = 'en';
-                document.documentElement.dir = 'ltr';
-                document.querySelectorAll('.arrow-icon').forEach(icon => {
-                    icon.classList.remove('fa-arrow-left');
-                    icon.classList.add('fa-arrow-right');
-                });
-                currentLanguage = 'en';
-            } else {
-                // التبديل إلى العربية
-                document.querySelectorAll('.title-en, .subtitle-en, .section-title-en, .section-desc-en, .link-text-en, .footer-text-en').forEach(el => {
-                    el.style.display = 'none';
-                });
-                document.querySelectorAll('.title-ar, .subtitle-ar, .section-title-ar, .section-desc-ar, .link-text-ar, .footer-text-ar').forEach(el => {
-                    el.style.display = 'block';
-                });
-                document.documentElement.lang = 'ar';
-                document.documentElement.dir = 'rtl';
-                document.querySelectorAll('.arrow-icon').forEach(icon => {
-                    icon.classList.remove('fa-arrow-right');
-                    icon.classList.add('fa-arrow-left');
-                });
-                currentLanguage = 'ar';
-            }
-            
-            // حفظ تفضيل اللغة
-            localStorage.setItem('preferredLanguage', currentLanguage);
-        });
-
-        // تحميل تفضيل اللغة
-        if (localStorage.getItem('preferredLanguage') === 'en') {
-            languageToggle.click();
-        }
-    </script>
-</body>
-</html>
+    // إعدادات الوضع الداكن
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // 1. نضمن أن الوضع الافتراضي فاتح دائماً
+    document.body.classList.remove
