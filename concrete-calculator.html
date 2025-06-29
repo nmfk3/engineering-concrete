@@ -284,6 +284,14 @@
             margin-top: 3rem;
         }
 
+        .element-item {
+            background: rgba(69, 90, 100, 0.05);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px dashed var(--secondary);
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2rem;
@@ -299,6 +307,11 @@
             
             .tab-container {
                 flex-direction: column;
+            }
+            
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
     </style>
@@ -497,12 +510,204 @@
             
             <!-- تبويب المشاريع الكبيرة -->
             <div class="tab-content" id="large-tab">
-                <!-- محتوى المشاريع الكبيرة -->
+                <h2 class="calculator-title">
+                    <i class="fas fa-building"></i> 
+                    <span class="calc-title-ar">حاسبة المشاريع الكبيرة</span>
+                    <span class="calc-title-en" style="display:none;">Large Projects Calculator</span>
+                </h2>
+                
+                <div class="input-group">
+                    <label><span class="label-text-ar">وحدة القياس:</span><span class="label-text-en" style="display:none;">Unit:</span></label>
+                    <div class="unit-toggle" id="largeUnitToggle">
+                        <button class="unit-btn active" data-unit="meter">
+                            <span class="unit-text-ar">متر</span>
+                            <span class="unit-text-en" style="display:none;">Meter</span>
+                        </button>
+                        <button class="unit-btn" data-unit="centimeter">
+                            <span class="unit-text-ar">سنتيمتر</span>
+                            <span class="unit-text-en" style="display:none;">Centimeter</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="elementsContainer">
+                    <!-- العناصر ستضاف هنا ديناميكياً -->
+                </div>
+                
+                <button class="calculate-btn" id="addElementBtn">
+                    <i class="fas fa-plus"></i> 
+                    <span class="btn-text-ar">إضافة عنصر</span>
+                    <span class="btn-text-en" style="display:none;">Add Element</span>
+                </button>
+                
+                <div class="input-group">
+                    <label for="largeMix"><span class="label-text-ar">نسبة الخلطة:</span><span class="label-text-en" style="display:none;">Mix Ratio:</span></label>
+                    <select id="largeMix">
+                        <option value="1:2:4">
+                            <span class="option-text-ar">1:2:4 (خرسانة عادية)</span>
+                            <span class="option-text-en" style="display:none;">1:2:4 (Normal)</span>
+                        </option>
+                        <option value="1:1.5:3">
+                            <span class="option-text-ar">1:1.5:3 (خرسانة مسلحة)</span>
+                            <span class="option-text-en" style="display:none;">1:1.5:3 (Reinforced)</span>
+                        </option>
+                        <option value="1:1:2">
+                            <span class="option-text-ar">1:1:2 (خرسانة قوية)</span>
+                            <span class="option-text-en" style="display:none;">1:1:2 (Strong)</span>
+                        </option>
+                    </select>
+                </div>
+                
+                <button class="calculate-btn" id="calculateLargeBtn">
+                    <span class="btn-text-ar">حساب الكميات</span>
+                    <span class="btn-text-en" style="display:none;">Calculate</span>
+                </button>
+                
+                <div class="result-section" id="largeResults" style="display: none;">
+                    <h3 class="result-title">
+                        <i class="fas fa-clipboard-list"></i> 
+                        <span class="result-title-ar">النتائج الإجمالية</span>
+                        <span class="result-title-en" style="display:none;">Total Results</span>
+                    </h3>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">حجم الخرسانة الكلي:</span>
+                            <span class="result-label-en" style="display:none;">Total Concrete Volume:</span>
+                        </span>
+                        <span class="result-value" id="totalConcreteVolume">0</span> 
+                        <span class="unit-text-ar">م³</span>
+                        <span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">كمية الأسمنت الكلية:</span>
+                            <span class="result-label-en" style="display:none;">Total Cement:</span>
+                        </span>
+                        <span class="result-value" id="totalCementQuantity">0</span> 
+                        <span class="unit-text-ar">كيس (50 كجم)</span>
+                        <span class="unit-text-en" style="display:none;">Bags (50kg)</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">كمية الرمل الكلية:</span>
+                            <span class="result-label-en" style="display:none;">Total Sand:</span>
+                        </span>
+                        <span class="result-value" id="totalSandQuantity">0</span> 
+                        <span class="unit-text-ar">م³</span>
+                        <span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">كمية الزلط الكلية:</span>
+                            <span class="result-label-en" style="display:none;">Total Gravel:</span>
+                        </span>
+                        <span class="result-value" id="totalGravelQuantity">0</span> 
+                        <span class="unit-text-ar">م³</span>
+                        <span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                </div>
             </div>
             
             <!-- تبويب مراقبة الجودة -->
             <div class="tab-content" id="quality-tab">
-                <!-- محتوى مراقبة الجودة -->
+                <h2 class="calculator-title">
+                    <i class="fas fa-clipboard-check"></i> 
+                    <span class="calc-title-ar">مراقبة جودة الخرسانة</span>
+                    <span class="calc-title-en" style="display:none;">Concrete Quality Control</span>
+                </h2>
+                
+                <div class="quality-test">
+                    <h3 class="test-title">
+                        <i class="fas fa-vial"></i>
+                        <span class="test-title-ar">اختبار مقاومة الضغط</span>
+                        <span class="test-title-en" style="display:none;">Compressive Strength Test</span>
+                    </h3>
+                    
+                    <div class="input-group">
+                        <label for="testAge"><span class="label-text-ar">عمر العينة (أيام):</span><span class="label-text-en" style="display:none;">Sample Age (days):</span></label>
+                        <input type="number" id="testAge" min="1" value="28">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="testLoad"><span class="label-text-ar">أقصى حمل (كيلو نيوتن):</span><span class="label-text-en" style="display:none;">Maximum Load (kN):</span></label>
+                        <input type="number" id="testLoad" min="1" placeholder="500">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="testArea"><span class="label-text-ar">مساحة المقطع (مم²):</span><span class="label-text-en" style="display:none;">Cross Area (mm²):</span></label>
+                        <input type="number" id="testArea" min="1" value="22500">
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculateStrengthBtn">
+                        <span class="btn-text-ar">حساب المقاومة</span>
+                        <span class="btn-text-en" style="display:none;">Calculate Strength</span>
+                    </button>
+                    
+                    <div class="result-section" id="strengthResults" style="display: none;">
+                        <div class="result-item">
+                            <span class="result-label">
+                                <span class="result-label-ar">مقاومة الضغط:</span>
+                                <span class="result-label-en" style="display:none;">Compressive Strength:</span>
+                            </span>
+                            <span class="result-value" id="compressiveStrength">0</span> 
+                            <span class="unit-text-ar">نيوتن/مم²</span>
+                            <span class="unit-text-en" style="display:none;">N/mm²</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <span class="result-label-ar">الحالة:</span>
+                                <span class="result-label-en" style="display:none;">Status:</span>
+                            </span>
+                            <span class="result-value" id="strengthStatus">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quality-test">
+                    <h3 class="test-title">
+                        <i class="fas fa-tint"></i>
+                        <span class="test-title-ar">فحص نسبة الماء إلى الأسمنت</span>
+                        <span class="test-title-en" style="display:none;">Water-Cement Ratio Check</span>
+                    </h3>
+                    
+                    <div class="input-group">
+                        <label for="waterAmount"><span class="label-text-ar">كمية الماء (لتر):</span><span class="label-text-en" style="display:none;">Water Amount (liters):</span></label>
+                        <input type="number" id="waterAmount" min="1" placeholder="100">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cementAmount"><span class="label-text-ar">كمية الأسمنت (كجم):</span><span class="label-text-en" style="display:none;">Cement Amount (kg):</span></label>
+                        <input type="number" id="cementAmount" min="1" placeholder="300">
+                    </div>
+                    
+                    <button class="calculate-btn" id="calculateRatioBtn">
+                        <span class="btn-text-ar">حساب النسبة</span>
+                        <span class="btn-text-en" style="display:none;">Calculate Ratio</span>
+                    </button>
+                    
+                    <div class="result-section" id="ratioResults" style="display: none;">
+                        <div class="result-item">
+                            <span class="result-label">
+                                <span class="result-label-ar">نسبة الماء إلى الأسمنت:</span>
+                                <span class="result-label-en" style="display:none;">Water-Cement Ratio:</span>
+                            </span>
+                            <span class="result-value" id="wcRatio">0</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="result-label">
+                                <span class="result-label-ar">التقييم:</span>
+                                <span class="result-label-en" style="display:none;">Evaluation:</span>
+                            </span>
+                            <span class="result-value" id="ratioEvaluation">-</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -576,24 +781,29 @@
 
         // تبديل وحدات القياس
         const unitToggle = document.getElementById('unitToggle');
+        const largeUnitToggle = document.getElementById('largeUnitToggle');
         let currentUnit = 'meter';
         
-        unitToggle.addEventListener('click', function(e) {
-            if (e.target.classList.contains('unit-btn')) {
-                unitToggle.querySelectorAll('.unit-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                e.target.classList.add('active');
-                currentUnit = e.target.dataset.unit;
-                updateUnitDisplay();
-            }
-        });
+        function setupUnitToggle(toggleElement) {
+            toggleElement.addEventListener('click', function(e) {
+                if (e.target.classList.contains('unit-btn')) {
+                    toggleElement.querySelectorAll('.unit-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    currentUnit = e.target.dataset.unit;
+                    updateUnitDisplay();
+                }
+            });
+        }
+        
+        setupUnitToggle(unitToggle);
+        setupUnitToggle(largeUnitToggle);
 
         // تحديث عرض وحدة القياس
         function updateUnitDisplay() {
-            const unitText = currentUnit === 'meter' ? 
-                (currentLanguage === 'ar' ? 'متر' : 'm') : 
-                (currentLanguage === 'ar' ? 'سنتيمتر' : 'cm');
+            const unitTextMeter = currentLanguage === 'ar' ? 'متر' : 'm';
+            const unitTextCm = currentLanguage === 'ar' ? 'سنتيمتر' : 'cm';
             
             document.querySelectorAll('.unit-display').forEach(el => {
                 el.querySelector('.unit-text-ar').style.display = currentLanguage === 'ar' ? 'inline' : 'none';
@@ -667,13 +877,4 @@
             // عرض النتائج
             document.getElementById('concreteVolume').textContent = volume.toFixed(2);
             document.getElementById('cementQuantity').textContent = Math.ceil(cement);
-            document.getElementById('sandQuantity').textContent = sand.toFixed(2);
-            document.getElementById('gravelQuantity').textContent = gravel.toFixed(2);
-            document.getElementById('basicResults').style.display = 'block';
-        });
-
-        // تحديث وحدات القياس عند التحميل
-        updateUnitDisplay();
-    </script>
-</body>
-</html>
+            document.getElementById('sandQuantity').textContent
