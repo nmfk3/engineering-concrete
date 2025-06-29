@@ -11,7 +11,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
         }
         
         body {
@@ -20,90 +19,6 @@
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
-            padding-top: 100px; /* مساحة لشريط التنقل */
-        }
-        
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: #f0f0f0;
-        }
-        
-        /* شريط التنقل العلوي */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background: linear-gradient(to right, #5d4037, #795548);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            border-bottom: 3px solid #ff9800;
-        }
-        
-        .dark-mode .navbar {
-            background: linear-gradient(to right, #3e2723, #4e342e);
-            border-bottom: 3px solid #ff6b00;
-        }
-        
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .nav-logo img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff9800, #ff5722);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .nav-logo h2 {
-            color: white;
-            font-size: 1.8rem;
-            margin: 0;
-            padding: 0;
-            border: none;
-        }
-        
-        .nav-controls {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .nav-btn {
-            background: linear-gradient(135deg, #ff9800, #ff5722);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .dark-mode .nav-btn {
-            background: linear-gradient(135deg, #ff6b00, #ff3d00);
-        }
-        
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         
         .container {
@@ -123,11 +38,6 @@
             border: 2px solid #ff9800;
         }
         
-        .dark-mode header {
-            background: rgba(30, 30, 46, 0.95);
-            border-color: #ff6b00;
-        }
-        
         header::before {
             content: "";
             position: absolute;
@@ -145,18 +55,10 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
-        .dark-mode h1 {
-            color: #4caf50;
-        }
-        
         .subtitle {
             font-size: 1.4rem;
             color: #689f38;
             font-weight: 600;
-        }
-        
-        .dark-mode .subtitle {
-            color: #8bc34a;
         }
         
         .content-section {
@@ -167,11 +69,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
             border: 1px solid #ff9800;
-        }
-        
-        .dark-mode .content-section {
-            background: rgba(30, 30, 46, 0.97);
-            border-color: #ff6b00;
         }
         
         .content-section:hover {
@@ -188,11 +85,6 @@
             display: inline-block;
         }
         
-        .dark-mode h2 {
-            color: #4caf50;
-            border-bottom-color: #ff6b00;
-        }
-        
         .intro {
             font-size: 1.25rem;
             line-height: 1.8;
@@ -201,16 +93,8 @@
             text-align: justify;
         }
         
-        .dark-mode .intro {
-            color: #f0f0f0;
-        }
-        
         .intro strong {
             color: #ff5722;
-        }
-        
-        .dark-mode .intro strong {
-            color: #ff6b00;
         }
         
         .table-container {
@@ -221,18 +105,10 @@
             border: 1px solid #ff9800;
         }
         
-        .dark-mode .table-container {
-            border-color: #ff6b00;
-        }
-        
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-        }
-        
-        .dark-mode table {
-            background: #1e1e2e;
         }
         
         th {
@@ -243,35 +119,18 @@
             text-align: right;
         }
         
-        .dark-mode th {
-            background: linear-gradient(to right, #1b5e20, #2e7d32);
-        }
-        
         td {
             padding: 15px;
             border-bottom: 1px solid #e0e0e0;
             font-size: 1.1rem;
         }
         
-        .dark-mode td {
-            border-bottom: 1px solid #3d3d5c;
-            color: #f0f0f0;
-        }
-        
         tr:nth-child(even) {
             background-color: #f1f8e9;
         }
         
-        .dark-mode tr:nth-child(even) {
-            background-color: #2a2a40;
-        }
-        
         tr:hover {
             background-color: #e8f5e9;
-        }
-        
-        .dark-mode tr:hover {
-            background-color: #3a3a5a;
         }
         
         .steel-icon {
@@ -285,10 +144,6 @@
             color: white;
             margin-left: 10px;
             font-size: 1.2rem;
-        }
-        
-        .dark-mode .steel-icon {
-            background: linear-gradient(135deg, #2e7d32, #4caf50);
         }
         
         .features-grid {
@@ -309,19 +164,10 @@
             background: linear-gradient(to bottom, #ffffff, #fff8e1);
         }
         
-        .dark-mode .feature-card {
-            background: linear-gradient(to bottom, #2a2a40, #1e1e2e);
-            border-top: 4px solid #ff6b00;
-        }
-        
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
             background: linear-gradient(to bottom, #ffffff, #ffecb3);
-        }
-        
-        .dark-mode .feature-card:hover {
-            background: linear-gradient(to bottom, #3a3a5a, #2a2a40);
         }
         
         .feature-card i {
@@ -330,21 +176,9 @@
             margin-bottom: 15px;
         }
         
-        .dark-mode .feature-card i {
-            color: #ff6b00;
-        }
-        
         .feature-card h3 {
             color: #2e7d32;
             margin-bottom: 15px;
-        }
-        
-        .dark-mode .feature-card h3 {
-            color: #4caf50;
-        }
-        
-        .dark-mode .feature-card p {
-            color: #e0e0e0;
         }
         
         footer {
@@ -357,73 +191,7 @@
             border: 1px solid #ff9800;
         }
         
-        .dark-mode footer {
-            background: linear-gradient(to right, #3e2723, #4e342e);
-            border-color: #ff6b00;
-        }
-        
-        /* زر الرجوع للأعلى */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2e7d32, #689f38);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1000;
-        }
-        
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-        
-        .dark-mode .back-to-top {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-        }
-        
         @media (max-width: 768px) {
-            body {
-                padding-top: 90px;
-            }
-            
-            .navbar {
-                height: auto;
-                flex-direction: column;
-                padding: 15px;
-            }
-            
-            .nav-logo {
-                margin-bottom: 15px;
-            }
-            
-            .nav-controls {
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            .nav-btn {
-                padding: 10px 20px;
-                font-size: 1rem;
-            }
-            
             h1 {
                 font-size: 2.2rem;
             }
@@ -456,26 +224,6 @@
     </style>
 </head>
 <body>
-    <!-- شريط التنقل العلوي -->
-    <nav class="navbar">
-        <div class="nav-logo">
-            <div class="logo-icon"><i class="fas fa-industry"></i></div>
-            <h2>أنواع الحديد الإنشائي</h2>
-        </div>
-        
-        <div class="nav-controls">
-            <button class="nav-btn" id="backBtn">
-                <i class="fas fa-arrow-left"></i> الرجوع
-            </button>
-            <button class="nav-btn" id="darkModeToggle">
-                <i class="fas fa-moon"></i> الوضع الداكن
-            </button>
-            <button class="nav-btn" id="languageToggle">
-                <i class="fas fa-globe"></i> اللغة
-            </button>
-        </div>
-    </nav>
-    
     <div class="container">
         <header>
             <h1><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
@@ -584,59 +332,7 @@
         </footer>
     </div>
     
-    <!-- زر الرجوع للأعلى -->
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-    
     <script>
-        // الوضع الداكن
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const body = document.body;
-        
-        // تحقق من التفضيل المحفوظ
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            body.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> الوضع الفاتح';
-        }
-        
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> الوضع الفاتح';
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i> الوضع الداكن';
-            }
-        });
-        
-        // زر الرجوع (للصفحة الرئيسية)
-        const backBtn = document.getElementById('backBtn');
-        backBtn.addEventListener('click', () => {
-            // يمكن تغيير هذا الرابط ليكون رابط الصفحة الرئيسية
-            window.location.href = 'https://example.com'; // استبدل هذا بالرابط الفعلي
-        });
-        
-        // زر الرجوع للأعلى
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-        
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
         // تأثيرات تفاعلية بسيطة
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -658,12 +354,6 @@
             heading.addEventListener('mouseleave', () => {
                 heading.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.1)';
             });
-        });
-        
-        // تبديل اللغة (بديل مؤقت)
-        const languageToggle = document.getElementById('languageToggle');
-        languageToggle.addEventListener('click', () => {
-            alert('سيتم إضافة خاصية تبديل اللغات في الإصدار القادم!');
         });
     </script>
 </body>
