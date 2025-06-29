@@ -30,60 +30,6 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
-        }
-        
-        /* أزرار التحكم في الزاوية العلوية اليمنى */
-        .control-buttons {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 1000;
-        }
-        
-        .control-btn {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff9800, #ff5722);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.4rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .dark-mode .control-btn {
-            background: linear-gradient(135deg, #ff6b00, #ff3d00);
-        }
-        
-        .control-btn:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
-        
-        .control-btn .tooltip {
-            position: absolute;
-            right: 65px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        
-        .control-btn:hover .tooltip {
-            opacity: 1;
         }
         
         header {
@@ -118,6 +64,7 @@
             color: #388e3c;
             margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
         }
         
         .dark-mode h1 {
@@ -128,10 +75,54 @@
             font-size: 1.4rem;
             color: #689f38;
             font-weight: 600;
+            margin-bottom: 15px;
         }
         
         .dark-mode .subtitle {
             color: #8bc34a;
+        }
+        
+        /* أزرار التحكم الشفافة في الزاوية العلوية اليمنى من الـ header */
+        .header-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10;
+        }
+        
+        .header-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: transparent;
+            color: #5d4037;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            border: 2px solid rgba(93, 64, 55, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .header-btn {
+            color: #ff9800;
+            border-color: rgba(255, 152, 0, 0.3);
+        }
+        
+        .header-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ff9800;
+        }
+        
+        .dark-mode .header-btn:hover {
+            background: rgba(255, 152, 0, 0.1);
+            border-color: #ff6b00;
         }
         
         .content-section {
@@ -338,19 +329,20 @@
         }
         
         @media (max-width: 768px) {
-            .control-buttons {
+            .header-controls {
                 top: 15px;
                 right: 15px;
             }
             
-            .control-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
+            .header-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
             }
             
             h1 {
                 font-size: 2.2rem;
+                padding-top: 40px;
             }
             
             .subtitle {
@@ -381,24 +373,21 @@
     </style>
 </head>
 <body>
-    <!-- أزرار التحكم في الزاوية العلوية اليمنى -->
-    <div class="control-buttons">
-        <div class="control-btn" id="backBtn">
-            <i class="fas fa-arrow-left"></i>
-            <span class="tooltip">الرجوع</span>
-        </div>
-        <div class="control-btn" id="darkModeToggle">
-            <i class="fas fa-moon"></i>
-            <span class="tooltip">الوضع الداكن</span>
-        </div>
-        <div class="control-btn" id="languageToggle">
-            <i class="fas fa-globe"></i>
-            <span class="tooltip">تبديل اللغة</span>
-        </div>
-    </div>
-    
     <div class="container">
         <header>
+            <!-- أزرار التحكم الشفافة في الزاوية العلوية اليمنى -->
+            <div class="header-controls">
+                <div class="header-btn" id="backBtn" title="الرجوع">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div class="header-btn" id="darkModeToggle" title="الوضع الداكن">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="header-btn" id="languageToggle" title="تبديل اللغة">
+                    <i class="fas fa-globe"></i>
+                </div>
+            </div>
+            
             <h1><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
             <p class="subtitle">دليل شامل لأنواع الحديد المستخدم في الإنشاءات الهندسية</p>
         </header>
@@ -513,7 +502,7 @@
         // تحقق من التفضيل المحفوظ
         if (localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="tooltip">الوضع الفاتح</span>';
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         }
         
         darkModeToggle.addEventListener('click', () => {
@@ -521,24 +510,25 @@
             
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('darkMode', 'enabled');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="tooltip">الوضع الفاتح</span>';
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkModeToggle.title = "الوضع الفاتح";
             } else {
                 localStorage.setItem('darkMode', 'disabled');
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="tooltip">الوضع الداكن</span>';
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                darkModeToggle.title = "الوضع الداكن";
             }
         });
         
         // زر الرجوع
         const backBtn = document.getElementById('backBtn');
         backBtn.addEventListener('click', () => {
-            // يمكن تغيير هذا الرابط ليكون رابط الصفحة الرئيسية
-            window.history.back(); // يعود للصفحة السابقة
+            window.history.back();
         });
         
-        // تبديل اللغة (بديل مؤقت)
+        // تبديل اللغة
         const languageToggle = document.getElementById('languageToggle');
         languageToggle.addEventListener('click', () => {
-            alert('سيتم إضافة خاصية تبديل اللغات في الإصدار القادم!');
+            alert('سيتم تفعيل خاصية تبديل اللغات في الإصدار القادم!');
         });
         
         // تأثيرات تفاعلية بسيطة
