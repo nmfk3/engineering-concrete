@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة حديد التسليح | Steel Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A6FA5;
+            --secondary: #555;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #333333;
+            --card-bg: #FFFFFF;
+            --error: #D32F2F;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            --light: #1E1E1E;
+            --white: #252525;
+            --text: #E0E0E0;
+            --card-bg: #2D2D2D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #3A5F8A);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .calculator-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .unit-toggle {
+            display: flex;
+            background: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .unit-btn {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text);
+        }
+
+        .unit-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: var(--white);
+            color: var(--text);
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 1.5rem 0;
+        }
+
+        .result-section {
+            background: rgba(74, 111, 165, 0.1);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            border-right: 3px solid var(--primary);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .result-value {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .control-btn {
+            background: rgba(74, 111, 165, 0.2);
+            border: none;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .input-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="control-buttons">
+        <button class="control-btn" id="languageToggle">
+            <i class="fas fa-language"></i>
+        </button>
+        <button class="control-btn" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <header>
+        <h1 class="title-ar"><i class="fas fa-ruler"></i> حاسبة حديد التسليح</h1>
+        <h1 class="title-en" style="display:none;"><i class="fas fa-ruler"></i> Steel Calculator</h1>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-card">
+            <div class="input-group">
+                <label><span class="label-text-ar">وحدة القياس:</span><span class="label-text-en" style="display:none;">Unit:</span></label>
+                <div class="unit-toggle" id="unitToggle">
+                    <button class="unit-btn active" data-unit="meter">
+                        <span class="unit-text-ar">متر</span>
+                        <span class="unit-text-en" style="display:none;">Meter</span>
+                    </button>
+                    <button class="unit-btn" data-unit="feet">
+                        <span class="unit-text-ar">قدم</span>
+                        <span class="unit-text-en" style="display:none;">Feet</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="steelType"><span class="label-text-ar">نوع الحديد:</span><span class="label-text-en" style="display:none;">Steel Type:</span></label>
+                <select id="steelType">
+                    <option value="8mm">
+                        <span class="option-text-ar">8 مم (أسياخ 12م)</span>
+                        <span class="option-text-en" style="display:none;">8mm (12m bars)</span>
+                    </option>
+                    <option value="10mm">
+                        <span class="option-text-ar">10 مم (أسياخ 12م)</span>
+                        <span class="option-text-en" style="display:none;">10mm (12m bars)</span>
+                    </option>
+                    <option value="12mm">
+                        <span class="option-text-ar">12 مم (أسياخ 12م)</span>
+                        <span class="option-text-en" style="display:none;">12mm (12m bars)</span>
+                    </option>
+                    <option value="16mm">
+                        <span class="option-text-ar">16 مم (أسياخ 12م)</span>
+                        <span class="option-text-en" style="display:none;">16mm (12m bars)</span>
+                    </option>
+                    <option value="custom">
+                        <span class="option-text-ar">مخصص</span>
+                        <span class="option-text-en" style="display:none;">Custom</span>
+                    </option>
+                </select>
+            </div>
+
+            <div id="customSteelInput" style="display: none;">
+                <div class="input-group">
+                    <label for="customDiameter"><span class="label-text-ar">القطر (مم):</span><span class="label-text-en" style="display:none;">Diameter (mm):</span></label>
+                    <input type="number" id="customDiameter" min="1" placeholder="مثال: 14">
+                </div>
+                <div class="input-group">
+                    <label for="customLength"><span class="label-text-ar">طول السيخ (متر):</span><span class="label-text-en" style="display:none;">Bar Length (m):</span></label>
+                    <input type="number" id="customLength" min="1" value="12">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="steelLength"><span class="label-text-ar">الطول المطلوب:</span><span class="label-text-en" style="display:none;">Required Length:</span></label>
+                <div class="input-row">
+                    <input type="number" id="steelLength" min="0.1" step="0.1" placeholder="50.0">
+                    <span class="unit-text-ar">متر</span>
+                    <span class="unit-text-en" style="display:none;">m</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="steelSpacing"><span class="label-text-ar">المسافة بين الأسياخ:</span><span class="label-text-en" style="display:none;">Spacing:</span></label>
+                <div class="input-row">
+                    <input type="number" id="steelSpacing" min="0.1" step="0.1" placeholder="0.2">
+                    <span class="unit-text-ar">متر</span>
+                    <span class="unit-text-en" style="display:none;">m</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="steelLayers"><span class="label-text-ar">عدد الطبقات:</span><span class="label-text-en" style="display:none;">Layers:</span></label>
+                <input type="number" id="steelLayers" min="1" value="1">
+            </div>
+
+            <button id="calculateBtn">
+                <span class="btn-text-ar">حساب الكمية</span>
+                <span class="btn-text-en" style="display:none;">Calculate</span>
+            </button>
+
+            <div class="result-section" id="results" style="display: none;">
+                <h3 class="result-title-ar">نتائج الحساب</h3>
+                <h3 class="result-title-en" style="display:none;">Calculation Results</h3>
+                
+                <div class="result-item">
+                    <span class="result-label">
+                        <span class="result-label-ar">عدد الأسياخ:</span>
+                        <span class="result-label-en" style="display:none;">Number of Bars:</span>
+                    </span>
+                    <span class="result-value" id="barsCount">0</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">
+                        <span class="result-label-ar">الوزن الإجمالي:</span>
+                        <span class="result-label-en" style="display:none;">Total Weight:</span>
+                    </span>
+                    <span class="result-value" id="totalWeight">0</span>
+                    <span class="unit-text-ar">طن</span>
+                    <span class="unit-text-en" style="display:none;">ton</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">
+                        <span class="result-label-ar">الطول الفعلي:</span>
+                        <span class="result-label-en" style="display:none;">Actual Length:</span>
+                    </span>
+                    <span class="result-value" id="actualLength">0</span>
+                    <span class="unit-text-ar">متر</span>
+                    <span class="unit-text-en" style="display:none;">m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // الأوزان لكل متر طولي (كجم/م)
+        const steelWeights = {
+            '8mm': 0.395,
+            '10mm': 0.617,
+            '12mm': 0.888,
+            '16mm': 1.58
+        };
+
+        // تبديل اللغة
+        const languageToggle = document.getElementById('languageToggle');
+        let currentLanguage = 'ar';
+        
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            
+            document.querySelectorAll('[class*="title-ar"], [class*="text-ar"], [class*="label-ar"], [class*="option-ar"]').forEach(el => {
+                el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
+            });
+            
+            document.querySelectorAll('[class*="title-en"], [class*="text-en"], [class*="label-en"], [class*="option-en"]').forEach(el => {
+                el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
+            });
+        });
+
+        // الوضع الداكن
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkModeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 
+                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // تبديل وحدات القياس
+        const unitToggle = document.getElementById('unitToggle');
+        unitToggle.addEventListener('click', (e) => {
+            if (e.target.classList.contains('unit-btn')) {
+                unitToggle.querySelectorAll('.unit-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            }
+        });
+
+        // إظهار/إخفاء خانات القياس المخصص
+        document.getElementById('steelType').addEventListener('change', function() {
+            document.getElementById('customSteelInput').style.display = 
+                this.value === 'custom' ? 'block' : 'none';
+        });
+
+        // حساب الكميات
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const steelType = document.getElementById('steelType').value;
+            let steelLength = parseFloat(document.getElementById('steelLength').value);
+            let steelSpacing = parseFloat(document.getElementById('steelSpacing').value);
+            const steelLayers = parseInt(document.getElementById('steelLayers').value);
+            
+            if (isNaN(steelLength) steelLength = 0;
+            if (isNaN(steelSpacing)) steelSpacing = 0;
+            
+            // حساب عدد الأسياخ لكل طبقة
+            const barsPerLayer = Math.ceil(steelLength / steelSpacing);
+            const totalBars = barsPerLayer * steelLayers;
+            
+            // حساب الوزن
+            let weightPerMeter;
+            if (steelType === 'custom') {
+                const diameter = parseFloat(document.getElementById('customDiameter').value);
+                weightPerMeter = (diameter * diameter) / 162; // قانون حساب وزن الحديد
+            } else {
+                weightPerMeter = steelWeights[steelType];
+            }
+            
+            const barLength = steelType === 'custom' ? 
+                parseFloat(document.getElementById('customLength').value) : 12;
+            
+            const totalWeight = (totalBars * barLength * weightPerMeter) / 1000; // بالطن
+            
+            // عرض النتائج
+            document.getElementById('barsCount').textContent = totalBars;
+            document.getElementById('totalWeight').textContent = totalWeight.toFixed(3);
+            document.getElementById('actualLength').textContent = (totalBars * barLength).toFixed(2);
+            document.getElementById('results').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
