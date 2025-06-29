@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
         }
         
         body {
@@ -21,9 +22,68 @@
             padding: 20px;
         }
         
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #f0f0f0;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+        }
+        
+        /* أزرار التحكم في الزاوية العلوية اليمنى */
+        .control-buttons {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .control-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark-mode .control-btn {
+            background: linear-gradient(135deg, #ff6b00, #ff3d00);
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .control-btn .tooltip {
+            position: absolute;
+            right: 65px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .control-btn:hover .tooltip {
+            opacity: 1;
         }
         
         header {
@@ -36,6 +96,11 @@
             position: relative;
             overflow: hidden;
             border: 2px solid #ff9800;
+        }
+        
+        .dark-mode header {
+            background: rgba(30, 30, 46, 0.95);
+            border-color: #ff6b00;
         }
         
         header::before {
@@ -55,10 +120,18 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
+        .dark-mode h1 {
+            color: #4caf50;
+        }
+        
         .subtitle {
             font-size: 1.4rem;
             color: #689f38;
             font-weight: 600;
+        }
+        
+        .dark-mode .subtitle {
+            color: #8bc34a;
         }
         
         .content-section {
@@ -69,6 +142,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
             border: 1px solid #ff9800;
+        }
+        
+        .dark-mode .content-section {
+            background: rgba(30, 30, 46, 0.97);
+            border-color: #ff6b00;
         }
         
         .content-section:hover {
@@ -85,6 +163,11 @@
             display: inline-block;
         }
         
+        .dark-mode h2 {
+            color: #4caf50;
+            border-bottom-color: #ff6b00;
+        }
+        
         .intro {
             font-size: 1.25rem;
             line-height: 1.8;
@@ -93,8 +176,16 @@
             text-align: justify;
         }
         
+        .dark-mode .intro {
+            color: #f0f0f0;
+        }
+        
         .intro strong {
             color: #ff5722;
+        }
+        
+        .dark-mode .intro strong {
+            color: #ff6b00;
         }
         
         .table-container {
@@ -105,10 +196,18 @@
             border: 1px solid #ff9800;
         }
         
+        .dark-mode .table-container {
+            border-color: #ff6b00;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
+        }
+        
+        .dark-mode table {
+            background: #1e1e2e;
         }
         
         th {
@@ -119,18 +218,35 @@
             text-align: right;
         }
         
+        .dark-mode th {
+            background: linear-gradient(to right, #1b5e20, #2e7d32);
+        }
+        
         td {
             padding: 15px;
             border-bottom: 1px solid #e0e0e0;
             font-size: 1.1rem;
         }
         
+        .dark-mode td {
+            border-bottom: 1px solid #3d3d5c;
+            color: #f0f0f0;
+        }
+        
         tr:nth-child(even) {
             background-color: #f1f8e9;
         }
         
+        .dark-mode tr:nth-child(even) {
+            background-color: #2a2a40;
+        }
+        
         tr:hover {
             background-color: #e8f5e9;
+        }
+        
+        .dark-mode tr:hover {
+            background-color: #3a3a5a;
         }
         
         .steel-icon {
@@ -144,6 +260,10 @@
             color: white;
             margin-left: 10px;
             font-size: 1.2rem;
+        }
+        
+        .dark-mode .steel-icon {
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
         }
         
         .features-grid {
@@ -164,10 +284,19 @@
             background: linear-gradient(to bottom, #ffffff, #fff8e1);
         }
         
+        .dark-mode .feature-card {
+            background: linear-gradient(to bottom, #2a2a40, #1e1e2e);
+            border-top: 4px solid #ff6b00;
+        }
+        
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
             background: linear-gradient(to bottom, #ffffff, #ffecb3);
+        }
+        
+        .dark-mode .feature-card:hover {
+            background: linear-gradient(to bottom, #3a3a5a, #2a2a40);
         }
         
         .feature-card i {
@@ -176,9 +305,21 @@
             margin-bottom: 15px;
         }
         
+        .dark-mode .feature-card i {
+            color: #ff6b00;
+        }
+        
         .feature-card h3 {
             color: #2e7d32;
             margin-bottom: 15px;
+        }
+        
+        .dark-mode .feature-card h3 {
+            color: #4caf50;
+        }
+        
+        .dark-mode .feature-card p {
+            color: #e0e0e0;
         }
         
         footer {
@@ -191,7 +332,23 @@
             border: 1px solid #ff9800;
         }
         
+        .dark-mode footer {
+            background: linear-gradient(to right, #3e2723, #4e342e);
+            border-color: #ff6b00;
+        }
+        
         @media (max-width: 768px) {
+            .control-buttons {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
             h1 {
                 font-size: 2.2rem;
             }
@@ -224,6 +381,22 @@
     </style>
 </head>
 <body>
+    <!-- أزرار التحكم في الزاوية العلوية اليمنى -->
+    <div class="control-buttons">
+        <div class="control-btn" id="backBtn">
+            <i class="fas fa-arrow-left"></i>
+            <span class="tooltip">الرجوع</span>
+        </div>
+        <div class="control-btn" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+            <span class="tooltip">الوضع الداكن</span>
+        </div>
+        <div class="control-btn" id="languageToggle">
+            <i class="fas fa-globe"></i>
+            <span class="tooltip">تبديل اللغة</span>
+        </div>
+    </div>
+    
     <div class="container">
         <header>
             <h1><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
@@ -333,6 +506,41 @@
     </div>
     
     <script>
+        // الوضع الداكن
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        // تحقق من التفضيل المحفوظ
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="tooltip">الوضع الفاتح</span>';
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="tooltip">الوضع الفاتح</span>';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="tooltip">الوضع الداكن</span>';
+            }
+        });
+        
+        // زر الرجوع
+        const backBtn = document.getElementById('backBtn');
+        backBtn.addEventListener('click', () => {
+            // يمكن تغيير هذا الرابط ليكون رابط الصفحة الرئيسية
+            window.history.back(); // يعود للصفحة السابقة
+        });
+        
+        // تبديل اللغة (بديل مؤقت)
+        const languageToggle = document.getElementById('languageToggle');
+        languageToggle.addEventListener('click', () => {
+            alert('سيتم إضافة خاصية تبديل اللغات في الإصدار القادم!');
+        });
+        
         // تأثيرات تفاعلية بسيطة
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
