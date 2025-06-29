@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة كميات الخرسانة | Concrete 360</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #333333;
+            --card-bg: #FFFFFF;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            --light: #1E1E1E;
+            --white: #252525;
+            --text: #E0E0E0;
+            --card-bg: #2D2D2D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1B5E20);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .control-buttons {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .language-toggle {
+            order: 1;
+        }
+
+        .dark-mode-toggle {
+            order: 2;
+        }
+
+        .back-button {
+            position: relative;
+            order: 3;
+            margin-right: auto;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent);
+        }
+
+        .calculator-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .calculator-title i {
+            color: var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-row input {
+            flex: 1;
+        }
+
+        .unit-toggle {
+            display: flex;
+            background: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .unit-btn {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text);
+        }
+
+        .unit-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: var(--white);
+            color: var(--text);
+        }
+
+        .calculate-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background-color: #e67e00;
+        }
+
+        .result-section {
+            background: rgba(46, 125, 50, 0.1);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            border-right: 3px solid var(--primary);
+        }
+
+        .result-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .result-value {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-container {
+                padding: 0 0.5rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="control-buttons">
+            <button class="language-toggle" id="languageToggle">
+                <i class="fas fa-language"></i>
+            </button>
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <h1 class="title-ar"><i class="fas fa-calculator"></i> حاسبة كميات الخرسانة</h1>
+        <h1 class="title-en" style="display:none;"><i class="fas fa-calculator"></i> Concrete Calculator</h1>
+        <p class="subtitle-ar">احسب الكميات المطلوبة لمشروعك بدقة</p>
+        <p class="subtitle-en" style="display:none;">Calculate required quantities for your project</p>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-card">
+            <h2 class="calculator-title"><i class="fas fa-ruler-combined"></i> <span class="calc-title-ar">أدخل الأبعاد</span><span class="calc-title-en" style="display:none;">Enter Dimensions</span></h2>
+            
+            <div class="input-group">
+                <label><span class="label-text-ar">وحدة القياس:</span><span class="label-text-en" style="display:none;">Measurement Unit:</span></label>
+                <div class="unit-toggle" id="unitToggle">
+                    <button class="unit-btn active" data-unit="meter"><span class="unit-text-ar">متر</span><span class="unit-text-en" style="display:none;">Meter</span></button>
+                    <button class="unit-btn" data-unit="centimeter"><span class="unit-text-ar">سنتيمتر</span><span class="unit-text-en" style="display:none;">Centimeter</span></button>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="shape"><span class="label-text-ar">نوع العنصر:</span><span class="label-text-en" style="display:none;">Element Type:</span></label>
+                <select id="shape">
+                    <option value="slab"><span class="option-text-ar">بلاطة/سقف</span><span class="option-text-en" style="display:none;">Slab/Ceiling</span></option>
+                    <option value="column"><span class="option-text-ar">عمود</span><span class="option-text-en" style="display:none;">Column</span></option>
+                    <option value="beam"><span class="option-text-ar">كمرة</span><span class="option-text-en" style="display:none;">Beam</span></option>
+                    <option value="wall"><span class="option-text-ar">حائط</span><span class="option-text-en" style="display:none;">Wall</span></option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="length"><span class="label-text-ar">الطول:</span><span class="label-text-en" style="display:none;">Length:</span></label>
+                <div class="input-row">
+                    <input type="number" id="length" min="0.1" step="0.01" placeholder="مثال: 5">
+                    <span class="unit-display" id="lengthUnit"><span class="unit-text-ar">متر</span><span class="unit-text-en" style="display:none;">m</span></span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="width"><span class="label-text-ar">العرض:</span><span class="label-text-en" style="display:none;">Width:</span></label>
+                <div class="input-row">
+                    <input type="number" id="width" min="0.1" step="0.01" placeholder="مثال: 3">
+                    <span class="unit-display" id="widthUnit"><span class="unit-text-ar">متر</span><span class="unit-text-en" style="display:none;">m</span></span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="thickness"><span class="label-text-ar">السماكة/الارتفاع:</span><span class="label-text-en" style="display:none;">Thickness/Height:</span></label>
+                <div class="input-row">
+                    <input type="number" id="thickness" min="0.05" step="0.01" placeholder="مثال: 0.2">
+                    <span class="unit-display" id="thicknessUnit"><span class="unit-text-ar">متر</span><span class="unit-text-en" style="display:none;">m</span></span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="mix"><span class="label-text-ar">نسبة الخلطة:</span><span class="label-text-en" style="display:none;">Mix Ratio:</span></label>
+                <select id="mix">
+                    <option value="1:2:4"><span class="option-text-ar">1:2:4 (خرسانة عادية)</span><span class="option-text-en" style="display:none;">1:2:4 (Normal)</span></option>
+                    <option value="1:1.5:3"><span class="option-text-ar">1:1.5:3 (خرسانة مسلحة)</span><span class="option-text-en" style="display:none;">1:1.5:3 (Reinforced)</span></option>
+                    <option value="1:1:2"><span class="option-text-ar">1:1:2 (خرسانة قوية)</span><span class="option-text-en" style="display:none;">1:1:2 (Strong)</span></option>
+                </select>
+            </div>
+            
+            <button class="calculate-btn" id="calculateBtn">
+                <span class="btn-text-ar">حساب الكميات</span>
+                <span class="btn-text-en" style="display:none;">Calculate</span>
+            </button>
+            
+            <div class="result-section" id="resultSection" style="display: none;">
+                <h3 class="result-title"><i class="fas fa-clipboard-list"></i> <span class="result-title-ar">النتائج</span><span class="result-title-en" style="display:none;">Results</span></h3>
+                
+                <div class="result-item">
+                    <span class="result-label"><span class="result-label-ar">حجم الخرسانة:</span><span class="result-label-en" style="display:none;">Concrete Volume:</span></span>
+                    <span class="result-value" id="concreteVolume">0</span> <span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label"><span class="result-label-ar">كمية الأسمنت:</span><span class="result-label-en" style="display:none;">Cement Quantity:</span></span>
+                    <span class="result-value" id="cementQuantity">0</span> <span class="unit-text-ar">كيس (50 كجم)</span><span class="unit-text-en" style="display:none;">Bags (50kg)</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label"><span class="result-label-ar">كمية الرمل:</span><span class="result-label-en" style="display:none;">Sand Quantity:</span></span>
+                    <span class="result-value" id="sandQuantity">0</span> <span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label"><span class="result-label-ar">كمية الزلط:</span><span class="result-label-en" style="display:none;">Gravel Quantity:</span></span>
+                    <span class="result-value" id="gravelQuantity">0</span> <span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text-ar">برمجة وتطوير :م.علي عبد الرحيم محي الدين</p>
+        <p class="footer-text-en" style="display:none;">© 2025 Concrete 360 | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // كود الوضع الداكن
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkModeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 
+                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // كود تبديل اللغة
+        const languageToggle = document.getElementById('languageToggle');
+        let currentLanguage = 'ar';
+        
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            
+            document.querySelectorAll('[class*="title-ar"], [class*="text-ar"], [class*="label-ar"], [class*="option-ar"]').forEach(el => {
+                el.style.display = currentLanguage === 'ar' ? 'block' : 'none';
+            });
+            
+            document.querySelectorAll('[class*="title-en"], [class*="text-en"], [class*="label-en"], [class*="option-en"]').forEach(el => {
+                el.style.display = currentLanguage === 'en' ? 'block' : 'none';
+            });
+            
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            
+            localStorage.setItem('preferredLanguage', currentLanguage);
+        });
+
+        // تحميل تفضيل اللغة
+        if (localStorage.getItem('preferredLanguage') === 'en') {
+            languageToggle.click();
+        }
+
+        // كود تبديل وحدات القياس
+        const unitToggle = document.getElementById('unitToggle');
+        const unitBtns = unitToggle.querySelectorAll('.unit-btn');
+        let currentUnit = 'meter';
+        
+        unitBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                unitBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentUnit = this.dataset.unit;
+                
+                // تحديث عرض الوحدات
+                const unitText = currentUnit === 'meter' ? 
+                    (currentLanguage === 'ar' ? 'متر' : 'm') : 
+                    (currentLanguage === 'ar' ? 'سنتيمتر' : 'cm');
+                
+                document.querySelectorAll('.unit-display').forEach(el => {
+                    el.querySelector('.unit-text-ar').style.display = currentLanguage === 'ar' ? 'inline' : 'none';
+                    el.querySelector('.unit-text-en').style.display = currentLanguage === 'en' ? 'inline' : 'none';
+                });
+            });
+        });
+
+        // كود الحاسبة
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            // الحصول على القيم المدخلة
+            let length = parseFloat(document.getElementById('length').value) || 0;
+            let width = parseFloat(document.getElementById('width').value) || 0;
+            let thickness = parseFloat(document.getElementById('thickness').value) || 0;
+            const mixRatio = document.getElementById('mix').value;
+            
+            // تحويل الوحدات إذا كانت بالسنتيمتر
+            if (currentUnit === 'centimeter') {
+                length = length / 100;
+                width = width / 100;
+                thickness = thickness / 100;
+            }
+            
+            // حساب حجم الخرسانة
+            const volume = length * width * thickness;
+            
+            // حساب الكميات حسب نسبة الخلطة
+            let cement, sand, gravel;
+            
+            switch(mixRatio) {
+                case '1:2:4':
+                    cement = volume * 7.5; // 7.5 أكياس لكل متر مكعب
+                    sand = volume * 0.5;   // 0.5 متر مكعب رمل
+                    gravel = volume * 1;   // 1 متر مكعب زلط
+                    break;
+                case '1:1.5:3':
+                    cement = volume * 8.5;
+                    sand = volume * 0.45;
+                    gravel = volume * 0.9;
+                    break;
+                case '1:1:2':
+                    cement = volume * 10;
+                    sand = volume * 0.4;
+                    gravel = volume * 0.8;
+                    break;
+            }
+            
+            // عرض النتائج
+            document.getElementById('concreteVolume').textContent = volume.toFixed(2);
+            document.getElementById('cementQuantity').textContent = Math.ceil(cement);
+            document.getElementById('sandQuantity').textContent = sand.toFixed(2);
+            document.getElementById('gravelQuantity').textContent = gravel.toFixed(2);
+            
+            document.getElementById('resultSection').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
