@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>حاسبة كميات الخرسانة</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #2E7D32;
+    --secondary: #455A64;
+    --accent: #FF8F00;
+    --light: #F5F5F5;
+    --white: #FFFFFF;
+    --text: #333333;
+    --card-bg: #FFFFFF;
+    --dark-bg: #121212;
+    --dark-card-bg: #1E1E1E;
+    --dark-text: #E0E0E0;
+  }
+
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--light);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  body.dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+  }
+
+  header {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    transition: background-color 0.3s;
+  }
+  .btn:hover {
+    background-color: #e67e00;
+  }
+
+  .btn-toggle {
+    background: var(--white);
+    color: var(--primary);
+    padding: 0.4rem 1rem;
+  }
+
+  main {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark main {
+    background-color: var(--dark-card-bg);
+  }
+
+  h1,h2 {
+    margin: 0 0 1rem 0;
+  }
+
+  label {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--white);
+    color: var(--text);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark input, body.dark select {
+    background-color: #2a2a2a;
+    color: var(--dark-text);
+    border: 1px solid #555;
+  }
+
+  button.calculate-btn {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .result {
+    margin-top: 1.5rem;
+    background-color: var(--light);
+    padding: 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+    min-height: 3rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark .result {
+    background-color: #2a2a2a;
+    color: var(--dark-text);
+  }
+
+  /* Layout for header buttons */
+  .header-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">حاسبة كميات الخرسانة</h1>
+  <div class="header-buttons">
+    <button id="langToggle" class="btn btn-toggle" onclick="toggleLanguage()">English</button>
+    <button id="darkToggle" class="btn btn-toggle" onclick="toggleDarkMode()">🌙</button>
+  </div>
+</header>
+
+<main>
+  <h2 id="subtitle">أدخل الأبعاد واختر الوحدة</h2>
+
+  <label for="type" id="label-type">نوع العنصر:</label>
+  <select id="type">
+    <option value="slab">بلاطة</option>
+    <option value="column">عمود</option>
+    <option value="beam">كمرة</option>
+    <option value="footing">أساس</option>
+    <option value="wall">جدار</option>
+  </select>
+
+  <label for="unit" id="label-unit">الوحدة:</label>
+  <select id="unit">
+    <option value="m">متر</option>
+    <option value="cm">سنتيمتر</option>
+  </select>
+
+  <label for="length" id="label-length">الطول:</label>
+  <input type="number" id="length" step="0.01" min="0" />
+
+  <label for="width" id="label-width">العرض:</label>
+  <input type="number" id="width" step="0.01" min="0" />
+
+  <label for="height" id="label-height">الارتفاع / السمك:</label>
+  <input type="number" id="height" step="0.01" min="0" />
+
+  <label for="waste" id="label-waste">نسبة الهدر:</label>
+  <select id="waste">
+    <option value="0">0%</option>
+    <option value="0.05">5%</option>
+    <option value="0.10" selected>10%</option>
+  </select>
+
+  <button class="btn calculate-btn" id="calc-btn" onclick="calculateVolume()">احسب كمية الخرسانة</button>
+  <button class="btn calculate-btn" id="pdf-btn" onclick="generatePDF()">📄 حفظ النتائج PDF</button>
+
+  <div id="result" class="result"></div>
+</main>
+
+<script>
+  let lastResultText = '';
+  let currentLang = 'ar';
+
+  const translations = {
+    ar: {
+      title: "حاسبة كميات الخرسانة",
+      subtitle: "أدخل الأبعاد واختر الوحدة",
+      "label-type": "نوع العنصر:",
+      "label-unit": "الوحدة:",
+      "label-length": "الطول:",
+      "label-width": "العرض:",
+      "label-height": "الارتفاع / السمك:",
+      "label-waste": "نسبة الهدر:",
+      "calc-btn": "احسب كمية الخرسانة",
+      "pdf-btn": "📄 حفظ النتائج PDF",
+      types: {
+        slab: "بلاطة",
+        column: "عمود",
+        beam: "كمرة",
+        footing: "أساس",
+        wall: "جدار"
+      },
+      result: (vol, volWaste, wastePercent) =>
+        `الحجم الصافي: <span style="color: var(--primary); font-size: 1.2em;">${vol} متر مكعب</span><br>` +
+        `الحجم مع الهدر (${wastePercent}%): <span style="color: var(--accent); font-size: 1.2em;">${volWaste} متر مكعب</span>`,
+      error: "يرجى إدخال أبعاد صحيحة.",
+      alertPdf: "يرجى حساب الحجم أولاً قبل حفظ الملف."
+    },
+    en: {
+      title: "Concrete Volume Calculator",
+      subtitle: "Enter dimensions and select unit",
+      "label-type": "Element Type:",
+      "label-unit": "Unit:",
+      "label-length": "Length:",
+      "label-width": "Width:",
+      "label-height": "Height/Thickness:",
+      "label-waste": "Waste Percentage:",
+      "calc-btn": "Calculate Concrete Volume",
+      "pdf-btn": "📄 Save PDF",
+      types: {
+        slab: "Slab",
+        column: "Column",
+        beam: "Beam",
+        footing: "Footing",
+        wall: "Wall"
+      },
+      result: (vol, volWaste, wastePercent) =>
+        `Net Volume: <span style="color: var(--primary); font-size: 1.2em;">${vol} m³</span><br>` +
+        `Volume with Waste (${wastePercent}%): <span style="color: var(--accent); font-size: 1.2em;">${volWaste} m³</span>`,
+      error: "Please enter valid dimensions.",
+      alertPdf: "Please calculate volume first."
+    }
+  };
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+    const t = translations[currentLang];
+
+    document.getElementById('title').innerText = t.title;
+    document.getElementById('subtitle').innerText = t.subtitle;
+    document.getElementById('label-type').innerText = t["label-type"];
+    document.getElementById('label-unit').innerText = t["label-unit"];
+    document.getElementById('label-length').innerText = t["label-length"];
+    document.getElementById('label-width').innerText = t["label-width"];
+    document.getElementById('label-height').innerText = t["label-height"];
+    document.getElementById('label-waste').innerText = t["label-waste"];
+    document.getElementById('calc-btn').innerText = t["calc-btn"];
+    document.getElementById('pdf-btn').innerText = t["pdf-btn"];
+
+    // تحديث خيارات العناصر
+    const typeSelect = document.getElementById('type');
+    for(let i=0; i < typeSelect.options.length; i++) {
+      let val = typeSelect.options[i].value;
+      typeSelect.options[i].text = t.types[val];
+    }
+
+    // تحديث زر اللغة
+    document.getElementById('langToggle').innerText = currentLang === 'ar' ? 'English' : 'العربية';
+
+    // إعادة حساب وإظهار النتيجة إذا كانت موجودة
+    if (lastResultText !== '') calculateVolume();
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+    const darkBtn = document.getElementById('darkToggle');
+    if(document.body.classList.contains('dark')){
+      darkBtn.innerText = '☀️';
+    } else {
+      darkBtn.innerText = '🌙';
+    }
+  }
+
+  function calculateVolume() {
+    const type = document.getElementById('type').value;
+    const unit = document.getElementById('unit').value;
+    const waste = parseFloat(document.getElementById('waste').value);
+
+    let length = parseFloat(document.getElementById('length').value);
+    let width = parseFloat(document.getElementById('width').value);
+    let height = parseFloat(document.getElementById('height').value);
+
+    const t = translations[currentLang];
+
+    if (isNaN(length) || isNaN(width) || isNaN(height) || length <= 0 || width <= 0 || height <= 0) {
+      document.getElementById('result').innerHTML = t.error;
+      lastResultText = '';
+      return;
+    }
+
+    if (unit === "cm") {
+      length /= 100;
+      width /= 100;
+      height /= 100;
+    }
+
+    const volume = length * width * height;
+    const volumeWithWaste = volume * (1 + waste);
+    const wastePercent = (waste * 100).toFixed(0);
+
+    lastResultText = `${t.types[type]}:\n` +
+      `${length.toFixed(2)} × ${width.toFixed(2)} × ${height.toFixed(2)} ${unit === "cm" ? (currentLang === 'ar' ? 'م' : 'm') : (currentLang === 'ar' ? 'م' : 'm')}\n` +
+      `${currentLang === 'ar' ? 'الحجم الصافي' : 'Net Volume'}: ${volume.toFixed(2)} ${currentLang === 'ar' ? 'م³' : 'm³'}\n` +
+      `${currentLang === 'ar' ? 'الحجم مع الهدر' : 'Volume with Waste'} (${wastePercent}%): ${volumeWithWaste.toFixed(2)} ${currentLang === 'ar' ? 'م³' : 'm³'}`;
+
+    document.getElementById('result').innerHTML = t.result(volume.toFixed(2), volumeWithWaste.toFixed(2), wastePercent);
+  }
+
+  async function generatePDF() {
+    if (!lastResultText) {
+      alert(translations[currentLang].alertPdf);
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text(translations[currentLang].title, 20, 20);
+
+    doc.setFont("Helvetica", "normal");
+    doc.setFontSize(12);
+
+    // لتقسيم النص السطر بسطر (لأن jsPDF لا يدعم تنسيق HTML داخل النص)
+    let splitText = lastResultText.split('\n');
+    doc.text(splitText, 20, 40);
+
+    doc.save("Concrete_Volume_Result.pdf");
+  }
+
+  // إعداد اللغة للبدء
+  toggleLanguage();
+</script>
+</body>
+</html>
