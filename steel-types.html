@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
         
         body {
@@ -19,6 +20,11 @@
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
+        }
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #f0f0f0;
         }
         
         .container {
@@ -38,6 +44,11 @@
             border: 2px solid #ff9800;
         }
         
+        .dark-mode header {
+            background: rgba(30, 30, 46, 0.95);
+            border-color: #ff6b00;
+        }
+        
         header::before {
             content: "";
             position: absolute;
@@ -55,10 +66,18 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
+        .dark-mode h1 {
+            color: #4caf50;
+        }
+        
         .subtitle {
             font-size: 1.4rem;
             color: #689f38;
             font-weight: 600;
+        }
+        
+        .dark-mode .subtitle {
+            color: #8bc34a;
         }
         
         .content-section {
@@ -69,6 +88,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
             border: 1px solid #ff9800;
+        }
+        
+        .dark-mode .content-section {
+            background: rgba(30, 30, 46, 0.97);
+            border-color: #ff6b00;
         }
         
         .content-section:hover {
@@ -85,6 +109,11 @@
             display: inline-block;
         }
         
+        .dark-mode h2 {
+            color: #4caf50;
+            border-bottom-color: #ff6b00;
+        }
+        
         .intro {
             font-size: 1.25rem;
             line-height: 1.8;
@@ -93,8 +122,16 @@
             text-align: justify;
         }
         
+        .dark-mode .intro {
+            color: #f0f0f0;
+        }
+        
         .intro strong {
             color: #ff5722;
+        }
+        
+        .dark-mode .intro strong {
+            color: #ff6b00;
         }
         
         .table-container {
@@ -105,10 +142,18 @@
             border: 1px solid #ff9800;
         }
         
+        .dark-mode .table-container {
+            border-color: #ff6b00;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
+        }
+        
+        .dark-mode table {
+            background: #1e1e2e;
         }
         
         th {
@@ -119,18 +164,35 @@
             text-align: right;
         }
         
+        .dark-mode th {
+            background: linear-gradient(to right, #1b5e20, #2e7d32);
+        }
+        
         td {
             padding: 15px;
             border-bottom: 1px solid #e0e0e0;
             font-size: 1.1rem;
         }
         
+        .dark-mode td {
+            border-bottom: 1px solid #3d3d5c;
+            color: #f0f0f0;
+        }
+        
         tr:nth-child(even) {
             background-color: #f1f8e9;
         }
         
+        .dark-mode tr:nth-child(even) {
+            background-color: #2a2a40;
+        }
+        
         tr:hover {
             background-color: #e8f5e9;
+        }
+        
+        .dark-mode tr:hover {
+            background-color: #3a3a5a;
         }
         
         .steel-icon {
@@ -144,6 +206,10 @@
             color: white;
             margin-left: 10px;
             font-size: 1.2rem;
+        }
+        
+        .dark-mode .steel-icon {
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
         }
         
         .features-grid {
@@ -164,10 +230,19 @@
             background: linear-gradient(to bottom, #ffffff, #fff8e1);
         }
         
+        .dark-mode .feature-card {
+            background: linear-gradient(to bottom, #2a2a40, #1e1e2e);
+            border-top: 4px solid #ff6b00;
+        }
+        
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
             background: linear-gradient(to bottom, #ffffff, #ffecb3);
+        }
+        
+        .dark-mode .feature-card:hover {
+            background: linear-gradient(to bottom, #3a3a5a, #2a2a40);
         }
         
         .feature-card i {
@@ -176,9 +251,21 @@
             margin-bottom: 15px;
         }
         
+        .dark-mode .feature-card i {
+            color: #ff6b00;
+        }
+        
         .feature-card h3 {
             color: #2e7d32;
             margin-bottom: 15px;
+        }
+        
+        .dark-mode .feature-card h3 {
+            color: #4caf50;
+        }
+        
+        .dark-mode .feature-card p {
+            color: #e0e0e0;
         }
         
         footer {
@@ -189,6 +276,11 @@
             border-radius: 15px;
             margin-top: 30px;
             border: 1px solid #ff9800;
+        }
+        
+        .dark-mode footer {
+            background: linear-gradient(to right, #3e2723, #4e342e);
+            border-color: #ff6b00;
         }
         
         @media (max-width: 768px) {
@@ -220,6 +312,132 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+        }
+        
+        /* أزرار التحكم */
+        .control-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .dark-mode .control-btn {
+            background: linear-gradient(135deg, #ff6b00, #ff3d00);
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2e7d32, #689f38);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .dark-mode .back-to-top {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+        }
+        
+        .language-menu {
+            position: absolute;
+            bottom: 70px;
+            left: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+            width: 150px;
+        }
+        
+        .dark-mode .language-menu {
+            background: #2a2a40;
+        }
+        
+        .language-menu.show {
+            display: block;
+        }
+        
+        .lang-option {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .lang-option:hover {
+            background: #f5f5f5;
+        }
+        
+        .dark-mode .lang-option:hover {
+            background: #3a3a5a;
+        }
+        
+        .lang-option i {
+            font-size: 1.2rem;
+        }
+        
+        .lang-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .lang-name {
+            font-weight: bold;
+        }
+        
+        .lang-code {
+            font-size: 0.8rem;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -332,7 +550,93 @@
         </footer>
     </div>
     
+    <!-- أزرار التحكم -->
+    <div class="control-buttons">
+        <button class="control-btn" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button class="control-btn" id="languageToggle">
+            <i class="fas fa-globe"></i>
+        </button>
+        <div class="language-menu" id="languageMenu">
+            <div class="lang-option" data-lang="ar">
+                <i class="fas fa-language"></i>
+                <div class="lang-text">
+                    <span class="lang-name">العربية</span>
+                    <span class="lang-code">AR</span>
+                </div>
+            </div>
+            <div class="lang-option" data-lang="en">
+                <i class="fas fa-language"></i>
+                <div class="lang-text">
+                    <span class="lang-name">English</span>
+                    <span class="lang-code">EN</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- زر الرجوع للأعلى -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
     <script>
+        // الوضع الداكن
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        // تحقق من التفضيل المحفوظ
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+        
+        // تبديل اللغة
+        const languageToggle = document.getElementById('languageToggle');
+        const languageMenu = document.getElementById('languageMenu');
+        
+        languageToggle.addEventListener('click', () => {
+            languageMenu.classList.toggle('show');
+        });
+        
+        // إغلاق قائمة اللغات عند النقر خارجها
+        document.addEventListener('click', (e) => {
+            if (!languageMenu.contains(e.target) {
+                languageMenu.classList.remove('show');
+            }
+        });
+        
+        // زر الرجوع للأعلى
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
         // تأثيرات تفاعلية بسيطة
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
