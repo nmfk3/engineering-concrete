@@ -3,552 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أنواع الحديد الإنشائي | Steel Types</title>
+    <title>أنواع الحديد الإنشائي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2E7D32; /* أخضر - كما في اختبارات الخرسانة */
-            --secondary: #455A64; /* رمادي مزرق - كما في اختبارات الخرسانة */
-            --accent: #FF8F00; /* برتقالي - كما في اختبارات الخرسانة */
-            --light: #F5F5F5;
-            --white: #FFFFFF;
-            --text: #333333;
-            --card-bg: #FFFFFF;
-            --error: #D32F2F;
-            --success: #388E3C;
-            --warning: #FFA000;
-            --border: #DDDDDD;
-        }
-
-        body.dark-mode {
-            background-color: #121212;
-            --light: #1E1E1E;
-            --white: #252525;
-            --text: #E0E0E0;
-            --card-bg: #2D2D2D;
-            --border: #444444;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.8;
+            background: linear-gradient(135deg, #1a2a6c, #2a4d69, #4b86b4);
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
         }
-
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
         header {
-            background: linear-gradient(135deg, var(--primary), #1B5E20); /* درجات خضراء كما في السابق */
-            color: var(--white);
-            padding: 1.5rem;
             text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .control-buttons {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .control-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
-
-        .control-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .main-container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            flex: 1;
-            width: 100%;
-        }
-
-        .content-card {
-            background: var(--card-bg);
-            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--accent); /* البرتقالي المميز كما في السابق */
-            margin-bottom: 2rem;
         }
-
-        .section {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #22c1c3);
         }
-
-        .section:last-child {
-            border-bottom: none;
+        
+        h1 {
+            font-size: 2.8rem;
+            color: #2a4d69;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .section-title {
-            color: var(--primary); /* اللون الأخضر الأساسي */
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 1.5rem;
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #4b86b4;
+            font-weight: 600;
         }
-
-        .section-title i {
-            color: var(--accent); /* البرتقالي المميز */
-            font-size: 1.6rem;
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
         }
-
-        .steel-table {
+        
+        .content-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            color: #1a2a6c;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ff8a00;
+            display: inline-block;
+        }
+        
+        .intro {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: justify;
+        }
+        
+        .intro strong {
+            color: #e52e71;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
+        }
+        
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1.5rem;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: white;
         }
-
-        .steel-table th {
-            background-color: var(--primary); /* اللون الأخضر الأساسي */
+        
+        th {
+            background: linear-gradient(to right, #1a2a6c, #2a4d69);
             color: white;
-            padding: 1rem;
-            text-align: center;
+            font-size: 1.2rem;
+            padding: 18px 15px;
+            text-align: right;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
             font-size: 1.1rem;
         }
-
-        .steel-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            text-align: center;
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
         }
-
-        .steel-table tr:nth-child(even) {
-            background-color: rgba(46, 125, 50, 0.05); /* أخضر فاتح - نفس السابق */
+        
+        tr:hover {
+            background-color: #e3f2fd;
         }
-
-        .steel-table tr:hover {
-            background-color: rgba(46, 125, 50, 0.1); /* أخضر فاتح - نفس السابق */
-        }
-
-        .steel-type {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-
+        
         .steel-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #B0BEC5, #78909C); /* درجات رمادية - محايدة */
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2a4d69, #4b86b4);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            line-height: 40px;
             color: white;
-            font-size: 1.5rem;
-        }
-
-        .steel-name {
-            font-weight: bold;
-            color: var(--primary); /* اللون الأخضر الأساسي */
+            margin-left: 10px;
             font-size: 1.2rem;
         }
-
-        .steel-code {
-            font-size: 0.9rem;
-            color: var(--secondary); /* الرمادي المزرق الثانوي */
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
         }
-
-        .steel-property {
-            font-weight: bold;
-        }
-
-        .steel-value {
-            color: var(--primary); /* اللون الأخضر الأساسي */
-        }
-
-        footer {
-            background-color: var(--secondary); /* الرمادي المزرق الثانوي - نفس السابق */
-            color: var(--white);
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
             text-align: center;
-            padding: 1.5rem;
-            margin-top: auto;
-            font-size: 0.9rem;
+            border-top: 4px solid #22c1c3;
         }
-
-        .steel-description {
-            margin-top: 2rem;
-            background: rgba(46, 125, 50, 0.1); /* أخضر فاتح - نفس السابق */
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary); /* اللون الأخضر الأساسي */
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
-
-        .steel-description h3 {
-            color: var(--primary); /* اللون الأخضر الأساسي */
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.3rem;
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #e52e71;
+            margin-bottom: 15px;
         }
-
-        .steel-description ul {
-            padding-right: 1.5rem;
-            list-style-type: none;
+        
+        .feature-card h3 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
         }
-
-        .steel-description li {
-            margin-bottom: 1rem;
-            position: relative;
-            padding-right: 1.5rem;
-            font-size: 1.1rem;
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 15px;
+            margin-top: 30px;
         }
-
-        .steel-description li:before {
-            content: "•";
-            color: var(--accent); /* البرتقالي المميز */
-            font-weight: bold;
-            position: absolute;
-            right: 0;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-
-        .intro-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            padding: 0 1rem;
-        }
-
-        /* تحسينات التوافق مع الشاشات الصغيرة */
+        
         @media (max-width: 768px) {
-            .control-buttons {
-                position: static;
-                justify-content: center;
-                margin-bottom: 1rem;
+            h1 {
+                font-size: 2.2rem;
             }
             
-            .main-container {
-                padding: 0 0.8rem;
+            .subtitle {
+                font-size: 1.1rem;
             }
             
-            .section-title {
-                font-size: 1.3rem;
+            .content-section {
+                padding: 25px;
             }
             
-            .steel-table {
-                font-size: 0.9rem;
-                display: block;
-                overflow-x: auto;
+            h2 {
+                font-size: 1.8rem;
             }
             
-            .steel-table th, 
-            .steel-table td {
-                padding: 0.8rem;
-                min-width: 100px;
+            .intro {
+                font-size: 1.1rem;
             }
             
-            .steel-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+            th, td {
+                font-size: 0.95rem;
+                padding: 12px 8px;
             }
-            
-            .steel-name {
-                font-size: 1rem;
-            }
-            
-            .section {
-                padding: 1rem;
-            }
-            
-            header {
-                padding: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .section-title {
-                font-size: 1.2rem;
-            }
-            
-            .steel-table th, 
-            .steel-table td {
-                padding: 0.6rem;
-                font-size: 0.85rem;
-            }
-            
-            .intro-text {
-                font-size: 1rem;
-            }
-            
-            .steel-description li {
-                font-size: 1rem;
-            }
-        }
-
-        /* تحسينات للوضع الداكن - نفس السابق */
-        body.dark-mode .steel-table tr:nth-child(even) {
-            background-color: rgba(46, 125, 50, 0.08);
-        }
-        
-        body.dark-mode .steel-description {
-            background: rgba(46, 125, 50, 0.15);
-        }
-        
-        body.dark-mode .input-group input,
-        body.dark-mode .input-group select {
-            background-color: #333;
-            border-color: #555;
-        }
-        
-        /* تحسينات عامة للتوافق */
-        .responsive-table-container {
-            overflow-x: auto;
-            width: 100%;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="control-buttons">
-            <button class="control-btn" id="backBtn" title="الرجوع">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <button class="control-btn" id="darkModeToggle" title="الوضع الداكن">
-                <i class="fas fa-moon"></i>
-            </button>
-            <button class="control-btn" id="languageToggle" title="تبديل اللغة">
-                <i class="fas fa-language"></i>
-            </button>
-        </div>
-
-        <h1 class="title-ar"><i class="fas fa-hard-hat"></i> أنواع الحديد الإنشائي</h1>
-        <h1 class="title-en" style="display:none;"><i class="fas fa-hard-hat"></i> Structural Steel Types</h1>
-        <p style="margin-top: 10px; opacity: 0.9;">
-            <span class="title-ar">nmfk3.github.io/engineering-conc</span>
-            <span class="title-en" style="display:none;">nmfk3.github.io/engineering-conc</span>
-        </p>
-    </header>
-
-    <div class="main-container">
-        <div class="content-card">
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-info-circle"></i>
-                    <span class="test-text-ar">مقدمة عن الحديد الإنشائي</span>
-                    <span class="test-text-en" style="display:none;">Introduction to Structural Steel</span>
-                </h2>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
+            <p class="subtitle">دليل شامل لأنواع الحديد المستخدم في الإنشاءات الهندسية</p>
+        </header>
+        
+        <section class="content-section">
+            <h2><span class="steel-icon"><i class="fas fa-book"></i></span> مقدمة عن الحديد الإنشائي</h2>
+            <p class="intro">
+                يُعد <strong>الحديد الإنشائي</strong> من أهم المواد المستخدمة في تشييد المباني والجسور والمنشآت الهندسية. يتميز بقوة تحمله ومقاومته للشد والانهيار، مما يجعله الخيار الأمثل للهياكل الإنشائية الكبيرة. تختلف أنواع الحديد حسب خصائصها الميكانيكية والكيميائية، حيث يلعب التركيب الكيميائي ونسبة الكربون دوراً أساسياً في تحديد قوة ومتانة الحديد.
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-weight-hanging"></i>
+                    <h3>قوة التحمل</h3>
+                    <p>يتميز الحديد الإنشائي بقدرة عالية على تحمل الأوزان والضغوط الهيكلية</p>
+                </div>
                 
-                <p class="intro-text">
-                    <span class="label-text-ar">
-                        يُعد الحديد الإنشائي من أهم المواد المستخدمة في تشييد المباني والجسور والمنشآت الهندسية. 
-                        يتميز بقوة تحمله ومقاومته للشد والانحناء، مما يجعله الخيار الأمثل للهياكل الإنشائية الكبيرة. 
-                        تختلف أنواع الحديد حسب خصائصها الميكانيكية والكيميائية، حيث يلعب التركيب الكيميائي ونسبة الكربون دوراً أساسياً في تحديد قوة ومتانة الحديد.
-                    </span>
-                    <span class="label-text-en" style="display:none;">
-                        Structural steel is one of the most important materials used in the construction of buildings, bridges, and engineering structures. 
-                        It is characterized by its load-bearing capacity and resistance to tension and bending, making it the ideal choice for large structural frameworks. 
-                        Steel types differ according to their mechanical and chemical properties, where the chemical composition and carbon content play a fundamental role in determining the strength and durability of the steel.
-                    </span>
-                </p>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>المقاومة</h3>
+                    <p>مقاومة عالية للشد والضغط والانثناء مما يضمن متانة الهياكل</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-ruler-combined"></i>
+                    <h3>المرونة</h3>
+                    <p>يمكن تشكيل الحديد الإنشائي بسهولة ليتناسب مع التصاميم المعقدة</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <h2><span class="steel-icon"><i class="fas fa-table"></i></span> جدول أنواع الحديد الإنشائي</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>نوع الحديد</th>
+                            <th>نسبة الكربون (%)</th>
+                            <th>الخصائص الميكانيكية</th>
+                            <th>الاستخدامات الشائعة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الحديد الطري (Low Carbon Steel)</td>
+                            <td>0.05 - 0.25</td>
+                            <td>ليّن، سهل التشكيل، قابل لللحام</td>
+                            <td>الهياكل الإنشائية، ألواح التسقيف، المواسير</td>
+                        </tr>
+                        <tr>
+                            <td>الحديد المتوسط (Medium Carbon Steel)</td>
+                            <td>0.25 - 0.55</td>
+                            <td>متوسط الصلابة، قابلية معالجة جيدة</td>
+                            <td>قضبان التسليح، المحاور، التروس</td>
+                        </tr>
+                        <tr>
+                            <td>الحديد العالي الكربون (High Carbon Steel)</td>
+                            <td>0.55 - 0.95</td>
+                            <td>عالية الصلابة، مقاومة للاهتراء</td>
+                            <td>أدوات القطع، النوابض، الأسلاك</td>
+                        </tr>
+                        <tr>
+                            <td>الفولاذ الإنشائي الهيكلي (Structural Steel)</td>
+                            <td>0.15 - 0.25</td>
+                            <td>قوة شد عالية، متانة ممتازة</td>
+                            <td>الهياكل الفولاذية، الجسور، ناطحات السحاب</td>
+                        </tr>
+                        <tr>
+                            <td>الفولاذ المقاوم للصدأ (Stainless Steel)</td>
+                            <td>0.03 - 1.2</td>
+                            <td>مقاوم للتآكل، متانة عالية</td>
+                            <td>المنشآت الساحلية، المعدات الطبية، التطبيقات المعمارية</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-table"></i>
-                    <span class="test-text-ar">جدول أنواع الحديد الإنشائي</span>
-                    <span class="test-text-en" style="display:none;">Structural Steel Types Table</span>
-                </h2>
-                
-                <div class="responsive-table-container">
-                    <table class="steel-table">
-                        <thead>
-                            <tr>
-                                <th><span class="label-text-ar">النوع</span><span class="label-text-en" style="display:none;">Type</span></th>
-                                <th><span class="label-text-ar">الرمز</span><span class="label-text-en" style="display:none;">Code</span></th>
-                                <th><span class="label-text-ar">مقاومة الشد (N/mm²)</span><span class="label-text-en" style="display:none;">Tensile Strength</span></th>
-                                <th><span class="label-text-ar">مقاومة الخضوع (N/mm²)</span><span class="label-text-en" style="display:none;">Yield Strength</span></th>
-                                <th><span class="label-text-ar">الاستخدامات</span><span class="label-text-en" style="display:none;">Applications</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="steel-type">
-                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
-                                        <div>
-                                            <div class="steel-name">حديد 37</div>
-                                            <div class="steel-code">A36</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>A36</td>
-                                <td><span class="steel-property">370-500</span></td>
-                                <td><span class="steel-value">250</span></td>
-                                <td>الهياكل العامة، الجسور الصغيرة</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="steel-type">
-                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
-                                        <div>
-                                            <div class="steel-name">حديد 52</div>
-                                            <div class="steel-code">A572</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>A572</td>
-                                <td><span class="steel-property">520-700</span></td>
-                                <td><span class="steel-value">360</span></td>
-                                <td>المباني الشاهقة، الجسور الكبيرة</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="steel-type">
-                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
-                                        <div>
-                                            <div class="steel-name">حديد 60</div>
-                                            <div class="steel-code">A992</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>A992</td>
-                                <td><span class="steel-property">620-760</span></td>
-                                <td><span class="steel-value">440</span></td>
-                                <td>الهياكل ذات الأحمال الثقيلة</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="steel-type">
-                                        <div class="steel-icon"><i class="fas fa-shield-alt"></i></div>
-                                        <div>
-                                            <div class="steel-name">حديد مقاوم للصدأ</div>
-                                            <div class="steel-code">304/316</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>304/316</td>
-                                <td><span class="steel-property">500-700</span></td>
-                                <td><span class="steel-value">200-300</span></td>
-                                <td>المنشآت الساحلية، الصناعات الغذائية</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="steel-type">
-                                        <div class="steel-icon"><i class="fas fa-bolt"></i></div>
-                                        <div>
-                                            <div class="steel-name">حديد عالي المقاومة</div>
-                                            <div class="steel-code">A514</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>A514</td>
-                                <td><span class="steel-property">760-895</span></td>
-                                <td><span class="steel-value">690</span></td>
-                                <td>الرافعات، المعدات الثقيلة</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-hard-hat"></i>
+                    <h3>السلامة الهيكلية</h3>
+                    <p>يضمن الحديد الإنشائي سلامة الهياكل في الظروف القاسية</p>
                 </div>
                 
-                <div class="steel-description">
-                    <h3><i class="fas fa-info-circle"></i> <span class="label-text-ar">معلومات عامة عن الحديد الإنشائي</span><span class="label-text-en" style="display:none;">General Information About Structural Steel</span></h3>
-                    <ul>
-                        <li><span class="label-text-ar">يستخدم الحديد الإنشائي في تشييد المباني والجسور والمنشآت الهندسية المختلفة</span></li>
-                        <li><span class="label-text-ar">يتم تصنيف الحديد الإنشائي حسب قوة تحمله ومقاومته للشد والانحناء</span></li>
-                        <li><span class="label-text-ar">تختلف أنواع الحديد حسب نسبة الكربون والعناصر السبائكية المضافة</span></li>
-                        <li><span class="label-text-ar">يتم اختيار نوع الحديد المناسب حسب متطلبات المشروع والظروف البيئية</span></li>
-                        <li><span class="label-text-ar">يتطلب الحديد الإنشائي معالجة خاصة للحماية من الصدأ والتآكل</span></li>
-                    </ul>
+                <div class="feature-card">
+                    <i class="fas fa-building"></i>
+                    <h3>المتانة</h3>
+                    <p>يدوم الحديد الإنشائي لعقود مع صيانة محدودة</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-recycle"></i>
+                    <h3>القابلية لإعادة التدوير</h3>
+                    <p>يمكن إعادة تدوير الحديد الإنشائي بنسبة 100%</p>
                 </div>
             </div>
-        </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 دليل أنواع الحديد الإنشائي | تم تطويره وفق أحدث المعايير الهندسية</p>
+            <p>جميع الحقوق محفوظة - تم حذف الروابط الخارجية حسب الطلب</p>
+        </footer>
     </div>
-
-    <footer>
-        <p class="footer-text-ar">برمجة وتطوير: م. علي عبد الرحيم محي الدين </p>
-        <p class="footer-text-en" style="display:none;">Developed by: E. Ali Abdul Rahim Mohieddin </p>
-    </footer>
-
-    <script>
-        // تأكد من تحميل DOM بالكامل قبل تنفيذ الجافاسكربت
-        document.addEventListener('DOMContentLoaded', function() {
-            // الوضع الداكن
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            
-            // تحميل التفضيلات المحفوظة
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.body.classList.add('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-
-            darkModeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-                localStorage.setItem('darkMode', isDark);
-            });
-
-            // تبديل اللغة
-            const languageToggle = document.getElementById('languageToggle');
-            let currentLanguage = localStorage.getItem('language') || 'ar';
-            
-            function updateLanguage() {
-                document.documentElement.lang = currentLanguage;
-                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
-                
-                document.querySelectorAll('[class*="text-ar"], [class*="label-ar"], [class*="title-ar"]').forEach(el => {
-                    el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
-                });
-                
-                document.querySelectorAll('[class*="text-en"], [class*="label-en"], [class*="title-en"]').forEach(el => {
-                    el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
-                });
-                
-                localStorage.setItem('language', currentLanguage);
-            }
-
-            languageToggle.addEventListener('click', function() {
-                currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
-                updateLanguage();
-            });
-
-            // زر الرجوع
-            document.getElementById('backBtn').addEventListener('click', function() {
-                window.history.back();
-            });
-
-            // تهيئة أولية
-            updateLanguage();
-        });
-    </script>
 </body>
 </html>
