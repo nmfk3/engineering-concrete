@@ -87,6 +87,7 @@
             margin: 2rem auto;
             padding: 0 1rem;
             flex: 1;
+            width: 100%;
         }
 
         .content-card {
@@ -246,6 +247,7 @@
             padding: 0 1rem;
         }
 
+        /* تحسينات التوافق مع الشاشات الصغيرة */
         @media (max-width: 768px) {
             .control-buttons {
                 position: static;
@@ -263,17 +265,52 @@
             
             .steel-table {
                 font-size: 0.9rem;
+                display: block;
+                overflow-x: auto;
             }
             
             .steel-table th, 
             .steel-table td {
                 padding: 0.8rem;
+                min-width: 100px;
             }
             
             .steel-icon {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
+            }
+            
+            .steel-name {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .steel-table th, 
+            .steel-table td {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+            
+            .intro-text {
+                font-size: 1rem;
+            }
+            
+            .steel-description li {
+                font-size: 1rem;
             }
         }
 
@@ -285,11 +322,20 @@
         body.dark-mode .steel-description {
             background: rgba(30, 136, 229, 0.15);
         }
+        
+        /* تحسينات عامة للتوافق */
+        .responsive-table-container {
+            overflow-x: auto;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="control-buttons">
+            <button class="control-btn" id="backBtn" title="الرجوع">
+                <i class="fas fa-arrow-left"></i>
+            </button>
             <button class="control-btn" id="darkModeToggle" title="الوضع الداكن">
                 <i class="fas fa-moon"></i>
             </button>
@@ -300,6 +346,10 @@
 
         <h1 class="title-ar"><i class="fas fa-hard-hat"></i> أنواع الحديد الإنشائي</h1>
         <h1 class="title-en" style="display:none;"><i class="fas fa-hard-hat"></i> Structural Steel Types</h1>
+        <p style="margin-top: 10px; opacity: 0.9;">
+            <span class="title-ar">nmfk3.github.io/engineering-conc</span>
+            <span class="title-en" style="display:none;">nmfk3.github.io/engineering-conc</span>
+        </p>
     </header>
 
     <div class="main-container">
@@ -332,94 +382,96 @@
                     <span class="test-text-en" style="display:none;">Structural Steel Types Table</span>
                 </h2>
                 
-                <table class="steel-table">
-                    <thead>
-                        <tr>
-                            <th><span class="label-text-ar">النوع</span><span class="label-text-en" style="display:none;">Type</span></th>
-                            <th><span class="label-text-ar">الرمز</span><span class="label-text-en" style="display:none;">Code</span></th>
-                            <th><span class="label-text-ar">مقاومة الشد (N/mm²)</span><span class="label-text-en" style="display:none;">Tensile Strength</span></th>
-                            <th><span class="label-text-ar">مقاومة الخضوع (N/mm²)</span><span class="label-text-en" style="display:none;">Yield Strength</span></th>
-                            <th><span class="label-text-ar">الاستخدامات</span><span class="label-text-en" style="display:none;">Applications</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="steel-type">
-                                    <div class="steel-icon"><i class="fas fa-bars"></i></div>
-                                    <div>
-                                        <div class="steel-name">حديد 37</div>
-                                        <div class="steel-code">A36</div>
+                <div class="responsive-table-container">
+                    <table class="steel-table">
+                        <thead>
+                            <tr>
+                                <th><span class="label-text-ar">النوع</span><span class="label-text-en" style="display:none;">Type</span></th>
+                                <th><span class="label-text-ar">الرمز</span><span class="label-text-en" style="display:none;">Code</span></th>
+                                <th><span class="label-text-ar">مقاومة الشد (N/mm²)</span><span class="label-text-en" style="display:none;">Tensile Strength</span></th>
+                                <th><span class="label-text-ar">مقاومة الخضوع (N/mm²)</span><span class="label-text-en" style="display:none;">Yield Strength</span></th>
+                                <th><span class="label-text-ar">الاستخدامات</span><span class="label-text-en" style="display:none;">Applications</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
+                                        <div>
+                                            <div class="steel-name">حديد 37</div>
+                                            <div class="steel-code">A36</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>A36</td>
-                            <td><span class="steel-property">370-500</span></td>
-                            <td><span class="steel-value">250</span></td>
-                            <td>الهياكل العامة، الجسور الصغيرة</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="steel-type">
-                                    <div class="steel-icon"><i class="fas fa-bars"></i></div>
-                                    <div>
-                                        <div class="steel-name">حديد 52</div>
-                                        <div class="steel-code">A572</div>
+                                </td>
+                                <td>A36</td>
+                                <td><span class="steel-property">370-500</span></td>
+                                <td><span class="steel-value">250</span></td>
+                                <td>الهياكل العامة، الجسور الصغيرة</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
+                                        <div>
+                                            <div class="steel-name">حديد 52</div>
+                                            <div class="steel-code">A572</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>A572</td>
-                            <td><span class="steel-property">520-700</span></td>
-                            <td><span class="steel-value">360</span></td>
-                            <td>المباني الشاهقة، الجسور الكبيرة</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="steel-type">
-                                    <div class="steel-icon"><i class="fas fa-bars"></i></div>
-                                    <div>
-                                        <div class="steel-name">حديد 60</div>
-                                        <div class="steel-code">A992</div>
+                                </td>
+                                <td>A572</td>
+                                <td><span class="steel-property">520-700</span></td>
+                                <td><span class="steel-value">360</span></td>
+                                <td>المباني الشاهقة، الجسور الكبيرة</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
+                                        <div>
+                                            <div class="steel-name">حديد 60</div>
+                                            <div class="steel-code">A992</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>A992</td>
-                            <td><span class="steel-property">620-760</span></td>
-                            <td><span class="steel-value">440</span></td>
-                            <td>الهياكل ذات الأحمال الثقيلة</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="steel-type">
-                                    <div class="steel-icon"><i class="fas fa-shield-alt"></i></div>
-                                    <div>
-                                        <div class="steel-name">حديد مقاوم للصدأ</div>
-                                        <div class="steel-code">304/316</div>
+                                </td>
+                                <td>A992</td>
+                                <td><span class="steel-property">620-760</span></td>
+                                <td><span class="steel-value">440</span></td>
+                                <td>الهياكل ذات الأحمال الثقيلة</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-shield-alt"></i></div>
+                                        <div>
+                                            <div class="steel-name">حديد مقاوم للصدأ</div>
+                                            <div class="steel-code">304/316</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>304/316</td>
-                            <td><span class="steel-property">500-700</span></td>
-                            <td><span class="steel-value">200-300</span></td>
-                            <td>المنشآت الساحلية، الصناعات الغذائية</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="steel-type">
-                                    <div class="steel-icon"><i class="fas fa-bolt"></i></div>
-                                    <div>
-                                        <div class="steel-name">حديد عالي المقاومة</div>
-                                        <div class="steel-code">A514</div>
+                                </td>
+                                <td>304/316</td>
+                                <td><span class="steel-property">500-700</span></td>
+                                <td><span class="steel-value">200-300</span></td>
+                                <td>المنشآت الساحلية، الصناعات الغذائية</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bolt"></i></div>
+                                        <div>
+                                            <div class="steel-name">حديد عالي المقاومة</div>
+                                            <div class="steel-code">A514</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>A514</td>
-                            <td><span class="steel-property">760-895</span></td>
-                            <td><span class="steel-value">690</span></td>
-                            <td>الرافعات، المعدات الثقيلة</td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                                <td>A514</td>
+                                <td><span class="steel-property">760-895</span></td>
+                                <td><span class="steel-value">690</span></td>
+                                <td>الرافعات، المعدات الثقيلة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 
                 <div class="steel-description">
                     <h3><i class="fas fa-info-circle"></i> <span class="label-text-ar">معلومات عامة عن الحديد الإنشائي</span><span class="label-text-en" style="display:none;">General Information About Structural Steel</span></h3>
@@ -481,6 +533,11 @@
             languageToggle.addEventListener('click', function() {
                 currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
                 updateLanguage();
+            });
+
+            // زر الرجوع
+            document.getElementById('backBtn').addEventListener('click', function() {
+                window.history.back();
             });
 
             // تهيئة أولية
