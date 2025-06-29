@@ -131,7 +131,8 @@
         }
 
         .input-group input,
-        .input-group select {
+        .input-group select,
+        .input-group textarea {
             width: 100%;
             padding: 0.9rem;
             border: 1px solid var(--border);
@@ -142,7 +143,8 @@
         }
 
         .input-group input:focus,
-        .input-group select:focus {
+        .input-group select:focus,
+        .input-group textarea:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(255, 143, 0, 0.2);
@@ -250,6 +252,24 @@
             display: none;
         }
 
+        /* أنماط الجدول الإحصائي */
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .result-table th, .result-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .result-table th {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--secondary);
+        }
+
         @media (max-width: 768px) {
             .control-buttons {
                 position: static;
@@ -272,7 +292,8 @@
 
         /* تحسينات للوضع الداكن */
         body.dark-mode .input-group input,
-        body.dark-mode .input-group select {
+        body.dark-mode .input-group select,
+        body.dark-mode .input-group textarea {
             background-color: #333;
             border-color: #555;
         }
@@ -343,6 +364,72 @@
                         <span class="result-value" id="strength-status">-</span>
                     </div>
                 </div>
+
+                <!-- قسم التحليل الإحصائي -->
+                <div class="input-group">
+                    <label>
+                        <span class="label-text-ar">إدخال عدة نتائج (kN) - مفصولة بفواصل:</span>
+                        <span class="label-text-en" style="display:none;">Enter multiple results (kN) - comma separated:</span>
+                    </label>
+                    <input type="text" id="multiple-results" placeholder="مثال: 500, 520, 480, 510">
+                </div>
+
+                <button class="calculate-btn" id="calculate-statistics">
+                    <span class="btn-text-ar">تحليل النتائج الإحصائية</span>
+                    <span class="btn-text-en" style="display:none;">Statistical Analysis</span>
+                </button>
+
+                <div class="result-section" id="statistics-result">
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">عدد العينات:</span>
+                            <span class="result-label-en" style="display:none;">Number of Samples:</span>
+                        </span>
+                        <span class="result-value" id="samples-count">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">المتوسط الحسابي:</span>
+                            <span class="result-label-en" style="display:none;">Average:</span>
+                        </span>
+                        <span class="result-value" id="average-strength">0</span> N/mm²
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">الانحراف المعياري:</span>
+                            <span class="result-label-en" style="display:none;">Standard Deviation:</span>
+                        </span>
+                        <span class="result-value" id="standard-deviation">0</span> N/mm²
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">معامل الاختلاف (CV%):</span>
+                            <span class="result-label-en" style="display:none;">Coefficient of Variation (CV%):</span>
+                        </span>
+                        <span class="result-value" id="coefficient-variation">0</span> %
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">أقل نتيجة:</span>
+                            <span class="result-label-en" style="display:none;">Minimum Value:</span>
+                        </span>
+                        <span class="result-value" id="min-strength">0</span> N/mm²
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">أعلى نتيجة:</span>
+                            <span class="result-label-en" style="display:none;">Maximum Value:</span>
+                        </span>
+                        <span class="result-value" id="max-strength">0</span> N/mm²
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">التقييم:</span>
+                            <span class="result-label-en" style="display:none;">Evaluation:</span>
+                        </span>
+                        <span class="result-value" id="statistics-status">-</span>
+                    </div>
+                </div>
             </div>
 
             <!-- اختبار نسبة الماء/أسمنت -->
@@ -391,7 +478,7 @@
     </div>
 
     <footer>
-        <p class="footer-text-ar">برمجة وتطوير:م. علي عبد الرحيم محي الدين </p>
+        <p class="footer-text-ar">برمجة وتطوير: فريق البناء الذكي</p>
         <p class="footer-text-en" style="display:none;">Developed by: Smart Build Team</p>
     </footer>
 
@@ -438,7 +525,7 @@
 
         // زر الرجوع
         document.getElementById('backBtn').addEventListener('click', () => {
-            window.location.href = 'index.html'; // أو window.history.back();
+            window.history.back();
         });
 
         // التحقق من المدخلات
@@ -525,6 +612,60 @@
             document.getElementById('ratio-evaluation').textContent = evaluation;
             document.getElementById('ratio-evaluation').className = 'result-value ' + evalClass;
             document.getElementById('ratio-result').style.display = 'block';
+        });
+
+        // التحليل الإحصائي
+        document.getElementById('calculate-statistics').addEventListener('click', function() {
+            const resultsInput = document.getElementById('multiple-results').value;
+            const results = resultsInput.split(',').map(item => parseFloat(item.trim())).filter(item => !isNaN(item));
+            
+            if (results.length < 2) {
+                alert(currentLanguage === 'ar' ? 'أدخل على الأقل نتيجتين صحيحتين!' : 'Enter at least 2 valid results!');
+                return;
+            }
+
+            const area = 22500; // مساحة العينة القياسية (150x150mm)
+            const strengths = results.map(load => (load * 1000) / area); // تحويل kN إلى N/mm²
+
+            // المتوسط الحسابي
+            const average = strengths.reduce((sum, val) => sum + val, 0) / strengths.length;
+            
+            // الانحراف المعياري
+            const squaredDifferences = strengths.map(val => Math.pow(val - average, 2));
+            const variance = squaredDifferences.reduce((sum, val) => sum + val, 0) / strengths.length;
+            const standardDeviation = Math.sqrt(variance);
+            
+            // معامل الاختلاف (CV%)
+            const coefficientOfVariation = (standardDeviation / average) * 100;
+
+            // القيم القصوى والدنيا
+            const minStrength = Math.min(...strengths);
+            const maxStrength = Math.max(...strengths);
+
+            // عرض النتائج
+            document.getElementById('samples-count').textContent = strengths.length;
+            document.getElementById('average-strength').textContent = average.toFixed(2);
+            document.getElementById('standard-deviation').textContent = standardDeviation.toFixed(2);
+            document.getElementById('coefficient-variation').textContent = coefficientOfVariation.toFixed(2);
+            document.getElementById('min-strength').textContent = minStrength.toFixed(2);
+            document.getElementById('max-strength').textContent = maxStrength.toFixed(2);
+
+            // التقييم
+            let status, statusClass;
+            if (coefficientOfVariation < 10) {
+                status = currentLanguage === 'ar' ? 'ممتاز (تجانس عالي)' : 'Excellent (High Uniformity)';
+                statusClass = 'text-success';
+            } else if (coefficientOfVariation <= 15) {
+                status = currentLanguage === 'ar' ? 'جيد (مقبول حسب ACI 318)' : 'Good (Acceptable per ACI 318)';
+                statusClass = 'text-warning';
+            } else {
+                status = currentLanguage === 'ar' ? 'ضعيف (غير متجانس)' : 'Poor (Non-Uniform)';
+                statusClass = 'text-error';
+            }
+
+            document.getElementById('statistics-status').textContent = status;
+            document.getElementById('statistics-status').className = 'result-value ' + statusClass;
+            document.getElementById('statistics-result').style.display = 'block';
         });
 
         // تهيئة أولية
