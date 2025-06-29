@@ -370,9 +370,152 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* نافذة اختيار اللغة */
+        .language-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .language-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .dark-mode .modal-content {
+            background: #1e1e2e;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #2e7d32;
+        }
+        
+        .dark-mode .modal-title {
+            color: #4caf50;
+        }
+        
+        .language-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .language-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-option:hover {
+            background: #f5f5f5;
+            transform: translateY(-3px);
+            border-color: #ff9800;
+        }
+        
+        .dark-mode .language-option {
+            border-color: #3d3d5c;
+        }
+        
+        .dark-mode .language-option:hover {
+            background: #2a2a40;
+            border-color: #ff6b00;
+        }
+        
+        .language-flag {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        
+        .language-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .close-btn {
+            background: #2a2a40;
+            color: white;
+        }
+        
+        .close-btn:hover {
+            background: #ff5722;
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- نافذة اختيار اللغة -->
+    <div class="language-modal" id="languageModal">
+        <div class="modal-content">
+            <div class="close-btn" id="closeModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h3 class="modal-title">اختر اللغة</h3>
+            <div class="language-options">
+                <div class="language-option" data-lang="ar">
+                    <div class="language-flag" style="background: #4CAF50; color: white;">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="language-name">العربية</div>
+                </div>
+                <div class="language-option" data-lang="en">
+                    <div class="language-flag" style="background: #2196F3; color: white;">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="language-name">English</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="container">
         <header>
             <!-- أزرار التحكم الشفافة في الزاوية العلوية اليمنى -->
@@ -388,80 +531,80 @@
                 </div>
             </div>
             
-            <h1><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
-            <p class="subtitle">دليل شامل لأنواع الحديد المستخدم في الإنشاءات الهندسية</p>
+            <h1 id="mainTitle"><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
+            <p class="subtitle" id="subTitle">دليل شامل لأنواع الحديد المستخدم في الإنشاءات الهندسية</p>
         </header>
         
         <section class="content-section">
-            <h2><span class="steel-icon"><i class="fas fa-book"></i></span> مقدمة عن الحديد الإنشائي</h2>
-            <p class="intro">
+            <h2 id="section1Title"><span class="steel-icon"><i class="fas fa-book"></i></span> مقدمة عن الحديد الإنشائي</h2>
+            <p class="intro" id="introText">
                 يُعد <strong>الحديد الإنشائي</strong> من أهم المواد المستخدمة في تشييد المباني والجسور والمنشآت الهندسية. يتميز بقوة تحمله ومقاومته للشد والانهيار، مما يجعله الخيار الأمثل للهياكل الإنشائية الكبيرة. تختلف أنواع الحديد حسب خصائصها الميكانيكية والكيميائية، حيث يلعب التركيب الكيميائي ونسبة الكربون دوراً أساسياً في تحديد قوة ومتانة الحديد.
             </p>
             
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-weight-hanging"></i>
-                    <h3>قوة التحمل</h3>
-                    <p>يتميز الحديد الإنشائي بقدرة عالية على تحمل الأوزان والضغوط الهيكلية</p>
+                    <h3 id="feature1Title">قوة التحمل</h3>
+                    <p id="feature1Desc">يتميز الحديد الإنشائي بقدرة عالية على تحمل الأوزان والضغوط الهيكلية</p>
                 </div>
                 
                 <div class="feature-card">
                     <i class="fas fa-shield-alt"></i>
-                    <h3>المقاومة</h3>
-                    <p>مقاومة عالية للشد والضغط والانثناء مما يضمن متانة الهياكل</p>
+                    <h3 id="feature2Title">المقاومة</h3>
+                    <p id="feature2Desc">مقاومة عالية للشد والضغط والانثناء مما يضمن متانة الهياكل</p>
                 </div>
                 
                 <div class="feature-card">
                     <i class="fas fa-ruler-combined"></i>
-                    <h3>المرونة</h3>
-                    <p>يمكن تشكيل الحديد الإنشائي بسهولة ليتناسب مع التصاميم المعقدة</p>
+                    <h3 id="feature3Title">المرونة</h3>
+                    <p id="feature3Desc">يمكن تشكيل الحديد الإنشائي بسهولة ليتناسب مع التصاميم المعقدة</p>
                 </div>
             </div>
         </section>
         
         <section class="content-section">
-            <h2><span class="steel-icon"><i class="fas fa-table"></i></span> جدول أنواع الحديد الإنشائي</h2>
+            <h2 id="section2Title"><span class="steel-icon"><i class="fas fa-table"></i></span> جدول أنواع الحديد الإنشائي</h2>
             
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>نوع الحديد</th>
-                            <th>نسبة الكربون (%)</th>
-                            <th>الخصائص الميكانيكية</th>
-                            <th>الاستخدامات الشائعة</th>
+                            <th id="col1Header">نوع الحديد</th>
+                            <th id="col2Header">نسبة الكربون (%)</th>
+                            <th id="col3Header">الخصائص الميكانيكية</th>
+                            <th id="col4Header">الاستخدامات الشائعة</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>الحديد الطري (Low Carbon Steel)</td>
-                            <td>0.05 - 0.25</td>
-                            <td>ليّن، سهل التشكيل، قابل لللحام</td>
-                            <td>الهياكل الإنشائية، ألواح التسقيف، المواسير</td>
+                            <td id="row1col1">الحديد الطري (Low Carbon Steel)</td>
+                            <td id="row1col2">0.05 - 0.25</td>
+                            <td id="row1col3">ليّن، سهل التشكيل، قابل لللحام</td>
+                            <td id="row1col4">الهياكل الإنشائية، ألواح التسقيف، المواسير</td>
                         </tr>
                         <tr>
-                            <td>الحديد المتوسط (Medium Carbon Steel)</td>
-                            <td>0.25 - 0.55</td>
-                            <td>متوسط الصلابة، قابلية معالجة جيدة</td>
-                            <td>قضبان التسليح، المحاور، التروس</td>
+                            <td id="row2col1">الحديد المتوسط (Medium Carbon Steel)</td>
+                            <td id="row2col2">0.25 - 0.55</td>
+                            <td id="row2col3">متوسط الصلابة، قابلية معالجة جيدة</td>
+                            <td id="row2col4">قضبان التسليح، المحاور، التروس</td>
                         </tr>
                         <tr>
-                            <td>الحديد العالي الكربون (High Carbon Steel)</td>
-                            <td>0.55 - 0.95</td>
-                            <td>عالية الصلابة، مقاومة للاهتراء</td>
-                            <td>أدوات القطع، النوابض، الأسلاك</td>
+                            <td id="row3col1">الحديد العالي الكربون (High Carbon Steel)</td>
+                            <td id="row3col2">0.55 - 0.95</td>
+                            <td id="row3col3">عالية الصلابة، مقاومة للاهتراء</td>
+                            <td id="row3col4">أدوات القطع، النوابض، الأسلاك</td>
                         </tr>
                         <tr>
-                            <td>الفولاذ الإنشائي الهيكلي (Structural Steel)</td>
-                            <td>0.15 - 0.25</td>
-                            <td>قوة شد عالية، متانة ممتازة</td>
-                            <td>الهياكل الفولاذية، الجسور، ناطحات السحاب</td>
+                            <td id="row4col1">الفولاذ الإنشائي الهيكلي (Structural Steel)</td>
+                            <td id="row4col2">0.15 - 0.25</td>
+                            <td id="row4col3">قوة شد عالية، متانة ممتازة</td>
+                            <td id="row4col4">الهياكل الفولاذية، الجسور، ناطحات السحاب</td>
                         </tr>
                         <tr>
-                            <td>الفولاذ المقاوم للصدأ (Stainless Steel)</td>
-                            <td>0.03 - 1.2</td>
-                            <td>مقاوم للتآكل، متانة عالية</td>
-                            <td>المنشآت الساحلية، المعدات الطبية، التطبيقات المعمارية</td>
+                            <td id="row5col1">الفولاذ المقاوم للصدأ (Stainless Steel)</td>
+                            <td id="row5col2">0.03 - 1.2</td>
+                            <td id="row5col3">مقاوم للتآكل، متانة عالية</td>
+                            <td id="row5col4">المنشآت الساحلية، المعدات الطبية، التطبيقات المعمارية</td>
                         </tr>
                     </tbody>
                 </table>
@@ -470,27 +613,27 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-hard-hat"></i>
-                    <h3>السلامة الهيكلية</h3>
-                    <p>يضمن الحديد الإنشائي سلامة الهياكل في الظروف القاسية</p>
+                    <h3 id="feature4Title">السلامة الهيكلية</h3>
+                    <p id="feature4Desc">يضمن الحديد الإنشائي سلامة الهياكل في الظروف القاسية</p>
                 </div>
                 
                 <div class="feature-card">
                     <i class="fas fa-building"></i>
-                    <h3>المتانة</h3>
-                    <p>يدوم الحديد الإنشائي لعقود مع صيانة محدودة</p>
+                    <h3 id="feature5Title">المتانة</h3>
+                    <p id="feature5Desc">يدوم الحديد الإنشائي لعقود مع صيانة محدودة</p>
                 </div>
                 
                 <div class="feature-card">
                     <i class="fas fa-recycle"></i>
-                    <h3>القابلية لإعادة التدوير</h3>
-                    <p>يمكن إعادة تدوير الحديد الإنشائي بنسبة 100%</p>
+                    <h3 id="feature6Title">القابلية لإعادة التدوير</h3>
+                    <p id="feature6Desc">يمكن إعادة تدوير الحديد الإنشائي بنسبة 100%</p>
                 </div>
             </div>
         </section>
         
         <footer>
-            <p>© 2023 دليل أنواع الحديد الإنشائي | تم تطويره وفق أحدث المعايير الهندسية</p>
-            <p>جميع الحقوق محفوظة - تصميم متجدد بألوان دافئة وجذابة</p>
+            <p id="footerText1">© 2023 دليل أنواع الحديد الإنشائي | تم تطويره وفق أحدث المعايير الهندسية</p>
+            <p id="footerText2">جميع الحقوق محفوظة - تصميم متجدد بألوان دافئة وجذابة</p>
         </footer>
     </div>
     
@@ -503,6 +646,7 @@
         if (localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
             darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            darkModeToggle.title = "الوضع الفاتح";
         }
         
         darkModeToggle.addEventListener('click', () => {
@@ -525,10 +669,157 @@
             window.history.back();
         });
         
-        // تبديل اللغة
+        // نافذة اختيار اللغة
+        const languageModal = document.getElementById('languageModal');
         const languageToggle = document.getElementById('languageToggle');
+        const closeModal = document.getElementById('closeModal');
+        
         languageToggle.addEventListener('click', () => {
-            alert('سيتم تفعيل خاصية تبديل اللغات في الإصدار القادم!');
+            languageModal.classList.add('show');
+        });
+        
+        closeModal.addEventListener('click', () => {
+            languageModal.classList.remove('show');
+        });
+        
+        // إغلاق النافذة عند النقر خارجها
+        window.addEventListener('click', (e) => {
+            if (e.target === languageModal) {
+                languageModal.classList.remove('show');
+            }
+        });
+        
+        // بيانات اللغة
+        const translations = {
+            ar: {
+                mainTitle: "أنواع الحديد الإنشائي",
+                subTitle: "دليل شامل لأنواع الحديد المستخدم في الإنشاءات الهندسية",
+                section1Title: "مقدمة عن الحديد الإنشائي",
+                introText: "يُعد <strong>الحديد الإنشائي</strong> من أهم المواد المستخدمة في تشييد المباني والجسور والمنشآت الهندسية. يتميز بقوة تحمله ومقاومته للشد والانهيار، مما يجعله الخيار الأمثل للهياكل الإنشائية الكبيرة. تختلف أنواع الحديد حسب خصائصها الميكانيكية والكيميائية، حيث يلعب التركيب الكيميائي ونسبة الكربون دوراً أساسياً في تحديد قوة ومتانة الحديد.",
+                feature1Title: "قوة التحمل",
+                feature1Desc: "يتميز الحديد الإنشائي بقدرة عالية على تحمل الأوزان والضغوط الهيكلية",
+                feature2Title: "المقاومة",
+                feature2Desc: "مقاومة عالية للشد والضغط والانثناء مما يضمن متانة الهياكل",
+                feature3Title: "المرونة",
+                feature3Desc: "يمكن تشكيل الحديد الإنشائي بسهولة ليتناسب مع التصاميم المعقدة",
+                section2Title: "جدول أنواع الحديد الإنشائي",
+                col1Header: "نوع الحديد",
+                col2Header: "نسبة الكربون (%)",
+                col3Header: "الخصائص الميكانيكية",
+                col4Header: "الاستخدامات الشائعة",
+                row1col1: "الحديد الطري (Low Carbon Steel)",
+                row1col2: "0.05 - 0.25",
+                row1col3: "ليّن، سهل التشكيل، قابل لللحام",
+                row1col4: "الهياكل الإنشائية، ألواح التسقيف، المواسير",
+                row2col1: "الحديد المتوسط (Medium Carbon Steel)",
+                row2col2: "0.25 - 0.55",
+                row2col3: "متوسط الصلابة، قابلية معالجة جيدة",
+                row2col4: "قضبان التسليح، المحاور، التروس",
+                row3col1: "الحديد العالي الكربون (High Carbon Steel)",
+                row3col2: "0.55 - 0.95",
+                row3col3: "عالية الصلابة، مقاومة للاهتراء",
+                row3col4: "أدوات القطع، النوابض، الأسلاك",
+                row4col1: "الفولاذ الإنشائي الهيكلي (Structural Steel)",
+                row4col2: "0.15 - 0.25",
+                row4col3: "قوة شد عالية، متانة ممتازة",
+                row4col4: "الهياكل الفولاذية، الجسور، ناطحات السحاب",
+                row5col1: "الفولاذ المقاوم للصدأ (Stainless Steel)",
+                row5col2: "0.03 - 1.2",
+                row5col3: "مقاوم للتآكل، متانة عالية",
+                row5col4: "المنشآت الساحلية، المعدات الطبية، التطبيقات المعمارية",
+                feature4Title: "السلامة الهيكلية",
+                feature4Desc: "يضمن الحديد الإنشائي سلامة الهياكل في الظروف القاسية",
+                feature5Title: "المتانة",
+                feature5Desc: "يدوم الحديد الإنشائي لعقود مع صيانة محدودة",
+                feature6Title: "القابلية لإعادة التدوير",
+                feature6Desc: "يمكن إعادة تدوير الحديد الإنشائي بنسبة 100%",
+                footerText1: "© 2023 دليل أنواع الحديد الإنشائي | تم تطويره وفق أحدث المعايير الهندسية",
+                footerText2: "جميع الحقوق محفوظة - تصميم متجدد بألوان دافئة وجذابة"
+            },
+            en: {
+                mainTitle: "Structural Steel Types",
+                subTitle: "A comprehensive guide to steel types used in engineering constructions",
+                section1Title: "Introduction to Structural Steel",
+                introText: "<strong>Structural steel</strong> is one of the most important materials used in the construction of buildings, bridges, and engineering structures. It is characterized by its load-bearing capacity and resistance to tension and collapse, making it the ideal choice for large structural frameworks. The types of steel vary according to their mechanical and chemical properties, where the chemical composition and carbon percentage play a fundamental role in determining the strength and durability of the steel.",
+                feature1Title: "Load Capacity",
+                feature1Desc: "Structural steel has a high capacity to bear weights and structural pressures",
+                feature2Title: "Resistance",
+                feature2Desc: "High resistance to tension, pressure and bending ensures structural durability",
+                feature3Title: "Flexibility",
+                feature3Desc: "Structural steel can be easily shaped to fit complex designs",
+                section2Title: "Table of Structural Steel Types",
+                col1Header: "Steel Type",
+                col2Header: "Carbon Percentage (%)",
+                col3Header: "Mechanical Properties",
+                col4Header: "Common Uses",
+                row1col1: "Mild Steel (Low Carbon Steel)",
+                row1col2: "0.05 - 0.25",
+                row1col3: "Soft, easy to shape, weldable",
+                row1col4: "Structural frames, roofing sheets, pipes",
+                row2col1: "Medium Carbon Steel",
+                row2col2: "0.25 - 0.55",
+                row2col3: "Medium hardness, good machinability",
+                row2col4: "Reinforcement bars, axles, gears",
+                row3col1: "High Carbon Steel",
+                row3col2: "0.55 - 0.95",
+                row3col3: "High hardness, wear resistance",
+                row3col4: "Cutting tools, springs, wires",
+                row4col1: "Structural Steel",
+                row4col2: "0.15 - 0.25",
+                row4col3: "High tensile strength, excellent durability",
+                row4col4: "Steel structures, bridges, skyscrapers",
+                row5col1: "Stainless Steel",
+                row5col2: "0.03 - 1.2",
+                row5col3: "Corrosion resistant, high durability",
+                row5col4: "Coastal structures, medical equipment, architectural applications",
+                feature4Title: "Structural Safety",
+                feature4Desc: "Structural steel ensures the safety of structures under harsh conditions",
+                feature5Title: "Durability",
+                feature5Desc: "Structural steel lasts for decades with minimal maintenance",
+                feature6Title: "Recyclability",
+                feature6Desc: "Structural steel is 100% recyclable",
+                footerText1: "© 2023 Structural Steel Guide | Developed according to the latest engineering standards",
+                footerText2: "All rights reserved - Renewed design with warm and attractive colors"
+            }
+        };
+        
+        // تطبيق اللغة المحددة
+        function applyLanguage(lang) {
+            // حفظ اللغة المفضلة
+            localStorage.setItem('language', lang);
+            
+            // تحديث اتجاه الصفحة
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // تحديث جميع النصوص
+            for (const [key, value] of Object.entries(translations[lang])) {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key === 'introText') {
+                        element.innerHTML = value;
+                    } else {
+                        element.textContent = value;
+                    }
+                }
+            }
+            
+            // إغلاق نافذة اللغة
+            languageModal.classList.remove('show');
+            
+            // تحديث عنوان الزر
+            languageToggle.title = lang === 'ar' ? "تبديل اللغة" : "Change Language";
+        }
+        
+        // تحميل اللغة المحفوظة
+        const savedLang = localStorage.getItem('language') || 'ar';
+        applyLanguage(savedLang);
+        
+        // اختيار اللغة
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.dataset.lang;
+                applyLanguage(lang);
+            });
         });
         
         // تأثيرات تفاعلية بسيطة
