@@ -20,11 +20,90 @@
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
+            padding-top: 100px; /* مساحة لشريط التنقل */
         }
         
         body.dark-mode {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: #f0f0f0;
+        }
+        
+        /* شريط التنقل العلوي */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to right, #5d4037, #795548);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-bottom: 3px solid #ff9800;
+        }
+        
+        .dark-mode .navbar {
+            background: linear-gradient(to right, #3e2723, #4e342e);
+            border-bottom: 3px solid #ff6b00;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-logo img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .nav-logo h2 {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+        
+        .nav-controls {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .nav-btn {
+            background: linear-gradient(135deg, #ff6b00, #ff3d00);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         
         .container {
@@ -283,73 +362,7 @@
             border-color: #ff6b00;
         }
         
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .content-section {
-                padding: 25px;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
-            
-            .intro {
-                font-size: 1.1rem;
-            }
-            
-            th, td {
-                font-size: 0.95rem;
-                padding: 12px 8px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* أزرار التحكم */
-        .control-buttons {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 1000;
-        }
-        
-        .control-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff9800, #ff5722);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            border: none;
-        }
-        
-        .dark-mode .control-btn {
-            background: linear-gradient(135deg, #ff6b00, #ff3d00);
-        }
-        
-        .control-btn:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-        
+        /* زر الرجوع للأعلى */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -385,63 +398,84 @@
             background: linear-gradient(135deg, #1b5e20, #2e7d32);
         }
         
-        .language-menu {
-            position: absolute;
-            bottom: 70px;
-            left: 0;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            display: none;
-            width: 150px;
-        }
-        
-        .dark-mode .language-menu {
-            background: #2a2a40;
-        }
-        
-        .language-menu.show {
-            display: block;
-        }
-        
-        .lang-option {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .lang-option:hover {
-            background: #f5f5f5;
-        }
-        
-        .dark-mode .lang-option:hover {
-            background: #3a3a5a;
-        }
-        
-        .lang-option i {
-            font-size: 1.2rem;
-        }
-        
-        .lang-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .lang-name {
-            font-weight: bold;
-        }
-        
-        .lang-code {
-            font-size: 0.8rem;
-            opacity: 0.7;
+        @media (max-width: 768px) {
+            body {
+                padding-top: 90px;
+            }
+            
+            .navbar {
+                height: auto;
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-logo {
+                margin-bottom: 15px;
+            }
+            
+            .nav-controls {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .intro {
+                font-size: 1.1rem;
+            }
+            
+            th, td {
+                font-size: 0.95rem;
+                padding: 12px 8px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- شريط التنقل العلوي -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <div class="logo-icon"><i class="fas fa-industry"></i></div>
+            <h2>أنواع الحديد الإنشائي</h2>
+        </div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn" id="backBtn">
+                <i class="fas fa-arrow-left"></i> الرجوع
+            </button>
+            <button class="nav-btn" id="darkModeToggle">
+                <i class="fas fa-moon"></i> الوضع الداكن
+            </button>
+            <button class="nav-btn" id="languageToggle">
+                <i class="fas fa-globe"></i> اللغة
+            </button>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <h1><i class="fas fa-industry"></i> أنواع الحديد الإنشائي</h1>
@@ -550,32 +584,6 @@
         </footer>
     </div>
     
-    <!-- أزرار التحكم -->
-    <div class="control-buttons">
-        <button class="control-btn" id="darkModeToggle">
-            <i class="fas fa-moon"></i>
-        </button>
-        <button class="control-btn" id="languageToggle">
-            <i class="fas fa-globe"></i>
-        </button>
-        <div class="language-menu" id="languageMenu">
-            <div class="lang-option" data-lang="ar">
-                <i class="fas fa-language"></i>
-                <div class="lang-text">
-                    <span class="lang-name">العربية</span>
-                    <span class="lang-code">AR</span>
-                </div>
-            </div>
-            <div class="lang-option" data-lang="en">
-                <i class="fas fa-language"></i>
-                <div class="lang-text">
-                    <span class="lang-name">English</span>
-                    <span class="lang-code">EN</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- زر الرجوع للأعلى -->
     <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
@@ -589,7 +597,7 @@
         // تحقق من التفضيل المحفوظ
         if (localStorage.getItem('darkMode') === 'enabled') {
             body.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> الوضع الفاتح';
         }
         
         darkModeToggle.addEventListener('click', () => {
@@ -597,26 +605,18 @@
             
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('darkMode', 'enabled');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> الوضع الفاتح';
             } else {
                 localStorage.setItem('darkMode', 'disabled');
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i> الوضع الداكن';
             }
         });
         
-        // تبديل اللغة
-        const languageToggle = document.getElementById('languageToggle');
-        const languageMenu = document.getElementById('languageMenu');
-        
-        languageToggle.addEventListener('click', () => {
-            languageMenu.classList.toggle('show');
-        });
-        
-        // إغلاق قائمة اللغات عند النقر خارجها
-        document.addEventListener('click', (e) => {
-            if (!languageMenu.contains(e.target) {
-                languageMenu.classList.remove('show');
-            }
+        // زر الرجوع (للصفحة الرئيسية)
+        const backBtn = document.getElementById('backBtn');
+        backBtn.addEventListener('click', () => {
+            // يمكن تغيير هذا الرابط ليكون رابط الصفحة الرئيسية
+            window.location.href = 'https://example.com'; // استبدل هذا بالرابط الفعلي
         });
         
         // زر الرجوع للأعلى
@@ -658,6 +658,12 @@
             heading.addEventListener('mouseleave', () => {
                 heading.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.1)';
             });
+        });
+        
+        // تبديل اللغة (بديل مؤقت)
+        const languageToggle = document.getElementById('languageToggle');
+        languageToggle.addEventListener('click', () => {
+            alert('سيتم إضافة خاصية تبديل اللغات في الإصدار القادم!');
         });
     </script>
 </body>
