@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختبارات الخرسانة | Concrete Tests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2E7D32;
@@ -17,6 +18,7 @@
             --error: #D32F2F;
             --success: #388E3C;
             --warning: #FFA000;
+            --border: #DDDDDD;
         }
 
         body.dark-mode {
@@ -25,6 +27,7 @@
             --white: #252525;
             --text: #E0E0E0;
             --card-bg: #2D2D2D;
+            --border: #444444;
         }
 
         * {
@@ -32,13 +35,14 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Tajawal', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
         body {
             background-color: var(--light);
             color: var(--text);
             line-height: 1.8;
+            min-height: 100vh;
         }
 
         header {
@@ -47,6 +51,7 @@
             padding: 1.5rem;
             text-align: center;
             position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .control-buttons {
@@ -68,6 +73,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
         }
 
         .calculator-container {
@@ -82,96 +92,162 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border-top: 4px solid var(--accent);
+            margin-bottom: 2rem;
         }
 
         .test-card {
             padding: 1.5rem;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .test-card:last-child {
+            border-bottom: none;
         }
 
         .test-title {
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            font-size: 1.2rem;
         }
 
         .test-title i {
             color: var(--accent);
+            font-size: 1.4rem;
         }
 
         .input-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             color: var(--secondary);
             font-weight: bold;
+            font-size: 1rem;
         }
 
         .input-group input,
         .input-group select {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 0.9rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
             background: var(--white);
             color: var(--text);
+            font-size: 1rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 143, 0, 0.2);
         }
 
         .calculate-btn {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 1rem;
+            padding: 1.1rem;
             width: 100%;
-            border-radius: 5px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
             margin-top: 1rem;
+            font-size: 1.1rem;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .calculate-btn:hover {
             background-color: #E65100;
+            transform: translateY(-2px);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
         }
 
         .result-section {
             background: rgba(46, 125, 50, 0.1);
-            padding: 1rem;
-            border-radius: 5px;
-            margin-top: 1rem;
+            padding: 1.2rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
             display: none;
+            border-right: 3px solid var(--primary);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .result-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dashed var(--border);
+            align-items: center;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
         .result-label {
             font-weight: bold;
             color: var(--secondary);
+            font-size: 1rem;
         }
 
         .result-value {
             font-weight: bold;
             color: var(--primary);
+            font-size: 1.1rem;
+            text-align: left;
+            min-width: 120px;
         }
 
-        .text-success { color: var(--success) !important; }
-        .text-warning { color: var(--warning) !important; }
-        .text-error { color: var(--error) !important; }
+        .text-success { 
+            color: var(--success) !important; 
+            background-color: rgba(56, 142, 60, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+        .text-warning { 
+            color: var(--warning) !important;
+            background-color: rgba(255, 160, 0, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+        .text-error { 
+            color: var(--error) !important;
+            background-color: rgba(211, 47, 47, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
 
         footer {
             background-color: var(--secondary);
             color: var(--white);
             text-align: center;
             padding: 1.5rem;
-            margin-top: 2rem;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -180,19 +256,42 @@
                 justify-content: center;
                 margin-bottom: 1rem;
             }
+            
+            .calculator-container {
+                padding: 0 0.8rem;
+            }
+            
+            .test-title {
+                font-size: 1.1rem;
+            }
+            
+            .input-group label {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* تحسينات للوضع الداكن */
+        body.dark-mode .input-group input,
+        body.dark-mode .input-group select {
+            background-color: #333;
+            border-color: #555;
+        }
+        
+        body.dark-mode .result-section {
+            background: rgba(46, 125, 50, 0.15);
         }
     </style>
 </head>
 <body>
     <header>
         <div class="control-buttons">
-            <button class="control-btn" id="backBtn">
+            <button class="control-btn" id="backBtn" title="الرجوع">
                 <i class="fas fa-arrow-left"></i>
             </button>
-            <button class="control-btn" id="darkModeToggle">
+            <button class="control-btn" id="darkModeToggle" title="الوضع الداكن">
                 <i class="fas fa-moon"></i>
             </button>
-            <button class="control-btn" id="languageToggle">
+            <button class="control-btn" id="languageToggle" title="تبديل اللغة">
                 <i class="fas fa-language"></i>
             </button>
         </div>
@@ -208,17 +307,19 @@
                 <h3 class="test-title">
                     <i class="fas fa-weight-hanging"></i>
                     <span class="test-text-ar">اختبار مقاومة الضغط</span>
-                    <span class="test-text-en" style="display:none;">Compressive Strength</span>
+                    <span class="test-text-en" style="display:none;">Compressive Strength Test</span>
                 </h3>
                 
                 <div class="input-group">
                     <label><span class="label-text-ar">عمر العينة (أيام):</span><span class="label-text-en" style="display:none;">Sample Age (days):</span></label>
                     <input type="number" id="test-age" min="1" value="28">
+                    <div class="error-message" id="age-error"></div>
                 </div>
                 
                 <div class="input-group">
-                    <label><span class="label-text-ar">أقصى حمل (kN):</span><span class="label-text-en" style="display:none;">Max Load (kN):</span></label>
-                    <input type="number" id="test-load" placeholder="500">
+                    <label><span class="label-text-ar">أقصى حمل (kN):</span><span class="label-text-en" style="display:none;">Maximum Load (kN):</span></label>
+                    <input type="number" id="test-load" min="1" placeholder="500">
+                    <div class="error-message" id="load-error"></div>
                 </div>
                 
                 <button class="calculate-btn" id="calculate-strength">
@@ -239,7 +340,7 @@
                             <span class="result-label-ar">الحالة:</span>
                             <span class="result-label-en" style="display:none;">Status:</span>
                         </span>
-                        <span class="result-value" id="strength-status"></span>
+                        <span class="result-value" id="strength-status">-</span>
                     </div>
                 </div>
             </div>
@@ -249,17 +350,19 @@
                 <h3 class="test-title">
                     <i class="fas fa-tint"></i>
                     <span class="test-text-ar">اختبار نسبة الماء/أسمنت</span>
-                    <span class="test-text-en" style="display:none;">Water-Cement Ratio</span>
+                    <span class="test-text-en" style="display:none;">Water-Cement Ratio Test</span>
                 </h3>
                 
                 <div class="input-group">
-                    <label><span class="label-text-ar">كمية الماء (لتر):</span><span class="label-text-en" style="display:none;">Water (liters):</span></label>
-                    <input type="number" id="water-amount" min="1">
+                    <label><span class="label-text-ar">كمية الماء (لتر):</span><span class="label-text-en" style="display:none;">Water Amount (liters):</span></label>
+                    <input type="number" id="water-amount" min="0.1" step="0.1" placeholder="100">
+                    <div class="error-message" id="water-error"></div>
                 </div>
                 
                 <div class="input-group">
-                    <label><span class="label-text-ar">كمية الأسمنت (كجم):</span><span class="label-text-en" style="display:none;">Cement (kg):</span></label>
-                    <input type="number" id="cement-amount" min="1">
+                    <label><span class="label-text-ar">كمية الأسمنت (كجم):</span><span class="label-text-en" style="display:none;">Cement Amount (kg):</span></label>
+                    <input type="number" id="cement-amount" min="0.1" step="0.1" placeholder="300">
+                    <div class="error-message" id="cement-error"></div>
                 </div>
                 
                 <button class="calculate-btn" id="calculate-ratio">
@@ -280,7 +383,7 @@
                             <span class="result-label-ar">التقييم:</span>
                             <span class="result-label-en" style="display:none;">Evaluation:</span>
                         </span>
-                        <span class="result-value" id="ratio-evaluation"></span>
+                        <span class="result-value" id="ratio-evaluation">-</span>
                     </div>
                 </div>
             </div>
@@ -288,13 +391,15 @@
     </div>
 
     <footer>
-        <p class="footer-text-ar">برمجة وتطوير: [اسمك]</p>
-        <p class="footer-text-en" style="display:none;">Developed by: [Your Name]</p>
+        <p class="footer-text-ar">برمجة وتطوير:م. علي عبد الرحيم محي الدين </p>
+        <p class="footer-text-en" style="display:none;">Developed by: Smart Build Team</p>
     </footer>
 
     <script>
         // الوضع الداكن
         const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        // تحميل التفضيلات المحفوظة
         if (localStorage.getItem('darkMode') === 'true') {
             document.body.classList.add('dark-mode');
             darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
@@ -315,11 +420,11 @@
             document.documentElement.lang = currentLanguage;
             document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
             
-            document.querySelectorAll('[class*="ar"]').forEach(el => {
+            document.querySelectorAll('[class*="text-ar"], [class*="label-ar"], [class*="title-ar"]').forEach(el => {
                 el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
             });
             
-            document.querySelectorAll('[class*="en"]').forEach(el => {
+            document.querySelectorAll('[class*="text-en"], [class*="label-en"], [class*="title-en"]').forEach(el => {
                 el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
             });
             
@@ -333,34 +438,53 @@
 
         // زر الرجوع
         document.getElementById('backBtn').addEventListener('click', () => {
-            window.history.back();
+            window.location.href = 'index.html'; // أو window.history.back();
         });
+
+        // التحقق من المدخلات
+        function validateInput(inputId, errorId, minValue = 0) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            const value = parseFloat(input.value);
+            
+            if (isNaN(value) || value <= minValue) {
+                error.textContent = currentLanguage === 'ar' ? 
+                    `القيمة يجب أن تكون رقمًا أكبر من ${minValue}` : 
+                    `Value must be a number greater than ${minValue}`;
+                error.style.display = 'block';
+                return false;
+            } else {
+                error.style.display = 'none';
+                return true;
+            }
+        }
 
         // اختبار مقاومة الضغط
         document.getElementById('calculate-strength').addEventListener('click', function() {
+            // التحقق من المدخلات
+            const isValidAge = validateInput('test-age', 'age-error', 0);
+            const isValidLoad = validateInput('test-load', 'load-error', 0);
+            
+            if (!isValidAge || !isValidLoad) return;
+            
             const age = parseInt(document.getElementById('test-age').value);
             const load = parseFloat(document.getElementById('test-load').value);
-            const area = 22500; // 150x150mm
+            const area = 22500; // مساحة العينة القياسية (150x150mm)
             
-            if (!load || isNaN(load)) {
-                alert(currentLanguage === 'ar' ? 'الرجاء إدخال حمل صحيح' : 'Please enter valid load');
-                return;
-            }
-            
-            const strength = (load * 1000) / area;
+            const strength = (load * 1000) / area; // التحويل من kN إلى N ثم القسمة على المساحة
             document.getElementById('compressive-strength').textContent = strength.toFixed(2);
             
             let status, statusClass;
             if (age === 28) {
                 if (strength >= 25) {
-                    status = currentLanguage === 'ar' ? '✔️ مطابق للمواصفات' : '✔️ Meets standards';
+                    status = currentLanguage === 'ar' ? 'مطابق للمواصفات (جيد)' : 'Meets standards (Good)';
                     statusClass = 'text-success';
                 } else {
-                    status = currentLanguage === 'ar' ? '✖️ غير مطابق' : '✖️ Below standards';
+                    status = currentLanguage === 'ar' ? 'غير مطابق (ضعيف)' : 'Below standards (Weak)';
                     statusClass = 'text-error';
                 }
             } else {
-                status = currentLanguage === 'ar' ? 'ℹ️ قارن مع منحنى النمو' : 'ℹ️ Compare with growth curve';
+                status = currentLanguage === 'ar' ? 'قارن مع منحنى النمو' : 'Compare with growth curve';
                 statusClass = 'text-warning';
             }
             
@@ -371,27 +495,31 @@
 
         // اختبار نسبة الماء/أسمنت
         document.getElementById('calculate-ratio').addEventListener('click', function() {
+            // التحقق من المدخلات
+            const isValidWater = validateInput('water-amount', 'water-error', 0);
+            const isValidCement = validateInput('cement-amount', 'cement-error', 0);
+            
+            if (!isValidWater || !isValidCement) return;
+            
             const water = parseFloat(document.getElementById('water-amount').value);
             const cement = parseFloat(document.getElementById('cement-amount').value);
-            
-            if (!water || !cement || isNaN(water) || isNaN(cement)) {
-                alert(currentLanguage === 'ar' ? 'الرجاء إدخال قيم صحيحة' : 'Please enter valid values');
-                return;
-            }
-            
             const ratio = (water / cement).toFixed(2);
+            
             document.getElementById('wc-ratio').textContent = ratio;
             
             let evaluation, evalClass;
             if (ratio < 0.35) {
-                evaluation = currentLanguage === 'ar' ? 'نسبة منخفضة جدًا' : 'Very low ratio';
+                evaluation = currentLanguage === 'ar' ? 'منخفضة جدًا (غير مناسبة)' : 'Very low (Not suitable)';
                 evalClass = 'text-error';
             } else if (ratio <= 0.5) {
-                evaluation = currentLanguage === 'ar' ? 'نسبة ممتازة' : 'Excellent ratio';
+                evaluation = currentLanguage === 'ar' ? 'ممتازة (مثالية)' : 'Excellent (Ideal)';
                 evalClass = 'text-success';
-            } else {
-                evaluation = currentLanguage === 'ar' ? 'نسبة عالية' : 'High ratio';
+            } else if (ratio <= 0.6) {
+                evaluation = currentLanguage === 'ar' ? 'مرتفعة (مقبولة)' : 'High (Acceptable)';
                 evalClass = 'text-warning';
+            } else {
+                evaluation = currentLanguage === 'ar' ? 'مرتفعة جدًا (غير مناسبة)' : 'Very high (Not suitable)';
+                evalClass = 'text-error';
             }
             
             document.getElementById('ratio-evaluation').textContent = evaluation;
