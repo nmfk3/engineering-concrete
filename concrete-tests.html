@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختبارات الخرسانة | Concrete Tests</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -252,7 +252,6 @@
             display: none;
         }
 
-        /* أنماط الجدول الإحصائي */
         .result-table {
             width: 100%;
             border-collapse: collapse;
@@ -290,7 +289,6 @@
             }
         }
 
-        /* تحسينات للوضع الداكن */
         body.dark-mode .input-group input,
         body.dark-mode .input-group select,
         body.dark-mode .input-group textarea {
@@ -483,193 +481,196 @@
     </footer>
 
     <script>
-        // الوضع الداكن
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        
-        // تحميل التفضيلات المحفوظة
-        if (localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            darkModeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            localStorage.setItem('darkMode', isDark);
-        });
-
-        // تبديل اللغة
-        const languageToggle = document.getElementById('languageToggle');
-        let currentLanguage = localStorage.getItem('language') || 'ar';
-        
-        function updateLanguage() {
-            document.documentElement.lang = currentLanguage;
-            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+        // تأكد من تحميل DOM بالكامل قبل تنفيذ الجافاسكربت
+        document.addEventListener('DOMContentLoaded', function() {
+            // الوضع الداكن
+            const darkModeToggle = document.getElementById('darkModeToggle');
             
-            document.querySelectorAll('[class*="text-ar"], [class*="label-ar"], [class*="title-ar"]').forEach(el => {
-                el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
-            });
-            
-            document.querySelectorAll('[class*="text-en"], [class*="label-en"], [class*="title-en"]').forEach(el => {
-                el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
-            });
-            
-            localStorage.setItem('language', currentLanguage);
-        }
-
-        languageToggle.addEventListener('click', () => {
-            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
-            updateLanguage();
-        });
-
-        // زر الرجوع
-        document.getElementById('backBtn').addEventListener('click', () => {
-            window.history.back();
-        });
-
-        // التحقق من المدخلات
-        function validateInput(inputId, errorId, minValue = 0) {
-            const input = document.getElementById(inputId);
-            const error = document.getElementById(errorId);
-            const value = parseFloat(input.value);
-            
-            if (isNaN(value) || value <= minValue) {
-                error.textContent = currentLanguage === 'ar' ? 
-                    `القيمة يجب أن تكون رقمًا أكبر من ${minValue}` : 
-                    `Value must be a number greater than ${minValue}`;
-                error.style.display = 'block';
-                return false;
-            } else {
-                error.style.display = 'none';
-                return true;
+            // تحميل التفضيلات المحفوظة
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
-        }
 
-        // اختبار مقاومة الضغط
-        document.getElementById('calculate-strength').addEventListener('click', function() {
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                localStorage.setItem('darkMode', isDark);
+            });
+
+            // تبديل اللغة
+            const languageToggle = document.getElementById('languageToggle');
+            let currentLanguage = localStorage.getItem('language') || 'ar';
+            
+            function updateLanguage() {
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                
+                document.querySelectorAll('[class*="text-ar"], [class*="label-ar"], [class*="title-ar"]').forEach(el => {
+                    el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
+                });
+                
+                document.querySelectorAll('[class*="text-en"], [class*="label-en"], [class*="title-en"]').forEach(el => {
+                    el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
+                });
+                
+                localStorage.setItem('language', currentLanguage);
+            }
+
+            languageToggle.addEventListener('click', function() {
+                currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+                updateLanguage();
+            });
+
+            // زر الرجوع
+            document.getElementById('backBtn').addEventListener('click', function() {
+                window.history.back();
+            });
+
             // التحقق من المدخلات
-            const isValidAge = validateInput('test-age', 'age-error', 0);
-            const isValidLoad = validateInput('test-load', 'load-error', 0);
-            
-            if (!isValidAge || !isValidLoad) return;
-            
-            const age = parseInt(document.getElementById('test-age').value);
-            const load = parseFloat(document.getElementById('test-load').value);
-            const area = 22500; // مساحة العينة القياسية (150x150mm)
-            
-            const strength = (load * 1000) / area; // التحويل من kN إلى N ثم القسمة على المساحة
-            document.getElementById('compressive-strength').textContent = strength.toFixed(2);
-            
-            let status, statusClass;
-            if (age === 28) {
-                if (strength >= 25) {
-                    status = currentLanguage === 'ar' ? 'مطابق للمواصفات (جيد)' : 'Meets standards (Good)';
-                    statusClass = 'text-success';
+            function validateInput(inputId, errorId, minValue = 0) {
+                const input = document.getElementById(inputId);
+                const error = document.getElementById(errorId);
+                const value = parseFloat(input.value);
+                
+                if (isNaN(value) || value <= minValue) {
+                    error.textContent = currentLanguage === 'ar' ? 
+                        `القيمة يجب أن تكون رقمًا أكبر من ${minValue}` : 
+                        `Value must be a number greater than ${minValue}`;
+                    error.style.display = 'block';
+                    return false;
                 } else {
-                    status = currentLanguage === 'ar' ? 'غير مطابق (ضعيف)' : 'Below standards (Weak)';
+                    error.style.display = 'none';
+                    return true;
+                }
+            }
+
+            // اختبار مقاومة الضغط
+            document.getElementById('calculate-strength').addEventListener('click', function() {
+                // التحقق من المدخلات
+                const isValidAge = validateInput('test-age', 'age-error', 0);
+                const isValidLoad = validateInput('test-load', 'load-error', 0);
+                
+                if (!isValidAge || !isValidLoad) return;
+                
+                const age = parseInt(document.getElementById('test-age').value);
+                const load = parseFloat(document.getElementById('test-load').value);
+                const area = 22500; // مساحة العينة القياسية (150x150mm)
+                
+                const strength = (load * 1000) / area; // التحويل من kN إلى N ثم القسمة على المساحة
+                document.getElementById('compressive-strength').textContent = strength.toFixed(2);
+                
+                let status, statusClass;
+                if (age === 28) {
+                    if (strength >= 25) {
+                        status = currentLanguage === 'ar' ? 'مطابق للمواصفات (جيد)' : 'Meets standards (Good)';
+                        statusClass = 'text-success';
+                    } else {
+                        status = currentLanguage === 'ar' ? 'غير مطابق (ضعيف)' : 'Below standards (Weak)';
+                        statusClass = 'text-error';
+                    }
+                } else {
+                    status = currentLanguage === 'ar' ? 'قارن مع منحنى النمو' : 'Compare with growth curve';
+                    statusClass = 'text-warning';
+                }
+                
+                document.getElementById('strength-status').textContent = status;
+                document.getElementById('strength-status').className = 'result-value ' + statusClass;
+                document.getElementById('strength-result').style.display = 'block';
+            });
+
+            // اختبار نسبة الماء/أسمنت
+            document.getElementById('calculate-ratio').addEventListener('click', function() {
+                // التحقق من المدخلات
+                const isValidWater = validateInput('water-amount', 'water-error', 0);
+                const isValidCement = validateInput('cement-amount', 'cement-error', 0);
+                
+                if (!isValidWater || !isValidCement) return;
+                
+                const water = parseFloat(document.getElementById('water-amount').value);
+                const cement = parseFloat(document.getElementById('cement-amount').value);
+                const ratio = (water / cement).toFixed(2);
+                
+                document.getElementById('wc-ratio').textContent = ratio;
+                
+                let evaluation, evalClass;
+                if (ratio < 0.35) {
+                    evaluation = currentLanguage === 'ar' ? 'منخفضة جدًا (غير مناسبة)' : 'Very low (Not suitable)';
+                    evalClass = 'text-error';
+                } else if (ratio <= 0.5) {
+                    evaluation = currentLanguage === 'ar' ? 'ممتازة (مثالية)' : 'Excellent (Ideal)';
+                    evalClass = 'text-success';
+                } else if (ratio <= 0.6) {
+                    evaluation = currentLanguage === 'ar' ? 'مرتفعة (مقبولة)' : 'High (Acceptable)';
+                    evalClass = 'text-warning';
+                } else {
+                    evaluation = currentLanguage === 'ar' ? 'مرتفعة جدًا (غير مناسبة)' : 'Very high (Not suitable)';
+                    evalClass = 'text-error';
+                }
+                
+                document.getElementById('ratio-evaluation').textContent = evaluation;
+                document.getElementById('ratio-evaluation').className = 'result-value ' + evalClass;
+                document.getElementById('ratio-result').style.display = 'block';
+            });
+
+            // التحليل الإحصائي
+            document.getElementById('calculate-statistics').addEventListener('click', function() {
+                const resultsInput = document.getElementById('multiple-results').value;
+                const results = resultsInput.split(',').map(item => parseFloat(item.trim())).filter(item => !isNaN(item));
+                
+                if (results.length < 2) {
+                    alert(currentLanguage === 'ar' ? 'أدخل على الأقل نتيجتين صحيحتين!' : 'Enter at least 2 valid results!');
+                    return;
+                }
+
+                const area = 22500; // مساحة العينة القياسية (150x150mm)
+                const strengths = results.map(load => (load * 1000) / area); // تحويل kN إلى N/mm²
+
+                // المتوسط الحسابي
+                const average = strengths.reduce((sum, val) => sum + val, 0) / strengths.length;
+                
+                // الانحراف المعياري
+                const squaredDifferences = strengths.map(val => Math.pow(val - average, 2));
+                const variance = squaredDifferences.reduce((sum, val) => sum + val, 0) / strengths.length;
+                const standardDeviation = Math.sqrt(variance);
+                
+                // معامل الاختلاف (CV%)
+                const coefficientOfVariation = (standardDeviation / average) * 100;
+
+                // القيم القصوى والدنيا
+                const minStrength = Math.min(...strengths);
+                const maxStrength = Math.max(...strengths);
+
+                // عرض النتائج
+                document.getElementById('samples-count').textContent = strengths.length;
+                document.getElementById('average-strength').textContent = average.toFixed(2);
+                document.getElementById('standard-deviation').textContent = standardDeviation.toFixed(2);
+                document.getElementById('coefficient-variation').textContent = coefficientOfVariation.toFixed(2);
+                document.getElementById('min-strength').textContent = minStrength.toFixed(2);
+                document.getElementById('max-strength').textContent = maxStrength.toFixed(2);
+
+                // التقييم
+                let status, statusClass;
+                if (coefficientOfVariation < 10) {
+                    status = currentLanguage === 'ar' ? 'ممتاز (تجانس عالي)' : 'Excellent (High Uniformity)';
+                    statusClass = 'text-success';
+                } else if (coefficientOfVariation <= 15) {
+                    status = currentLanguage === 'ar' ? 'جيد (مقبول حسب ACI 318)' : 'Good (Acceptable per ACI 318)';
+                    statusClass = 'text-warning';
+                } else {
+                    status = currentLanguage === 'ar' ? 'ضعيف (غير متجانس)' : 'Poor (Non-Uniform)';
                     statusClass = 'text-error';
                 }
-            } else {
-                status = currentLanguage === 'ar' ? 'قارن مع منحنى النمو' : 'Compare with growth curve';
-                statusClass = 'text-warning';
-            }
-            
-            document.getElementById('strength-status').textContent = status;
-            document.getElementById('strength-status').className = 'result-value ' + statusClass;
-            document.getElementById('strength-result').style.display = 'block';
+
+                document.getElementById('statistics-status').textContent = status;
+                document.getElementById('statistics-status').className = 'result-value ' + statusClass;
+                document.getElementById('statistics-result').style.display = 'block';
+            });
+
+            // تهيئة أولية
+            updateLanguage();
         });
-
-        // اختبار نسبة الماء/أسمنت
-        document.getElementById('calculate-ratio').addEventListener('click', function() {
-            // التحقق من المدخلات
-            const isValidWater = validateInput('water-amount', 'water-error', 0);
-            const isValidCement = validateInput('cement-amount', 'cement-error', 0);
-            
-            if (!isValidWater || !isValidCement) return;
-            
-            const water = parseFloat(document.getElementById('water-amount').value);
-            const cement = parseFloat(document.getElementById('cement-amount').value);
-            const ratio = (water / cement).toFixed(2);
-            
-            document.getElementById('wc-ratio').textContent = ratio;
-            
-            let evaluation, evalClass;
-            if (ratio < 0.35) {
-                evaluation = currentLanguage === 'ar' ? 'منخفضة جدًا (غير مناسبة)' : 'Very low (Not suitable)';
-                evalClass = 'text-error';
-            } else if (ratio <= 0.5) {
-                evaluation = currentLanguage === 'ar' ? 'ممتازة (مثالية)' : 'Excellent (Ideal)';
-                evalClass = 'text-success';
-            } else if (ratio <= 0.6) {
-                evaluation = currentLanguage === 'ar' ? 'مرتفعة (مقبولة)' : 'High (Acceptable)';
-                evalClass = 'text-warning';
-            } else {
-                evaluation = currentLanguage === 'ar' ? 'مرتفعة جدًا (غير مناسبة)' : 'Very high (Not suitable)';
-                evalClass = 'text-error';
-            }
-            
-            document.getElementById('ratio-evaluation').textContent = evaluation;
-            document.getElementById('ratio-evaluation').className = 'result-value ' + evalClass;
-            document.getElementById('ratio-result').style.display = 'block';
-        });
-
-        // التحليل الإحصائي
-        document.getElementById('calculate-statistics').addEventListener('click', function() {
-            const resultsInput = document.getElementById('multiple-results').value;
-            const results = resultsInput.split(',').map(item => parseFloat(item.trim())).filter(item => !isNaN(item));
-            
-            if (results.length < 2) {
-                alert(currentLanguage === 'ar' ? 'أدخل على الأقل نتيجتين صحيحتين!' : 'Enter at least 2 valid results!');
-                return;
-            }
-
-            const area = 22500; // مساحة العينة القياسية (150x150mm)
-            const strengths = results.map(load => (load * 1000) / area); // تحويل kN إلى N/mm²
-
-            // المتوسط الحسابي
-            const average = strengths.reduce((sum, val) => sum + val, 0) / strengths.length;
-            
-            // الانحراف المعياري
-            const squaredDifferences = strengths.map(val => Math.pow(val - average, 2));
-            const variance = squaredDifferences.reduce((sum, val) => sum + val, 0) / strengths.length;
-            const standardDeviation = Math.sqrt(variance);
-            
-            // معامل الاختلاف (CV%)
-            const coefficientOfVariation = (standardDeviation / average) * 100;
-
-            // القيم القصوى والدنيا
-            const minStrength = Math.min(...strengths);
-            const maxStrength = Math.max(...strengths);
-
-            // عرض النتائج
-            document.getElementById('samples-count').textContent = strengths.length;
-            document.getElementById('average-strength').textContent = average.toFixed(2);
-            document.getElementById('standard-deviation').textContent = standardDeviation.toFixed(2);
-            document.getElementById('coefficient-variation').textContent = coefficientOfVariation.toFixed(2);
-            document.getElementById('min-strength').textContent = minStrength.toFixed(2);
-            document.getElementById('max-strength').textContent = maxStrength.toFixed(2);
-
-            // التقييم
-            let status, statusClass;
-            if (coefficientOfVariation < 10) {
-                status = currentLanguage === 'ar' ? 'ممتاز (تجانس عالي)' : 'Excellent (High Uniformity)';
-                statusClass = 'text-success';
-            } else if (coefficientOfVariation <= 15) {
-                status = currentLanguage === 'ar' ? 'جيد (مقبول حسب ACI 318)' : 'Good (Acceptable per ACI 318)';
-                statusClass = 'text-warning';
-            } else {
-                status = currentLanguage === 'ar' ? 'ضعيف (غير متجانس)' : 'Poor (Non-Uniform)';
-                statusClass = 'text-error';
-            }
-
-            document.getElementById('statistics-status').textContent = status;
-            document.getElementById('statistics-status').className = 'result-value ' + statusClass;
-            document.getElementById('statistics-result').style.display = 'block';
-        });
-
-        // تهيئة أولية
-        updateLanguage();
     </script>
 </body>
 </html>
