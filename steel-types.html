@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنواع الحديد الإنشائي | Steel Types</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1E88E5;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #333333;
+            --card-bg: #FFFFFF;
+            --error: #D32F2F;
+            --success: #388E3C;
+            --warning: #FFA000;
+            --border: #DDDDDD;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            --light: #1E1E1E;
+            --white: #252525;
+            --text: #E0E0E0;
+            --card-bg: #2D2D2D;
+            --border: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #0D47A1);
+            color: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .control-buttons {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .calculator-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .test-card {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .test-card:last-child {
+            border-bottom: none;
+        }
+
+        .test-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .test-title i {
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .steel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .steel-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+        }
+
+        .steel-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .steel-table tr:nth-child(even) {
+            background-color: rgba(30, 136, 229, 0.05);
+        }
+
+        .steel-table tr:hover {
+            background-color: rgba(30, 136, 229, 0.1);
+        }
+
+        .steel-type {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .steel-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #B0BEC5, #78909C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .steel-details {
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .steel-name {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .steel-description {
+            margin-top: 2rem;
+            background: rgba(30, 136, 229, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .steel-description h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .steel-description ul {
+            padding-right: 1.5rem;
+        }
+
+        .steel-description li {
+            margin-bottom: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .control-buttons {
+                position: static;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            .calculator-container {
+                padding: 0 0.8rem;
+            }
+            
+            .test-title {
+                font-size: 1.1rem;
+            }
+            
+            .steel-table {
+                font-size: 0.85rem;
+            }
+            
+            .steel-table th, 
+            .steel-table td {
+                padding: 0.6rem;
+            }
+        }
+
+        /* تحسينات للوضع الداكن */
+        body.dark-mode .steel-table tr:nth-child(even) {
+            background-color: rgba(30, 136, 229, 0.08);
+        }
+        
+        body.dark-mode .steel-description {
+            background: rgba(30, 136, 229, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="control-buttons">
+            <button class="control-btn" id="backBtn" title="الرجوع">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="control-btn" id="darkModeToggle" title="الوضع الداكن">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="control-btn" id="languageToggle" title="تبديل اللغة">
+                <i class="fas fa-language"></i>
+            </button>
+        </div>
+
+        <h1 class="title-ar"><i class="fas fa-grip-lines"></i> أنواع الحديد الإنشائي</h1>
+        <h1 class="title-en" style="display:none;"><i class="fas fa-grip-lines"></i> Structural Steel Types</h1>
+    </header>
+
+    <div class="calculator-container">
+        <div class="calculator-card">
+            <!-- جدول أنواع الحديد -->
+            <div class="test-card">
+                <h3 class="test-title">
+                    <i class="fas fa-table"></i>
+                    <span class="test-text-ar">جدول أنواع الحديد الإنشائي</span>
+                    <span class="test-text-en" style="display:none;">Structural Steel Types Table</span>
+                </h3>
+                
+                <div class="input-group">
+                    <table class="steel-table">
+                        <thead>
+                            <tr>
+                                <th><span class="label-text-ar">النوع</span><span class="label-text-en" style="display:none;">Type</span></th>
+                                <th><span class="label-text-ar">الرمز</span><span class="label-text-en" style="display:none;">Symbol</span></th>
+                                <th><span class="label-text-ar">مقاومة الشد (N/mm²)</span><span class="label-text-en" style="display:none;">Tensile Strength</span></th>
+                                <th><span class="label-text-ar">مقاومة الخضوع (N/mm²)</span><span class="label-text-en" style="display:none;">Yield Strength</span></th>
+                                <th><span class="label-text-ar">الاستخدامات</span><span class="label-text-en" style="display:none;">Applications</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
+                                        <span class="steel-name">حديد 37</span>
+                                    </div>
+                                </td>
+                                <td>A36</td>
+                                <td>370-500</td>
+                                <td>250</td>
+                                <td>الهياكل العامة، الجسور الصغيرة</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
+                                        <span class="steel-name">حديد 52</span>
+                                    </div>
+                                </td>
+                                <td>A572</td>
+                                <td>520-700</td>
+                                <td>360</td>
+                                <td>المباني الشاهقة، الجسور الكبيرة</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bars"></i></div>
+                                        <span class="steel-name">حديد 60</span>
+                                    </div>
+                                </td>
+                                <td>A992</td>
+                                <td>620-760</td>
+                                <td>440</td>
+                                <td>الهياكل ذات الأحمال الثقيلة</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-shield-alt"></i></div>
+                                        <span class="steel-name">حديد مقاوم للصدأ</span>
+                                    </div>
+                                </td>
+                                <td>304/316</td>
+                                <td>500-700</td>
+                                <td>200-300</td>
+                                <td>المنشآت الساحلية، الصناعات الغذائية</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="steel-type">
+                                        <div class="steel-icon"><i class="fas fa-bolt"></i></div>
+                                        <span class="steel-name">حديد عالي المقاومة</span>
+                                    </div>
+                                </td>
+                                <td>A514</td>
+                                <td>760-895</td>
+                                <td>690</td>
+                                <td>الرافعات، المعدات الثقيلة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="steel-description">
+                    <h3><i class="fas fa-info-circle"></i> <span class="label-text-ar">معلومات عامة عن الحديد الإنشائي</span><span class="label-text-en" style="display:none;">General Information About Structural Steel</span></h3>
+                    <ul>
+                        <li><span class="label-text-ar">• يستخدم الحديد الإنشائي في تشييد المباني والجسور والمنشآت الهندسية المختلفة</span><span class="label-text-en" style="display:none;">• Structural steel is used in building construction, bridges, and various engineering structures</span></li>
+                        <li><span class="label-text-ar">• يتم تصنيف الحديد الإنشائي حسب قوة تحمله ومقاومته للشد والانحناء</span><span class="label-text-en" style="display:none;">• Structural steel is classified according to its load-bearing capacity and resistance to tension and bending</span></li>
+                        <li><span class="label-text-ar">• تختلف أنواع الحديد حسب نسبة الكربون والعناصر السبائكية المضافة</span><span class="label-text-en" style="display:none;">• Steel types vary according to carbon content and added alloying elements</span></li>
+                        <li><span class="label-text-ar">• يتم اختيار نوع الحديد المناسب حسب متطلبات المشروع والظروف البيئية</span><span class="label-text-en" style="display:none;">• The appropriate steel type is chosen based on project requirements and environmental conditions</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text-ar">برمجة وتطوير: فريق البناء الذكي</p>
+        <p class="footer-text-en" style="display:none;">Developed by: Smart Build Team</p>
+    </footer>
+
+    <script>
+        // تأكد من تحميل DOM بالكامل قبل تنفيذ الجافاسكربت
+        document.addEventListener('DOMContentLoaded', function() {
+            // الوضع الداكن
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            
+            // تحميل التفضيلات المحفوظة
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                localStorage.setItem('darkMode', isDark);
+            });
+
+            // تبديل اللغة
+            const languageToggle = document.getElementById('languageToggle');
+            let currentLanguage = localStorage.getItem('language') || 'ar';
+            
+            function updateLanguage() {
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+                
+                document.querySelectorAll('[class*="text-ar"], [class*="label-ar"], [class*="title-ar"]').forEach(el => {
+                    el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
+                });
+                
+                document.querySelectorAll('[class*="text-en"], [class*="label-en"], [class*="title-en"]').forEach(el => {
+                    el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
+                });
+                
+                localStorage.setItem('language', currentLanguage);
+            }
+
+            languageToggle.addEventListener('click', function() {
+                currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+                updateLanguage();
+            });
+
+            // زر الرجوع
+            document.getElementById('backBtn').addEventListener('click', function() {
+                window.history.back();
+            });
+
+            // تهيئة أولية
+            updateLanguage();
+        });
+    </script>
+</body>
+                                          </html>
