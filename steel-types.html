@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #2a4d69, #4b86b4);
+            background: linear-gradient(135deg, #2e7d32, #689f38, #9ccc65);
             color: #333;
             line-height: 1.6;
             min-height: 100vh;
@@ -30,11 +30,12 @@
             text-align: center;
             padding: 30px 0;
             margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
+            border: 2px solid #ff9800;
         }
         
         header::before {
@@ -44,41 +45,43 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, #ff8a00, #e52e71, #22c1c3);
+            background: linear-gradient(90deg, #ff9800, #ff5722, #795548);
         }
         
         h1 {
             font-size: 2.8rem;
-            color: #2a4d69;
+            color: #388e3c;
             margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .subtitle {
             font-size: 1.4rem;
-            color: #4b86b4;
+            color: #689f38;
             font-weight: 600;
         }
         
         .content-section {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.97);
             border-radius: 15px;
             padding: 40px;
             margin-bottom: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
+            border: 1px solid #ff9800;
         }
         
         .content-section:hover {
             transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         }
         
         h2 {
-            color: #1a2a6c;
+            color: #2e7d32;
             font-size: 2.2rem;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 3px solid #ff8a00;
+            border-bottom: 3px solid #ff9800;
             display: inline-block;
         }
         
@@ -91,7 +94,7 @@
         }
         
         .intro strong {
-            color: #e52e71;
+            color: #ff5722;
         }
         
         .table-container {
@@ -99,6 +102,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             margin: 30px 0;
+            border: 1px solid #ff9800;
         }
         
         table {
@@ -108,7 +112,7 @@
         }
         
         th {
-            background: linear-gradient(to right, #1a2a6c, #2a4d69);
+            background: linear-gradient(to right, #2e7d32, #689f38);
             color: white;
             font-size: 1.2rem;
             padding: 18px 15px;
@@ -122,18 +126,18 @@
         }
         
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: #f1f8e9;
         }
         
         tr:hover {
-            background-color: #e3f2fd;
+            background-color: #e8f5e9;
         }
         
         .steel-icon {
             display: inline-block;
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #2a4d69, #4b86b4);
+            background: linear-gradient(135deg, #689f38, #9ccc65);
             border-radius: 50%;
             text-align: center;
             line-height: 40px;
@@ -156,32 +160,35 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             text-align: center;
-            border-top: 4px solid #22c1c3;
+            border-top: 4px solid #ff9800;
+            background: linear-gradient(to bottom, #ffffff, #fff8e1);
         }
         
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(to bottom, #ffffff, #ffecb3);
         }
         
         .feature-card i {
             font-size: 2.5rem;
-            color: #e52e71;
+            color: #ff5722;
             margin-bottom: 15px;
         }
         
         .feature-card h3 {
-            color: #1a2a6c;
+            color: #2e7d32;
             margin-bottom: 15px;
         }
         
         footer {
             text-align: center;
             padding: 25px;
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(to right, #5d4037, #795548);
             color: white;
             border-radius: 15px;
             margin-top: 30px;
+            border: 1px solid #ff9800;
         }
         
         @media (max-width: 768px) {
@@ -208,6 +215,10 @@
             th, td {
                 font-size: 0.95rem;
                 padding: 12px 8px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -317,8 +328,33 @@
         
         <footer>
             <p>© 2023 دليل أنواع الحديد الإنشائي | تم تطويره وفق أحدث المعايير الهندسية</p>
-            <p>جميع الحقوق محفوظة - تم حذف الروابط الخارجية حسب الطلب</p>
+            <p>جميع الحقوق محفوظة - تصميم متجدد بألوان دافئة وجذابة</p>
         </footer>
     </div>
+    
+    <script>
+        // تأثيرات تفاعلية بسيطة
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // تأثير للعناوين
+        const headings = document.querySelectorAll('h1, h2');
+        headings.forEach(heading => {
+            heading.addEventListener('mouseenter', () => {
+                heading.style.textShadow = '0 0 10px rgba(255, 152, 0, 0.7)';
+            });
+            
+            heading.addEventListener('mouseleave', () => {
+                heading.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
 </body>
 </html>
