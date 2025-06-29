@@ -285,6 +285,52 @@
             document.getElementById('slumpTests').textContent = slumpTests;
             document.getElementById('slumpRange').textContent = slumpRange;
         });
-    </script>
+    </script><script>
+document.getElementById('calculateBtn').addEventListener('click', function() {
+  // تحويل الوحدات
+  const unit = document.querySelector('.unit-btn.active').dataset.unit;
+  let length = parseFloat(document.getElementById('length').value) || 0;
+  let width = parseFloat(document.getElementById('width').value) || 0;
+  let thickness = parseFloat(document.getElementById('thickness').value) || 0;
+  
+  if (unit === 'centimeter') {
+    length = length / 100;
+    width = width / 100;
+    thickness = thickness / 100;
+  }
+
+  // حساب الحجم
+  const volume = length * width * thickness;
+  
+  // حساب المواد حسب نسبة الخلط
+  const mixRatio = document.getElementById('mix').value;
+  let cement, sand, gravel;
+  
+  switch(mixRatio) {
+    case '1:2:4':
+      cement = volume * 7.5;
+      sand = volume * 0.5;
+      gravel = volume * 1;
+      break;
+    case '1:1.5:3':
+      cement = volume * 8.5;
+      sand = volume * 0.45;
+      gravel = volume * 0.9;
+      break;
+    case '1:1:2':
+      cement = volume * 10;
+      sand = volume * 0.4;
+      gravel = volume * 0.8;
+      break;
+  }
+
+  // عرض النتائج
+  document.getElementById('concreteVolume').textContent = volume.toFixed(2);
+  document.getElementById('cementQuantity').textContent = Math.ceil(cement);
+  document.getElementById('sandQuantity').textContent = sand.toFixed(2);
+  document.getElementById('gravelQuantity').textContent = gravel.toFixed(2);
+  document.getElementById('resultSection').style.display = 'block';
+});
+</script>
 </body>
                           </html>
