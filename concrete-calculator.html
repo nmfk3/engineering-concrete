@@ -3,279 +3,677 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة متقدمة للخرسانة | Concrete 360</title>
+    <title>حاسبة الخرسانة المتكاملة | Concrete 360</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* الأنماط الأساسية السابقة تبقى كما هي */
-        
-        /* أنماط جديدة للتبويبات */
+        :root {
+            --primary: #2E7D32;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #333333;
+            --card-bg: #FFFFFF;
+            --error: #D32F2F;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            --light: #1E1E1E;
+            --white: #252525;
+            --text: #E0E0E0;
+            --card-bg: #2D2D2D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1B5E20);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .control-buttons {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent);
+        }
+
         .tab-container {
             display: flex;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #ddd;
+            background: var(--primary);
         }
-        
+
         .tab-btn {
-            padding: 0.8rem 1.5rem;
-            background: none;
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
             border: none;
-            cursor: pointer;
+            color: var(--white);
             font-weight: bold;
-            color: var(--secondary);
+            cursor: pointer;
+            text-align: center;
             border-bottom: 3px solid transparent;
         }
-        
+
         .tab-btn.active {
-            color: var(--primary);
             border-bottom: 3px solid var(--accent);
+            background: rgba(255,255,255,0.1);
         }
-        
+
         .tab-content {
             display: none;
+            padding: 1.5rem;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
-        /* أنماط قسم المشاريع الكبيرة */
-        .large-project-input {
-            margin-bottom: 1rem;
+
+        .calculator-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
         }
-        
-        /* أنماط قسم مراقبة الجودة */
+
+        .calculator-title i {
+            color: var(--accent);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .input-row input {
+            flex: 1;
+        }
+
+        .unit-toggle {
+            display: flex;
+            background: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .unit-btn {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text);
+        }
+
+        .unit-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .unit-display {
+            padding: 0.8rem;
+            background: var(--light);
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: var(--white);
+            color: var(--text);
+        }
+
+        .calculate-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 1.5rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background-color: #e67e00;
+        }
+
+        .result-section {
+            background: rgba(46, 125, 50, 0.1);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            border-right: 3px solid var(--primary);
+        }
+
+        .result-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .result-value {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
         .quality-test {
             background: rgba(69, 90, 100, 0.05);
             padding: 1rem;
             border-radius: 5px;
             margin-bottom: 1rem;
         }
-        
+
         .test-title {
             color: var(--secondary);
             margin-bottom: 0.5rem;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .error-message {
+            color: var(--error);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-container {
+                padding: 0 0.5rem;
+            }
+            
+            .calculator-card {
+                border-radius: 0;
+            }
+            
+            .tab-container {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- الهيدر يبقى كما هو -->
-    
+    <header>
+        <div class="control-buttons">
+            <button class="control-btn" id="languageToggle">
+                <i class="fas fa-language"></i>
+            </button>
+            <button class="control-btn" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="index.html" class="control-btn">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <h1 class="title-ar"><i class="fas fa-calculator"></i> حاسبة الخرسانة المتكاملة</h1>
+        <h1 class="title-en" style="display:none;"><i class="fas fa-calculator"></i> Advanced Concrete Calculator</h1>
+        <p class="subtitle-ar">أدق الحاسبات للخرسانة والإنشاءات</p>
+        <p class="subtitle-en" style="display:none;">The most accurate concrete calculations</p>
+    </header>
+
     <div class="calculator-container">
         <div class="calculator-card">
             <div class="tab-container">
-                <button class="tab-btn active" data-tab="basic"><i class="fas fa-calculator"></i> <span class="tab-text-ar">حاسبة أساسية</span><span class="tab-text-en" style="display:none;">Basic Calculator</span></button>
-                <button class="tab-btn" data-tab="large"><i class="fas fa-building"></i> <span class="tab-text-ar">مشاريع كبيرة</span><span class="tab-text-en" style="display:none;">Large Projects</span></button>
-                <button class="tab-btn" data-tab="quality"><i class="fas fa-clipboard-check"></i> <span class="tab-text-ar">مراقبة الجودة</span><span class="tab-text-en" style="display:none;">Quality Control</span></button>
+                <button class="tab-btn active" data-tab="basic">
+                    <i class="fas fa-calculator"></i> 
+                    <span class="tab-text-ar">حاسبة أساسية</span>
+                    <span class="tab-text-en" style="display:none;">Basic</span>
+                </button>
+                <button class="tab-btn" data-tab="large">
+                    <i class="fas fa-building"></i> 
+                    <span class="tab-text-ar">مشاريع كبيرة</span>
+                    <span class="tab-text-en" style="display:none;">Large Projects</span>
+                </button>
+                <button class="tab-btn" data-tab="quality">
+                    <i class="fas fa-clipboard-check"></i> 
+                    <span class="tab-text-ar">مراقبة الجودة</span>
+                    <span class="tab-text-en" style="display:none;">Quality Control</span>
+                </button>
             </div>
             
             <!-- تبويب الحاسبة الأساسية -->
             <div class="tab-content active" id="basic-tab">
-                <!-- محتوى الحاسبة الأساسية السابق -->
-            </div>
-            
-            <!-- تبويب المشاريع الكبيرة (الفكرة 5) -->
-            <div class="tab-content" id="large-tab">
-                <h2 class="calculator-title"><i class="fas fa-building"></i> <span class="calc-title-ar">حاسبة المشاريع الكبيرة</span><span class="calc-title-en" style="display:none;">Large Projects Calculator</span></h2>
+                <h2 class="calculator-title">
+                    <i class="fas fa-ruler-combined"></i> 
+                    <span class="calc-title-ar">حاسبة الخرسانة الأساسية</span>
+                    <span class="calc-title-en" style="display:none;">Basic Concrete Calculator</span>
+                </h2>
                 
                 <div class="input-group">
-                    <label for="project-area"><span class="label-text-ar">مساحة المشروع:</span><span class="label-text-en" style="display:none;">Project Area:</span></label>
-                    <div class="input-row">
-                        <input type="number" id="project-area" min="0.1" step="0.01" placeholder="مثال: 5000">
-                        <span class="unit-display"><span class="unit-text-ar">م²</span><span class="unit-text-en" style="display:none;">m²</span></span>
+                    <label><span class="label-text-ar">وحدة القياس:</span><span class="label-text-en" style="display:none;">Unit:</span></label>
+                    <div class="unit-toggle" id="unitToggle">
+                        <button class="unit-btn active" data-unit="meter">
+                            <span class="unit-text-ar">متر</span>
+                            <span class="unit-text-en" style="display:none;">Meter</span>
+                        </button>
+                        <button class="unit-btn" data-unit="centimeter">
+                            <span class="unit-text-ar">سنتيمتر</span>
+                            <span class="unit-text-en" style="display:none;">Centimeter</span>
+                        </button>
                     </div>
                 </div>
                 
                 <div class="input-group">
-                    <label for="avg-thickness"><span class="label-text-ar">متوسط السماكة:</span><span class="label-text-en" style="display:none;">Average Thickness:</span></label>
-                    <div class="input-row">
-                        <input type="number" id="avg-thickness" min="0.05" step="0.01" placeholder="مثال: 0.2">
-                        <span class="unit-display"><span class="unit-text-ar">متر</span><span class="unit-text-en" style="display:none;">m</span></span>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="truck-capacity"><span class="label-text-ar">سعة الشاحنة:</span><span class="label-text-en" style="display:none;">Truck Capacity:</span></label>
-                    <div class="input-row">
-                        <input type="number" id="truck-capacity" min="1" step="0.5" value="7" placeholder="مثال: 7">
-                        <span class="unit-display"><span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span></span>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="working-hours"><span class="label-text-ar">ساعات العمل اليومية:</span><span class="label-text-en" style="display:none;">Daily Working Hours:</span></label>
-                    <input type="number" id="working-hours" min="1" max="24" value="8">
-                </div>
-                
-                <button class="calculate-btn" id="calculateLargeBtn">
-                    <span class="btn-text-ar">حساب المشروع</span>
-                    <span class="btn-text-en" style="display:none;">Calculate Project</span>
-                </button>
-                
-                <div class="result-section" id="largeResults" style="display: none;">
-                    <h3 class="result-title"><i class="fas fa-chart-bar"></i> <span class="result-title-ar">نتائج المشروع الكبير</span><span class="result-title-en" style="display:none;">Large Project Results</span></h3>
-                    
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">حجم الخرسانة الإجمالي:</span><span class="result-label-en" style="display:none;">Total Concrete Volume:</span></span>
-                        <span class="result-value" id="totalVolume">0</span> <span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">عدد الشاحنات المطلوبة:</span><span class="result-label-en" style="display:none;">Required Trucks:</span></span>
-                        <span class="result-value" id="trucksRequired">0</span> <span class="unit-text-ar">شاحنة</span><span class="unit-text-en" style="display:none;">trucks</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">المدة التقديرية للصب:</span><span class="result-label-en" style="display:none;">Estimated Pouring Duration:</span></span>
-                        <span class="result-value" id="pouringDuration">0</span> <span class="unit-text-ar">يوم عمل</span><span class="unit-text-en" style="display:none;">working days</span>
-                    </div>
-                    
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">الكمية اليومية المطلوبة:</span><span class="result-label-en" style="display:none;">Daily Required Quantity:</span></span>
-                        <span class="result-value" id="dailyQuantity">0</span> <span class="unit-text-ar">م³/يوم</span><span class="unit-text-en" style="display:none;">m³/day</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- تبويب مراقبة الجودة (الفكرة 12) -->
-            <div class="tab-content" id="quality-tab">
-                <h2 class="calculator-title"><i class="fas fa-clipboard-check"></i> <span class="calc-title-ar">مراقبة جودة الخرسانة</span><span class="calc-title-en" style="display:none;">Concrete Quality Control</span></h2>
-                
-                <div class="input-group">
-                    <label for="project-volume"><span class="label-text-ar">حجم المشروع:</span><span class="label-text-en" style="display:none;">Project Volume:</span></label>
-                    <div class="input-row">
-                        <input type="number" id="project-volume" min="1" step="1" placeholder="مثال: 100">
-                        <span class="unit-display"><span class="unit-text-ar">م³</span><span class="unit-text-en" style="display:none;">m³</span></span>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="concrete-grade"><span class="label-text-ar">مقاومة الخرسانة:</span><span class="label-text-en" style="display:none;">Concrete Grade:</span></label>
-                    <select id="concrete-grade">
-                        <option value="25">25 MPa</option>
-                        <option value="30">30 MPa</option>
-                        <option value="35">35 MPa</option>
-                        <option value="40">40 MPa</option>
+                    <label for="shape"><span class="label-text-ar">نوع العنصر:</span><span class="label-text-en" style="display:none;">Element Type:</span></label>
+                    <select id="shape">
+                        <option value="slab">
+                            <span class="option-text-ar">بلاطة/سقف</span>
+                            <span class="option-text-en" style="display:none;">Slab/Ceiling</span>
+                        </option>
+                        <option value="column">
+                            <span class="option-text-ar">عمود</span>
+                            <span class="option-text-en" style="display:none;">Column</span>
+                        </option>
+                        <option value="beam">
+                            <span class="option-text-ar">كمرة</span>
+                            <span class="option-text-en" style="display:none;">Beam</span>
+                        </option>
+                        <option value="wall">
+                            <span class="option-text-ar">حائط</span>
+                            <span class="option-text-en" style="display:none;">Wall</span>
+                        </option>
                     </select>
                 </div>
                 
-                <div class="quality-test">
-                    <div class="test-title"><i class="fas fa-cube"></i> <span class="test-text-ar">اختبارات المكعبات:</span><span class="test-text-en" style="display:none;">Cube Tests:</span></div>
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">عدد المكعبات المطلوبة:</span><span class="result-label-en" style="display:none;">Required Cubes:</span></span>
-                        <span class="result-value" id="cubesCount">0</span> <span class="unit-text-ar">مكعب</span><span class="unit-text-en" style="display:none;">cubes</span>
+                <div class="input-group">
+                    <label for="length"><span class="label-text-ar">الطول:</span><span class="label-text-en" style="display:none;">Length:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="length" min="0.01" step="0.01" placeholder="5.0">
+                        <span class="unit-display" id="lengthUnit">
+                            <span class="unit-text-ar">متر</span>
+                            <span class="unit-text-en" style="display:none;">m</span>
+                        </span>
                     </div>
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">مواعيد الاختبار:</span><span class="result-label-en" style="display:none;">Test Dates:</span></span>
-                        <span class="result-value" id="testDates">7 أيام - 28 يوم</span>
-                    </div>
+                    <div class="error-message" id="lengthError"></div>
                 </div>
                 
-                <div class="quality-test">
-                    <div class="test-title"><i class="fas fa-vial"></i> <span class="test-text-ar">اختبار الهبوط (Slump Test):</span><span class="test-text-en" style="display:none;">Slump Test:</span></div>
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">عدد الاختبارات:</span><span class="result-label-en" style="display:none;">Test Count:</span></span>
-                        <span class="result-value" id="slumpTests">0</span> <span class="unit-text-ar">اختبار</span><span class="unit-text-en" style="display:none;">tests</span>
+                <div class="input-group">
+                    <label for="width"><span class="label-text-ar">العرض:</span><span class="label-text-en" style="display:none;">Width:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="width" min="0.01" step="0.01" placeholder="3.0">
+                        <span class="unit-display" id="widthUnit">
+                            <span class="unit-text-ar">متر</span>
+                            <span class="unit-text-en" style="display:none;">m</span>
+                        </span>
                     </div>
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">مدى الهبوط المقبول:</span><span class="result-label-en" style="display:none;">Acceptable Slump Range:</span></span>
-                        <span class="result-value" id="slumpRange">75-100 مم</span>
-                    </div>
+                    <div class="error-message" id="widthError"></div>
                 </div>
                 
-                <div class="quality-test">
-                    <div class="test-title"><i class="fas fa-check-circle"></i> <span class="test-text-ar">نسب الفشل المقبولة:</span><span class="test-text-en" style="display:none;">Acceptable Failure Rates:</span></div>
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">اختبار 7 أيام:</span><span class="result-label-en" style="display:none;">7-day Test:</span></span>
-                        <span class="result-value" id="failure7days">≤ 10%</span>
+                <div class="input-group">
+                    <label for="thickness"><span class="label-text-ar">السماكة/الارتفاع:</span><span class="label-text-en" style="display:none;">Thickness/Height:</span></label>
+                    <div class="input-row">
+                        <input type="number" id="thickness" min="0.01" step="0.01" placeholder="0.2">
+                        <span class="unit-display" id="thicknessUnit">
+                            <span class="unit-text-ar">متر</span>
+                            <span class="unit-text-en" style="display:none;">m</span>
+                        </span>
                     </div>
-                    <div class="result-item">
-                        <span class="result-label"><span class="result-label-ar">اختبار 28 يوم:</span><span class="result-label-en" style="display:none;">28-day Test:</span></span>
-                        <span class="result-value" id="failure28days">≤ 5%</span>
-                    </div>
+                    <div class="error-message" id="thicknessError"></div>
                 </div>
                 
-                <button class="calculate-btn" id="calculateQualityBtn">
-                    <span class="btn-text-ar">حساب متطلبات الجودة</span>
-                    <span class="btn-text-en" style="display:none;">Calculate Quality Requirements</span>
+                <div class="input-group">
+                    <label for="mix"><span class="label-text-ar">نسبة الخلطة:</span><span class="label-text-en" style="display:none;">Mix Ratio:</span></label>
+                    <select id="mix">
+                        <option value="1:2:4">
+                            <span class="option-text-ar">1:2:4 (خرسانة عادية)</span>
+                            <span class="option-text-en" style="display:none;">1:2:4 (Normal)</span>
+                        </option>
+                        <option value="1:1.5:3">
+                            <span class="option-text-ar">1:1.5:3 (خرسانة مسلحة)</span>
+                            <span class="option-text-en" style="display:none;">1:1.5:3 (Reinforced)</span>
+                        </option>
+                        <option value="1:1:2">
+                            <span class="option-text-ar">1:1:2 (خرسانة قوية)</span>
+                            <span class="option-text-en" style="display:none;">1:1:2 (Strong)</span>
+                        </option>
+                    </select>
+                </div>
+                
+                <button class="calculate-btn" id="calculateBasicBtn">
+                    <span class="btn-text-ar">حساب الكميات</span>
+                    <span class="btn-text-en" style="display:none;">Calculate</span>
                 </button>
+                
+                <div class="result-section" id="basicResults" style="display: none;">
+                    <h3 class="result-title">
+                        <i class="fas fa-clipboard-list"></i> 
+                        <span class="result-title-ar">النتائج</span>
+                        <span class="result-title-en" style="display:none;">Results</span>
+                    </h3>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">حجم الخرسانة:</span>
+                            <span class="result-label-en" style="display:none;">Concrete Volume:</span>
+                        </span>
+                        <span class="result-value" id="concreteVolume">0</span> 
+                        <span class="unit-text-ar">م³</span>
+                        <span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">كمية الأسمنت:</span>
+                            <span class="result-label-en" style="display:none;">Cement:</span>
+                        </span>
+                        <span class="result-value" id="cementQuantity">0</span> 
+                        <span class="unit-text-ar">كيس (50 كجم)</span>
+                        <span class="unit-text-en" style="display:none;">Bags (50kg)</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">كمية الرمل:</span>
+                            <span class="result-label-en" style="display:none;">Sand:</span>
+                        </span>
+                        <span class="result-value" id="sandQuantity">0</span> 
+                        <span class="unit-text-ar">م³</span>
+                        <span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">
+                            <span class="result-label-ar">كمية الزلط:</span>
+                            <span class="result-label-en" style="display:none;">Gravel:</span>
+                        </span>
+                        <span class="result-value" id="gravelQuantity">0</span> 
+                        <span class="unit-text-ar">م³</span>
+                        <span class="unit-text-en" style="display:none;">m³</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تبويب المشاريع الكبيرة -->
+            <div class="tab-content" id="large-tab">
+                <!-- محتوى المشاريع الكبيرة -->
+            </div>
+            
+            <!-- تبويب مراقبة الجودة -->
+            <div class="tab-content" id="quality-tab">
+                <!-- محتوى مراقبة الجودة -->
             </div>
         </div>
     </div>
 
-    <!-- الفوتر يبقى كما هو -->
+    <footer>
+        <p class="footer-text-ar">برمجة وتطوير: م.علي عبد الرحيم محي الدين</p>
+        <p class="footer-text-en" style="display:none;">Developed by: Eng. Ali Abdul Rahim Muhi Aldin</p>
+    </footer>
 
     <script>
-        // الكود السابق للوضع الداكن وتبديل اللغة
+        // الوضع الداكن
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
         
-        // كود التبويبات الجديدة
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        tabBtns.forEach(btn => {
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkModeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 
+                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        // تحميل الوضع الداكن من التخزين المحلي
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // تبديل اللغة
+        const languageToggle = document.getElementById('languageToggle');
+        let currentLanguage = 'ar';
+        
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            
+            // تبديل النصوص المرئية
+            document.querySelectorAll('[class*="title-ar"], [class*="text-ar"], [class*="label-ar"], [class*="option-ar"]').forEach(el => {
+                el.style.display = currentLanguage === 'ar' ? 'inline' : 'none';
+            });
+            
+            document.querySelectorAll('[class*="title-en"], [class*="text-en"], [class*="label-en"], [class*="option-en"]').forEach(el => {
+                el.style.display = currentLanguage === 'en' ? 'inline' : 'none';
+            });
+            
+            // تحديث وحدات القياس
+            updateUnitDisplay();
+            
+            localStorage.setItem('language', currentLanguage);
+        });
+
+        // تحميل اللغة من التخزين المحلي
+        if (localStorage.getItem('language') === 'en') {
+            languageToggle.click();
+        }
+
+        // تبديل التبويبات
+        document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const tabId = this.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
                 
-                // إخفاء جميع المحتويات
+                const tabId = this.dataset.tab;
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
-                
-                // إلغاء تنشيط جميع الأزرار
-                tabBtns.forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                // عرض المحتوى المحدد
                 document.getElementById(`${tabId}-tab`).classList.add('active');
-                this.classList.add('active');
             });
         });
 
-        // كود حاسبة المشاريع الكبيرة
-        document.getElementById('calculateLargeBtn').addEventListener('click', function() {
-            const area = parseFloat(document.getElementById('project-area').value) || 0;
-            const thickness = parseFloat(document.getElementById('avg-thickness').value) || 0;
-            const truckCapacity = parseFloat(document.getElementById('truck-capacity').value) || 7;
-            const workingHours = parseInt(document.getElementById('working-hours').value) || 8;
-            
-            // الحسابات
-            const totalVolume = area * thickness;
-            const trucksRequired = Math.ceil(totalVolume / truckCapacity);
-            
-            // افتراض أن كل شاحنة تحتاج ساعة واحدة للتفريغ (يمكن تعديلها)
-            const dailyTrucks = workingHours;
-            const pouringDays = Math.ceil(trucksRequired / dailyTrucks);
-            const dailyQuantity = (totalVolume / pouringDays).toFixed(2);
-            
-            // عرض النتائج
-            document.getElementById('totalVolume').textContent = totalVolume.toFixed(2);
-            document.getElementById('trucksRequired').textContent = trucksRequired;
-            document.getElementById('pouringDuration').textContent = pouringDays;
-            document.getElementById('dailyQuantity').textContent = dailyQuantity;
-            
-            document.getElementById('largeResults').style.display = 'block';
+        // تبديل وحدات القياس
+        const unitToggle = document.getElementById('unitToggle');
+        let currentUnit = 'meter';
+        
+        unitToggle.addEventListener('click', function(e) {
+            if (e.target.classList.contains('unit-btn')) {
+                unitToggle.querySelectorAll('.unit-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                currentUnit = e.target.dataset.unit;
+                updateUnitDisplay();
+            }
         });
 
-        // كود حاسبة مراقبة الجودة
-        document.getElementById('calculateQualityBtn').addEventListener('click', function() {
-            const volume = parseFloat(document.getElementById('project-volume').value) || 0;
-            const grade = document.getElementById('concrete-grade').value;
+        // تحديث عرض وحدة القياس
+        function updateUnitDisplay() {
+            const unitText = currentUnit === 'meter' ? 
+                (currentLanguage === 'ar' ? 'متر' : 'm') : 
+                (currentLanguage === 'ar' ? 'سنتيمتر' : 'cm');
             
-            // حساب عدد المكعبات (6 مكعبات لكل 100 م³)
-            const cubes = Math.max(6, Math.ceil(volume / 100 * 6));
+            document.querySelectorAll('.unit-display').forEach(el => {
+                el.querySelector('.unit-text-ar').style.display = currentLanguage === 'ar' ? 'inline' : 'none';
+                el.querySelector('.unit-text-en').style.display = currentLanguage === 'en' ? 'inline' : 'none';
+            });
+        }
+
+        // التحقق من المدخلات
+        function validateInputs() {
+            let isValid = true;
+            const inputs = [
+                { id: 'length', errorId: 'lengthError' },
+                { id: 'width', errorId: 'widthError' },
+                { id: 'thickness', errorId: 'thicknessError' }
+            ];
             
-            // حساب اختبارات الهبوط (اختبار لكل 50 م³)
-            const slumpTests = Math.max(1, Math.ceil(volume / 50));
+            inputs.forEach(input => {
+                const value = parseFloat(document.getElementById(input.id).value);
+                const errorElement = document.getElementById(input.errorId);
+                
+                if (isNaN(value) || value <= 0) {
+                    errorElement.textContent = currentLanguage === 'ar' ? 
+                        'القيمة يجب أن تكون رقمًا موجبًا' : 'Value must be a positive number';
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
             
-            // تحديد مدى الهبوط حسب مقاومة الخرسانة
-            let slumpRange = "75-100 مم";
-            if (grade >= 35) slumpRange = "50-75 مم";
-            if (grade >= 40) slumpRange = "25-50 مم";
+            return isValid;
+        }
+
+        // حاسبة الخرسانة الأساسية
+        document.getElementById('calculateBasicBtn').addEventListener('click', function() {
+            if (!validateInputs()) return;
+            
+            let length = parseFloat(document.getElementById('length').value);
+            let width = parseFloat(document.getElementById('width').value);
+            let thickness = parseFloat(document.getElementById('thickness').value);
+            
+            // تحويل إلى متر إذا كانت الوحدة سنتيمتر
+            if (currentUnit === 'centimeter') {
+                length = length / 100;
+                width = width / 100;
+                thickness = thickness / 100;
+            }
+            
+            const volume = length * width * thickness;
+            const mixRatio = document.getElementById('mix').value;
+            
+            let cement, sand, gravel;
+            switch(mixRatio) {
+                case '1:2:4':
+                    cement = volume * 7.5;
+                    sand = volume * 0.5;
+                    gravel = volume * 1;
+                    break;
+                case '1:1.5:3':
+                    cement = volume * 8.5;
+                    sand = volume * 0.45;
+                    gravel = volume * 0.9;
+                    break;
+                case '1:1:2':
+                    cement = volume * 10;
+                    sand = volume * 0.4;
+                    gravel = volume * 0.8;
+                    break;
+            }
             
             // عرض النتائج
-            document.getElementById('cubesCount').textContent = cubes;
-            document.getElementById('slumpTests').textContent = slumpTests;
-            document.getElementById('slumpRange').textContent = slumpRange;
+            document.getElementById('concreteVolume').textContent = volume.toFixed(2);
+            document.getElementById('cementQuantity').textContent = Math.ceil(cement);
+            document.getElementById('sandQuantity').textContent = sand.toFixed(2);
+            document.getElementById('gravelQuantity').textContent = gravel.toFixed(2);
+            document.getElementById('basicResults').style.display = 'block';
         });
+
+        // تحديث وحدات القياس عند التحميل
+        updateUnitDisplay();
     </script>
 </body>
 </html>
