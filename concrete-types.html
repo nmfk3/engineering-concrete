@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنواع الخرسانة | Concrete 360</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* نفس أنماط الملف الرئيسي تماماً */
+        :root {
+            --primary: #2E7D32;
+            --secondary: #455A64;
+            --accent: #FF8F00;
+            --light: #F5F5F5;
+            --white: #FFFFFF;
+            --text: #333333;
+            --card-bg: #FFFFFF;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            --light: #1E1E1E;
+            --white: #252525;
+            --text: #E0E0E0;
+            --card-bg: #2D2D2D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1B5E20);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .control-buttons {
+            position: absolute;
+            top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .language-toggle {
+            left: 1rem;
+        }
+
+        .dark-mode-toggle {
+            right: 1rem;
+        }
+
+        .dark-mode-toggle, .language-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            position: absolute;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* أنماط محتوى الصفحة */
+        .content-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .type-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--accent);
+        }
+
+        .type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .type-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .type-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .type-card:hover .type-image img {
+            transform: scale(1.1);
+        }
+
+        .type-content {
+            padding: 1.5rem;
+        }
+
+        .type-content h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .type-content h2 i {
+            color: var(--accent);
+        }
+
+        .type-content p {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .type-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .spec-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .spec-item i {
+            color: var(--accent);
+        }
+
+        .spec-label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .type-features h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .type-features ul {
+            padding-right: 1.5rem;
+        }
+
+        .type-features li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .type-features li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            right: -1rem;
+        }
+
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .type-specs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        <button class="language-toggle" id="languageToggle">
+            <i class="fas fa-language"></i>
+        </button>
+        <button class="dark-mode-toggle" id="darkModeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+        <h1 class="title-ar"><i class="fas fa-concrete-mixer"></i> أنواع الخرسانة</h1>
+        <h1 class="title-en" style="display:none;"><i class="fas fa-concrete-mixer"></i> Concrete Types</h1>
+        <p class="subtitle-ar">استكشف 15 نوعاً من الخرسانة وخصائصها</p>
+        <p class="subtitle-en" style="display:none;">Explore 15 types of concrete and their properties</p>
+    </header>
+
+    <div class="content-container">
+        <div class="types-grid">
+            <!-- الخرسانة العادية -->
+            <div class="type-card">
+                <div class="type-image">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e" alt="خرسانة عادية">
+                </div>
+                <div class="type-content">
+                    <h2><i class="fas fa-cube"></i> <span class="type-title-ar">الخرسانة العادية</span><span class="type-title-en" style="display:none;">Normal Concrete</span></h2>
+                    <p class="type-desc-ar">خرسانة بدون حديد تسليح تستخدم في الأعمال غير الإنشائية والأساسات البسيطة</p>
+                    <p class="type-desc-en" style="display:none;">Concrete without reinforcement used in non-structural works and simple foundations</p>
+                    
+                    <div class="type-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">قوة الضغط:</span><span class="spec-text-en" style="display:none;">Compressive Strength:</span></span>
+                                <span>20-40 MPa</span>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-balance-scale"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">نسبة الخلط:</span><span class="spec-text-en" style="display:none;">Mix Ratio:</span></span>
+                                <span>1:2:4 (أسمنت:رمل:زلط)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="type-features">
+                        <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                        <ul class="features-list-ar">
+                            <li>الأساسات البسيطة</li>
+                            <li>الأرضيات الخرسانية</li>
+                            <li>أعمال الردم الخرساني</li>
+                        </ul>
+                        <ul class="features-list-en" style="display:none;">
+                            <li>Simple foundations</li>
+                            <li>Concrete floors</li>
+                            <li>Concrete filling works</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الخرسانة المسلحة -->
+            <div class="type-card">
+                <div class="type-image">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="خرسانة مسلحة">
+                </div>
+                <div class="type-content">
+                    <h2><i class="fas fa-rebar"></i> <span class="type-title-ar">الخرسانة المسلحة</span><span class="type-title-en" style="display:none;">Reinforced Concrete</span></h2>
+                    <p class="type-desc-ar">خرسانة مدعمة بقضبان حديد التسليح لمقاومة الشد والقص</p>
+                    <p class="type-desc-en" style="display:none;">Concrete reinforced with steel bars to resist tension and shear</p>
+                    
+                    <div class="type-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">قوة الضغط:</span><span class="spec-text-en" style="display:none;">Compressive Strength:</span></span>
+                                <span>25-50 MPa</span>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-percentage"></i>
+                            <div>
+                                <span class="spec-label"><span class="spec-text-ar">نسبة الحديد:</span><span class="spec-text-en" style="display:none;">Steel Ratio:</span></span>
+                                <span>1-2% من الحجم</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="type-features">
+                        <h3><i class="fas fa-check-circle"></i> <span class="features-title-ar">الاستخدامات:</span><span class="features-title-en" style="display:none;">Uses:</span></h3>
+                        <ul class="features-list-ar">
+                            <li>الأعمدة والكمرات</li>
+                            <li>الأسقف الخرسانية</li>
+                            <li>الجسور والأنفاق</li>
+                        </ul>
+                        <ul class="features-list-en" style="display:none;">
+                            <li>Columns and beams</li>
+                            <li>Concrete ceilings</li>
+                            <li>Bridges and tunnels</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أضف باقي أنواع الخرسانة هنا بنفس الهيكل -->
+            
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text-ar">برمجة وتطوير :م.علي عبد الرحيم محي الدين</p>
+        <p class="footer-text-en" style="display:none;">© 2025 Concrete 360 | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // كود JavaScript (مطابق للكود الرئيسي)
+        // إعدادات الوضع الداكن
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // تبديل اللغة
+        const languageToggle = document.getElementById('languageToggle');
+        let currentLanguage = 'ar';
+        
+        languageToggle.addEventListener('click', () => {
+            if (currentLanguage === 'ar') {
+                // التبديل إلى الإنجليزية
+                document.querySelectorAll('.title-ar, .subtitle-ar, .type-title-ar, .type-desc-ar, .spec-text-ar, .features-title-ar, .features-list-ar, .footer-text-ar').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.title-en, .subtitle-en, .type-title-en, .type-desc-en, .spec-text-en, .features-title-en, .features-list-en, .footer-text-en').forEach(el => {
+                    el.style.display = 'block';
+                });
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+                currentLanguage = 'en';
+            } else {
+                // التبديل إلى العربية
+                document.querySelectorAll('.title-en, .subtitle-en, .type-title-en, .type-desc-en, .spec-text-en, .features-title-en, .features-list-en, .footer-text-en').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.title-ar, .subtitle-ar, .type-title-ar, .type-desc-ar, .spec-text-ar, .features-title-ar, .features-list-ar, .footer-text-ar').forEach(el => {
+                    el.style.display = 'block';
+                });
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                currentLanguage = 'ar';
+            }
+            
+            localStorage.setItem('preferredLanguage', currentLanguage);
+        });
+
+        // تحميل تفضيل اللغة
+        if (localStorage.getItem('preferredLanguage') === 'en') {
+            languageToggle.click();
+        }
+    </script>
+</body>
+</html>
