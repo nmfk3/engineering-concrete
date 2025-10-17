@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الهندسة المدنية - حاسبة الكميات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #2980b9;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #e67e22;
+            --danger-color: #e74c3c;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #343a40;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #34495e;
+            --secondary-color: #3498db;
+            --accent-color: #2980b9;
+            --light-color: #2c3e50;
+            --dark-color: #ecf0f1;
+            --gray-light: #34495e;
+            --gray-medium: #bdc3c7;
+            --gray-dark: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 0.5rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background-color: var(--accent-color);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .card-description {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Tool Section */
+        .tool-section {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .tool-section.active {
+            display: block;
+        }
+
+        .back-to-dashboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-to-dashboard:hover {
+            color: var(--accent-color);
+        }
+
+        .calculator-form {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-group .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .results {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .result-value {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .project-date {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+        }
+
+        .project-details {
+            color: var(--gray-medium);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .project-actions .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-buttons .btn {
+                justify-content: center;
+            }
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        body.dark-mode .card,
+        body.dark-mode .calculator-form,
+        body.dark-mode .results,
+        body.dark-mode .project-card {
+            background-color: var(--gray-light);
+            color: var(--dark-color);
+        }
+
+        body.dark-mode .form-control {
+            background-color: var(--light-color);
+            border-color: var(--gray-medium);
+            color: var(--dark-color);
+        }
+
+        body.dark-mode .result-item {
+            border-bottom-color: var(--gray-medium);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <h1>منصة الهندسة المدنية</h1>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-target="dashboard">الرئيسية</a></li>
+                <li><a href="#" class="nav-link" data-target="concrete-calculator">حساب الخرسانة</a></li>
+                <li><a href="#" class="nav-link" data-target="steel-calculator">حديد التسليح</a></li>
+                <li><a href="#" class="nav-link" data-target="brick-calculator">الطابوق والمونة</a></li>
+                <li><a href="#" class="nav-link" data-target="stairs-calculator">السلالم</a></li>
+                <li><a href="#" class="nav-link" data-target="plaster-calculator">الجص والدهان</a></li>
+                <li><a href="#" class="nav-link" data-target="formwork-calculator">القوالب</a></li>
+                <li><a href="#" class="nav-link" data-target="projects">إدارة المشاريع</a></li>
+                <li><a href="#" class="nav-link" data-target="cost-estimator">تحليل التكاليف</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="dashboard tool-section active">
+            <h2 class="section-title">لوحة التحكم</h2>
+            <div class="cards-grid">
+                <div class="card" data-target="concrete-calculator">
+                    <div class="card-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">حساب كميات الخرسانة</h3>
+                        <p class="card-description">حساب الكميات المطلوبة للخرسانة للمشاريع المختلفة</p>
+                    </div>
+                </div>
+                <div class="card" data-target="steel-calculator">
+                    <div class="card-icon">
+                        <i class="fas fa-grip-lines"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">حساب حديد التسليح</h3>
+                        <p class="card-description">تحديد كميات حديد التسليح اللازمة للمشروع</p>
+                    </div>
+                </div>
+                <div class="card" data-target="brick-calculator">
+                    <div class="card-icon">
+                        <i class="fas fa-th"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">حساب الطابوق والمونة</h3>
+                        <p class="card-description">حساب كميات الطابوق والمونة اللازمة للبناء</p>
+                    </div>
+                </div>
+                <div class="card" data-target="stairs-calculator">
+                    <div class="card-icon">
+                        <i class="fas fa-stairs"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">حساب السلالم</h3>
+                        <p class="card-description">حساب كميات الخرسانة والحديد للسلالم</p>
+                    </div>
+                </div>
+                <div class="card" data-target="plaster-calculator">
+                    <div class="card-icon">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">حساب الجص والدهان</h3>
+                        <p class="card-description">تحديد كميات مواد التشطيب والدهان</p>
+                    </div>
+                </div>
+                <div class="card" data-target="formwork-calculator">
+                    <div class="card-icon">
+                        <i class="fas fa-border-style"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">حساب القوالب</h3>
+                        <p class="card-description">حساب مساحات القوالب الخشبية اللازمة</p>
+                    </div>
+                </div>
+                <div class="card" data-target="projects">
+                    <div class="card-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">إدارة المشاريع</h3>
+                        <p class="card-description">إنشاء وإدارة مشاريعك وحفظ الحسابات</p>
+                    </div>
+                </div>
+                <div class="card" data-target="cost-estimator">
+                    <div class="card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">تحليل التكاليف</h3>
+                        <p class="card-description">تقدير التكاليف الإجمالية للمشروع</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concrete Calculator Section -->
+        <section id="concrete-calculator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">حساب كميات الخرسانة</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="concrete-type">نوع الخرسانة</label>
+                    <select id="concrete-type" class="form-control">
+                        <option value="ordinary">خرسانة عادية</option>
+                        <option value="reinforced">خرسانة مسلحة</option>
+                        <option value="foundation">خرسانة الأساسات</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="concrete-length">الطول (م)</label>
+                        <input type="number" id="concrete-length" class="form-control" placeholder="أدخل الطول">
+                    </div>
+                    <div class="form-group">
+                        <label for="concrete-width">العرض (م)</label>
+                        <input type="number" id="concrete-width" class="form-control" placeholder="أدخل العرض">
+                    </div>
+                    <div class="form-group">
+                        <label for="concrete-height">الارتفاع (م)</label>
+                        <input type="number" id="concrete-height" class="form-control" placeholder="أدخل الارتفاع">
+                    </div>
+                </div>
+                
+                <button class="btn" id="calculate-concrete">
+                    <i class="fas fa-calculator"></i>
+                    احسب الكمية
+                </button>
+            </div>
+            
+            <div class="results" id="concrete-results" style="display: none;">
+                <h3 class="section-title">نتائج الحساب</h3>
+                <div class="result-item">
+                    <span class="result-label">الحجم الكلي (م³)</span>
+                    <span class="result-value" id="concrete-volume">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الأسمنت (كيس 50 كجم)</span>
+                    <span class="result-value" id="concrete-cement">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الرمل (م³)</span>
+                    <span class="result-value" id="concrete-sand">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الحصى (م³)</span>
+                    <span class="result-value" id="concrete-gravel">0</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="save-concrete">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn" id="export-concrete-pdf">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline" id="reset-concrete">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Steel Calculator Section -->
+        <section id="steel-calculator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">حساب حديد التسليح</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="steel-type">نوع التسليح</label>
+                    <select id="steel-type" class="form-control">
+                        <option value="beams">الكمرات</option>
+                        <option value="columns">الأعمدة</option>
+                        <option value="slabs">البلاطات</option>
+                        <option value="foundation">الأساسات</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="steel-length">الطول (م)</label>
+                        <input type="number" id="steel-length" class="form-control" placeholder="أدخل الطول">
+                    </div>
+                    <div class="form-group">
+                        <label for="steel-diameter">قطر الحديد (مم)</label>
+                        <input type="number" id="steel-diameter" class="form-control" placeholder="أدخل القطر">
+                    </div>
+                    <div class="form-group">
+                        <label for="steel-count">عدد القضبان</label>
+                        <input type="number" id="steel-count" class="form-control" placeholder="أدخل العدد">
+                    </div>
+                </div>
+                
+                <button class="btn" id="calculate-steel">
+                    <i class="fas fa-calculator"></i>
+                    احسب الكمية
+                </button>
+            </div>
+            
+            <div class="results" id="steel-results" style="display: none;">
+                <h3 class="section-title">نتائج الحساب</h3>
+                <div class="result-item">
+                    <span class="result-label">الطول الكلي (م)</span>
+                    <span class="result-value" id="steel-total-length">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">الوزن الكلي (كجم)</span>
+                    <span class="result-value" id="steel-total-weight">0</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brick Calculator Section -->
+        <section id="brick-calculator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">حساب الطابوق والمونة</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="brick-type">نوع الطابوق</label>
+                    <select id="brick-type" class="form-control">
+                        <option value="red">طابوق أحمر (25×12×6 سم)</option>
+                        <option value="cement">طابوق إسمنتي (40×20×20 سم)</option>
+                        <option value="hollow">طابوق مفرغ (40×20×20 سم)</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="wall-length">طول الجدار (م)</label>
+                        <input type="number" id="wall-length" class="form-control" placeholder="أدخل الطول">
+                    </div>
+                    <div class="form-group">
+                        <label for="wall-height">ارتفاع الجدار (م)</label>
+                        <input type="number" id="wall-height" class="form-control" placeholder="أدخل الارتفاع">
+                    </div>
+                    <div class="form-group">
+                        <label for="wall-thickness">سمك الجدار (م)</label>
+                        <input type="number" id="wall-thickness" class="form-control" placeholder="أدخل السمك" step="0.05" value="0.2">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="openings-area">مساحة الفتحات (م²) - اختياري</label>
+                    <input type="number" id="openings-area" class="form-control" placeholder="أدخل مساحة النوافذ والأبواب">
+                </div>
+                
+                <button class="btn" id="calculate-brick">
+                    <i class="fas fa-calculator"></i>
+                    احسب الكمية
+                </button>
+            </div>
+            
+            <div class="results" id="brick-results" style="display: none;">
+                <h3 class="section-title">نتائج الحساب</h3>
+                <div class="result-item">
+                    <span class="result-label">عدد الطابوق</span>
+                    <span class="result-value" id="brick-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الأسمنت للمونة (كيس 50 كجم)</span>
+                    <span class="result-value" id="mortar-cement">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الرمل للمونة (م³)</span>
+                    <span class="result-value" id="mortar-sand">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">حجم المونة الإجمالي (م³)</span>
+                    <span class="result-value" id="mortar-volume">0</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline" id="reset-brick">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stairs Calculator Section -->
+        <section id="stairs-calculator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">حساب السلالم</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="stairs-type">نوع السلم</label>
+                    <select id="stairs-type" class="form-control">
+                        <option value="straight">سلم مستقيم</option>
+                        <option value="l-shaped">سلم بشكل L</option>
+                        <option value="u-shaped">سلم بشكل U</option>
+                        <option value="spiral">سلم حلزوني</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="stairs-height">ارتفاع السلم (م)</label>
+                        <input type="number" id="stairs-height" class="form-control" placeholder="أدخل الارتفاع الكلي">
+                    </div>
+                    <div class="form-group">
+                        <label for="stairs-width">عرض السلم (م)</label>
+                        <input type="number" id="stairs-width" class="form-control" placeholder="أدخل عرض الدرجة" step="0.1" value="1.0">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="step-height">ارتفاع الدرجة (سم)</label>
+                        <input type="number" id="step-height" class="form-control" placeholder="ارتفاع الناهض" step="0.5" value="17">
+                    </div>
+                    <div class="form-group">
+                        <label for="step-width">عرض الدرجة (سم)</label>
+                        <input type="number" id="step-width" class="form-control" placeholder="عرض المداس" step="0.5" value="30">
+                    </div>
+                </div>
+                
+                <button class="btn" id="calculate-stairs">
+                    <i class="fas fa-calculator"></i>
+                    احسب الكمية
+                </button>
+            </div>
+            
+            <div class="results" id="stairs-results" style="display: none;">
+                <h3 class="section-title">نتائج الحساب</h3>
+                <div class="result-item">
+                    <span class="result-label">عدد الدرجات</span>
+                    <span class="result-value" id="steps-count">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">حجم الخرسانة (م³)</span>
+                    <span class="result-value" id="stairs-concrete">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية حديد التسليح (كجم)</span>
+                    <span class="result-value" id="stairs-steel">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">مسطح القوالب (م²)</span>
+                    <span class="result-value" id="stairs-formwork">0</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline" id="reset-stairs">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plaster Calculator Section -->
+        <section id="plaster-calculator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">حساب الجص والدهان</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="plaster-type">نوع التشطيب</label>
+                    <select id="plaster-type" class="form-control">
+                        <option value="internal">تشطيب داخلي</option>
+                        <option value="external">تشطيب خارجي</option>
+                        <option value="both">تشطيب داخلي وخارجي</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="room-length">طول الغرفة (م)</label>
+                        <input type="number" id="room-length" class="form-control" placeholder="أدخل الطول">
+                    </div>
+                    <div class="form-group">
+                        <label for="room-width">عرض الغرفة (م)</label>
+                        <input type="number" id="room-width" class="form-control" placeholder="أدخل العرض">
+                    </div>
+                    <div class="form-group">
+                        <label for="room-height">ارتفاع الغرفة (م)</label>
+                        <input type="number" id="room-height" class="form-control" placeholder="أدخل الارتفاع" step="0.1" value="3">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="openings-area-plaster">مساحة الفتحات (م²) - اختياري</label>
+                    <input type="number" id="openings-area-plaster" class="form-control" placeholder="أدخل مساحة النوافذ والأبواب">
+                </div>
+                
+                <div class="form-group">
+                    <label for="paint-coats">عدد طبقات الدهان</label>
+                    <select id="paint-coats" class="form-control">
+                        <option value="1">طبقة واحدة</option>
+                        <option value="2" selected>طبقتان</option>
+                        <option value="3">ثلاث طبقات</option>
+                    </select>
+                </div>
+                
+                <button class="btn" id="calculate-plaster">
+                    <i class="fas fa-calculator"></i>
+                    احسب الكمية
+                </button>
+            </div>
+            
+            <div class="results" id="plaster-results" style="display: none;">
+                <h3 class="section-title">نتائج الحساب</h3>
+                <div class="result-item">
+                    <span class="result-label">مسطح الجص (م²)</span>
+                    <span class="result-value" id="plaster-area">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الأسمنت للجص (كيس 50 كجم)</span>
+                    <span class="result-value" id="plaster-cement">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الرمل للجص (م³)</span>
+                    <span class="result-value" id="plaster-sand">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية الدهان (لتر)</span>
+                    <span class="result-value" id="paint-volume">0</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline" id="reset-plaster">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formwork Calculator Section -->
+        <section id="formwork-calculator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">حساب القوالب</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="formwork-type">نوع القوالب</label>
+                    <select id="formwork-type" class="form-control">
+                        <option value="beams">قوالب كمرات</option>
+                        <option value="columns">قوالب أعمدة</option>
+                        <option value="slabs">قوالب بلاطات</option>
+                        <option value="walls">قوالب جدران</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="formwork-length">الطول (م)</label>
+                        <input type="number" id="formwork-length" class="form-control" placeholder="أدخل الطول">
+                    </div>
+                    <div class="form-group">
+                        <label for="formwork-width">العرض (م)</label>
+                        <input type="number" id="formwork-width" class="form-control" placeholder="أدخل العرض">
+                    </div>
+                    <div class="form-group">
+                        <label for="formwork-height">الارتفاع (م)</label>
+                        <input type="number" id="formwork-height" class="form-control" placeholder="أدخل الارتفاع">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="formwork-count">عدد العناصر</label>
+                    <input type="number" id="formwork-count" class="form-control" placeholder="أدخل عدد العناصر" value="1">
+                </div>
+                
+                <button class="btn" id="calculate-formwork">
+                    <i class="fas fa-calculator"></i>
+                    احسب الكمية
+                </button>
+            </div>
+            
+            <div class="results" id="formwork-results" style="display: none;">
+                <h3 class="section-title">نتائج الحساب</h3>
+                <div class="result-item">
+                    <span class="result-label">المساحة الإجمالية للقوالب (م²)</span>
+                    <span class="result-value" id="formwork-area">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">عدد ألواح الخشب (لوح 2.4×1.2 م)</span>
+                    <span class="result-value" id="wood-boards">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">كمية المسامير (كجم)</span>
+                    <span class="result-value" id="nails-weight">0</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline" id="reset-formwork">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">إدارة المشاريع</h2>
+            
+            <div class="action-buttons" style="margin-bottom: 2rem;">
+                <button class="btn" id="create-project">
+                    <i class="fas fa-plus"></i>
+                    إنشاء مشروع جديد
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-file-import"></i>
+                    تحميل مشروع
+                </button>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">فيلا الرياض</h3>
+                        <span class="project-date">15/08/2023</span>
+                    </div>
+                    <div class="project-details">
+                        <p>مشروع فيلا سكنية بمساحة 400 م²</p>
+                        <p>يشمل: الخرسانة، التسليح، الطابوق، التشطيبات</p>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-eye"></i>
+                            عرض
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            تحميل
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">مبنى تجاري - جدة</h3>
+                        <span class="project-date">02/07/2023</span>
+                    </div>
+                    <div class="project-details">
+                        <p>مبنى تجاري مكون من 4 طوابق</p>
+                        <p>يشمل: الهيكل الإنشائي، التشطيبات، التكييف</p>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-eye"></i>
+                            عرض
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            تحميل
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">مصنع الدمام</h3>
+                        <span class="project-date">20/05/2023</span>
+                    </div>
+                    <div class="project-details">
+                        <p>مصنع صناعي بمساحة 1200 م²</p>
+                        <p>يشمل: الهيكل المعدني، الأرضيات، المرافق</p>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-eye"></i>
+                            عرض
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            تحميل
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cost Estimator Section -->
+        <section id="cost-estimator" class="tool-section">
+            <a href="#" class="back-to-dashboard">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الرئيسية
+            </a>
+            <h2 class="section-title">تحليل التكاليف</h2>
+            
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="project-area">مساحة المشروع (م²)</label>
+                    <input type="number" id="project-area" class="form-control" placeholder="أدخل المساحة الإجمالية">
+                </div>
+                
+                <div class="form-group">
+                    <label for="project-type">نوع المشروع</label>
+                    <select id="project-type" class="form-control">
+                        <option value="residential">سكني</option>
+                        <option value="commercial">تجاري</option>
+                        <option value="industrial">صناعي</option>
+                        <option value="governmental">حكومي</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="project-finish">نوع التشطيب</label>
+                    <select id="project-finish" class="form-control">
+                        <option value="economy">اقتصادي</option>
+                        <option value="standard">عادي</option>
+                        <option value="luxury">فاخر</option>
+                    </select>
+                </div>
+                
+                <button class="btn" id="calculate-cost">
+                    <i class="fas fa-calculator"></i>
+                    احسب التكلفة
+                </button>
+            </div>
+            
+            <div class="results" id="cost-results" style="display: none;">
+                <h3 class="section-title">تقدير التكاليف</h3>
+                <div class="result-item">
+                    <span class="result-label">التكلفة التقريبية للمشروع</span>
+                    <span class="result-value" id="total-cost">0 ريال</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">تكلفة المواد</span>
+                    <span class="result-value" id="material-cost">0 ريال</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">تكلفة العمالة</span>
+                    <span class="result-value" id="labor-cost">0 ريال</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">مصاريف إدارية</span>
+                    <span class="result-value" id="admin-cost">0 ريال</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ في المشروع
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-file-pdf"></i>
+                        تصدير PDF
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-redo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <h2>منصة الهندسة المدنية</h2>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="#">عن المنصة</a></li>
+                    <li><a href="#">الدعم الفني</a></li>
+                    <li><a href="#">الشروط والأحكام</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+                <p class="copyright">جميع الحقوق محفوظة © 2023</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const cards = document.querySelectorAll('.card');
+        const toolSections = document.querySelectorAll('.tool-section');
+        const backButtons = document.querySelectorAll('.back-to-dashboard');
+
+        function showSection(sectionId) {
+            toolSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-target') === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('data-target');
+                showSection(target);
+            });
+        });
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const target = card.getAttribute('data-target');
+                showSection(target);
+            });
+        });
+
+        backButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('dashboard');
+            });
+        });
+
+        // Concrete Calculator
+        const calculateConcreteBtn = document.getElementById('calculate-concrete');
+        const concreteResults = document.getElementById('concrete-results');
+        const resetConcreteBtn = document.getElementById('reset-concrete');
+
+        calculateConcreteBtn.addEventListener('click', () => {
+            const length = parseFloat(document.getElementById('concrete-length').value) || 0;
+            const width = parseFloat(document.getElementById('concrete-width').value) || 0;
+            const height = parseFloat(document.getElementById('concrete-height').value) || 0;
+            const type = document.getElementById('concrete-type').value;
+            
+            if (length && width && height) {
+                const volume = length * width * height;
+                
+                // Simplified calculation for demonstration
+                let cementBags, sand, gravel;
+                
+                if (type === 'ordinary') {
+                    cementBags = Math.ceil(volume * 6);
+                    sand = (volume * 0.5).toFixed(2);
+                    gravel = (volume * 1).toFixed(2);
+                } else if (type === 'reinforced') {
+                    cementBags = Math.ceil(volume * 7);
+                    sand = (volume * 0.45).toFixed(2);
+                    gravel = (volume * 0.9).toFixed(2);
+                } else {
+                    cementBags = Math.ceil(volume * 8);
+                    sand = (volume * 0.4).toFixed(2);
+                    gravel = (volume * 0.8).toFixed(2);
+                }
+                
+                document.getElementById('concrete-volume').textContent = volume.toFixed(2);
+                document.getElementById('concrete-cement').textContent = cementBags;
+                document.getElementById('concrete-sand').textContent = sand;
+                document.getElementById('concrete-gravel').textContent = gravel;
+                
+                concreteResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال جميع القيم المطلوبة');
+            }
+        });
+
+        resetConcreteBtn.addEventListener('click', () => {
+            document.getElementById('concrete-length').value = '';
+            document.getElementById('concrete-width').value = '';
+            document.getElementById('concrete-height').value = '';
+            concreteResults.style.display = 'none';
+        });
+
+        // Steel Calculator
+        const calculateSteelBtn = document.getElementById('calculate-steel');
+        const steelResults = document.getElementById('steel-results');
+
+        calculateSteelBtn.addEventListener('click', () => {
+            const length = parseFloat(document.getElementById('steel-length').value) || 0;
+            const diameter = parseFloat(document.getElementById('steel-diameter').value) || 0;
+            const count = parseFloat(document.getElementById('steel-count').value) || 0;
+            
+            if (length && diameter && count) {
+                const totalLength = length * count;
+                // Simplified calculation: weight per meter = (diameter^2) / 162 (approx.)
+                const weightPerMeter = (diameter * diameter) / 162;
+                const totalWeight = (totalLength * weightPerMeter).toFixed(2);
+                
+                document.getElementById('steel-total-length').textContent = totalLength.toFixed(2);
+                document.getElementById('steel-total-weight').textContent = totalWeight;
+                
+                steelResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال جميع القيم المطلوبة');
+            }
+        });
+
+        // Brick Calculator
+        const calculateBrickBtn = document.getElementById('calculate-brick');
+        const brickResults = document.getElementById('brick-results');
+        const resetBrickBtn = document.getElementById('reset-brick');
+
+        calculateBrickBtn.addEventListener('click', () => {
+            const wallLength = parseFloat(document.getElementById('wall-length').value) || 0;
+            const wallHeight = parseFloat(document.getElementById('wall-height').value) || 0;
+            const wallThickness = parseFloat(document.getElementById('wall-thickness').value) || 0;
+            const openingsArea = parseFloat(document.getElementById('openings-area').value) || 0;
+            const brickType = document.getElementById('brick-type').value;
+            
+            if (wallLength && wallHeight && wallThickness) {
+                // Calculate wall area
+                const wallArea = (wallLength * wallHeight * 2) + (wallThickness * wallHeight * 2) - openingsArea;
+                
+                let brickCount, brickVolume, mortarVolume;
+                
+                if (brickType === 'red') {
+                    // Red brick dimensions: 25x12x6 cm
+                    const brickArea = 0.25 * 0.12; // in m²
+                    brickCount = Math.ceil(wallArea / brickArea * 1.1); // Adding 10% for waste
+                    brickVolume = brickCount * (0.25 * 0.12 * 0.06);
+                } else if (brickType === 'cement') {
+                    // Cement brick dimensions: 40x20x20 cm
+                    const brickArea = 0.4 * 0.2; // in m²
+                    brickCount = Math.ceil(wallArea / brickArea * 1.1); // Adding 10% for waste
+                    brickVolume = brickCount * (0.4 * 0.2 * 0.2);
+                } else {
+                    // Hollow brick dimensions: 40x20x20 cm
+                    const brickArea = 0.4 * 0.2; // in m²
+                    brickCount = Math.ceil(wallArea / brickArea * 1.1); // Adding 10% for waste
+                    brickVolume = brickCount * (0.4 * 0.2 * 0.2) * 0.6; // 40% less volume for hollow bricks
+                }
+                
+                // Mortar calculation (approximately 25% of brick volume)
+                mortarVolume = brickVolume * 0.25;
+                const cementBags = Math.ceil(mortarVolume * 7); // 7 bags per m³ of mortar
+                const sandVolume = (mortarVolume * 1.2).toFixed(2); // 1.2 m³ sand per m³ mortar
+                
+                document.getElementById('brick-count').textContent = brickCount;
+                document.getElementById('mortar-cement').textContent = cementBags;
+                document.getElementById('mortar-sand').textContent = sandVolume;
+                document.getElementById('mortar-volume').textContent = mortarVolume.toFixed(2);
+                
+                brickResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال جميع القيم المطلوبة');
+            }
+        });
+
+        resetBrickBtn.addEventListener('click', () => {
+            document.getElementById('wall-length').value = '';
+            document.getElementById('wall-height').value = '';
+            document.getElementById('wall-thickness').value = '0.2';
+            document.getElementById('openings-area').value = '';
+            brickResults.style.display = 'none';
+        });
+
+        // Stairs Calculator
+        const calculateStairsBtn = document.getElementById('calculate-stairs');
+        const stairsResults = document.getElementById('stairs-results');
+        const resetStairsBtn = document.getElementById('reset-stairs');
+
+        calculateStairsBtn.addEventListener('click', () => {
+            const stairsHeight = parseFloat(document.getElementById('stairs-height').value) || 0;
+            const stairsWidth = parseFloat(document.getElementById('stairs-width').value) || 0;
+            const stepHeight = parseFloat(document.getElementById('step-height').value) || 0;
+            const stepWidth = parseFloat(document.getElementById('step-width').value) || 0;
+            
+            if (stairsHeight && stairsWidth && stepHeight && stepWidth) {
+                // Convert step height from cm to m
+                const stepHeightM = stepHeight / 100;
+                const stepWidthM = stepWidth / 100;
+                
+                // Calculate number of steps
+                const stepsCount = Math.ceil(stairsHeight / stepHeightM);
+                
+                // Calculate concrete volume (simplified)
+                const concreteVolume = (stairsWidth * stepWidthM * stepsCount * stepHeightM * 0.5).toFixed(2);
+                
+                // Calculate steel weight (approx. 80 kg per m³ of concrete for stairs)
+                const steelWeight = (concreteVolume * 80).toFixed(1);
+                
+                // Calculate formwork area
+                const formworkArea = (stairsWidth * stepWidthM * stepsCount * 2).toFixed(1);
+                
+                document.getElementById('steps-count').textContent = stepsCount;
+                document.getElementById('stairs-concrete').textContent = concreteVolume;
+                document.getElementById('stairs-steel').textContent = steelWeight;
+                document.getElementById('stairs-formwork').textContent = formworkArea;
+                
+                stairsResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال جميع القيم المطلوبة');
+            }
+        });
+
+        resetStairsBtn.addEventListener('click', () => {
+            document.getElementById('stairs-height').value = '';
+            document.getElementById('stairs-width').value = '1.0';
+            document.getElementById('step-height').value = '17';
+            document.getElementById('step-width').value = '30';
+            stairsResults.style.display = 'none';
+        });
+
+        // Plaster Calculator
+        const calculatePlasterBtn = document.getElementById('calculate-plaster');
+        const plasterResults = document.getElementById('plaster-results');
+        const resetPlasterBtn = document.getElementById('reset-plaster');
+
+        calculatePlasterBtn.addEventListener('click', () => {
+            const roomLength = parseFloat(document.getElementById('room-length').value) || 0;
+            const roomWidth = parseFloat(document.getElementById('room-width').value) || 0;
+            const roomHeight = parseFloat(document.getElementById('room-height').value) || 0;
+            const openingsArea = parseFloat(document.getElementById('openings-area-plaster').value) || 0;
+            const paintCoats = parseInt(document.getElementById('paint-coats').value) || 1;
+            
+            if (roomLength && roomWidth && roomHeight) {
+                // Calculate total wall area (2 long walls + 2 short walls)
+                const wallArea = (roomLength * roomHeight * 2) + (roomWidth * roomHeight * 2) - openingsArea;
+                
+                // Ceiling area
+                const ceilingArea = roomLength * roomWidth;
+                
+                // Total plaster area (walls + ceiling)
+                const totalPlasterArea = wallArea + ceilingArea;
+                
+                // Plaster material calculation (1:4 cement:sand ratio)
+                // Approximately 12 kg cement and 0.03 m³ sand per m² of plaster (2 cm thickness)
+                const cementBags = Math.ceil(totalPlasterArea * 12 / 50); // 12 kg per m², 50 kg per bag
+                const sandVolume = (totalPlasterArea * 0.03).toFixed(2);
+                
+                // Paint calculation (approximately 10 m² per liter per coat)
+                const paintVolume = (totalPlasterArea * paintCoats / 10).toFixed(1);
+                
+                document.getElementById('plaster-area').textContent = totalPlasterArea.toFixed(1);
+                document.getElementById('plaster-cement').textContent = cementBags;
+                document.getElementById('plaster-sand').textContent = sandVolume;
+                document.getElementById('paint-volume').textContent = paintVolume;
+                
+                plasterResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال جميع القيم المطلوبة');
+            }
+        });
+
+        resetPlasterBtn.addEventListener('click', () => {
+            document.getElementById('room-length').value = '';
+            document.getElementById('room-width').value = '';
+            document.getElementById('room-height').value = '3';
+            document.getElementById('openings-area-plaster').value = '';
+            document.getElementById('paint-coats').value = '2';
+            plasterResults.style.display = 'none';
+        });
+
+        // Formwork Calculator
+        const calculateFormworkBtn = document.getElementById('calculate-formwork');
+        const formworkResults = document.getElementById('formwork-results');
+        const resetFormworkBtn = document.getElementById('reset-formwork');
+
+        calculateFormworkBtn.addEventListener('click', () => {
+            const formworkLength = parseFloat(document.getElementById('formwork-length').value) || 0;
+            const formworkWidth = parseFloat(document.getElementById('formwork-width').value) || 0;
+            const formworkHeight = parseFloat(document.getElementById('formwork-height').value) || 0;
+            const formworkCount = parseInt(document.getElementById('formwork-count').value) || 1;
+            const formworkType = document.getElementById('formwork-type').value;
+            
+            if (formworkLength && formworkWidth && formworkHeight) {
+                let totalArea;
+                
+                if (formworkType === 'beams') {
+                    // For beams: bottom + 2 sides
+                    totalArea = (formworkLength * formworkWidth) + (formworkLength * formworkHeight * 2);
+                } else if (formworkType === 'columns') {
+                    // For columns: 4 sides
+                    totalArea = formworkLength * formworkHeight * 4;
+                } else if (formworkType === 'slabs') {
+                    // For slabs: bottom only
+                    totalArea = formworkLength * formworkWidth;
+                } else {
+                    // For walls: 2 sides (assuming double-sided formwork)
+                    totalArea = formworkLength * formworkHeight * 2;
+                }
+                
+                totalArea *= formworkCount;
+                
+                // Wood boards calculation (standard board: 2.4m x 1.2m = 2.88 m²)
+                const woodBoards = Math.ceil(totalArea / 2.88);
+                
+                // Nails calculation (approx. 0.5 kg per m² of formwork)
+                const nailsWeight = (totalArea * 0.5).toFixed(1);
+                
+                document.getElementById('formwork-area').textContent = totalArea.toFixed(1);
+                document.getElementById('wood-boards').textContent = woodBoards;
+                document.getElementById('nails-weight').textContent = nailsWeight;
+                
+                formworkResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال جميع القيم المطلوبة');
+            }
+        });
+
+        resetFormworkBtn.addEventListener('click', () => {
+            document.getElementById('formwork-length').value = '';
+            document.getElementById('formwork-width').value = '';
+            document.getElementById('formwork-height').value = '';
+            document.getElementById('formwork-count').value = '1';
+            formworkResults.style.display = 'none';
+        });
+
+        // Cost Estimator
+        const calculateCostBtn = document.getElementById('calculate-cost');
+        const costResults = document.getElementById('cost-results');
+
+        calculateCostBtn.addEventListener('click', () => {
+            const area = parseFloat(document.getElementById('project-area').value) || 0;
+            const type = document.getElementById('project-type').value;
+            const finish = document.getElementById('project-finish').value;
+            
+            if (area) {
+                let costPerSqm;
+                
+                // Base cost per square meter based on project type
+                if (type === 'residential') {
+                    costPerSqm = 1500;
+                } else if (type === 'commercial') {
+                    costPerSqm = 2000;
+                } else if (type === 'industrial') {
+                    costPerSqm = 2500;
+                } else {
+                    costPerSqm = 1800;
+                }
+                
+                // Adjust based on finish quality
+                if (finish === 'economy') {
+                    costPerSqm *= 0.8;
+                } else if (finish === 'luxury') {
+                    costPerSqm *= 1.5;
+                }
+                
+                const totalCost = (area * costPerSqm).toLocaleString();
+                const materialCost = (area * costPerSqm * 0.6).toLocaleString();
+                const laborCost = (area * costPerSqm * 0.3).toLocaleString();
+                const adminCost = (area * costPerSqm * 0.1).toLocaleString();
+                
+                document.getElementById('total-cost').textContent = totalCost + ' ريال';
+                document.getElementById('material-cost').textContent = materialCost + ' ريال';
+                document.getElementById('labor-cost').textContent = laborCost + ' ريال';
+                document.getElementById('admin-cost').textContent = adminCost + ' ريال';
+                
+                costResults.style.display = 'block';
+            } else {
+                alert('يرجى إدخال مساحة المشروع');
+            }
+        });
+
+        // Create Project
+        const createProjectBtn = document.getElementById('create-project');
+        
+        createProjectBtn.addEventListener('click', () => {
+            const projectName = prompt('أدخل اسم المشروع الجديد:');
+            if (projectName) {
+                alert(`تم إنشاء المشروع "${projectName}" بنجاح`);
+                // In a real application, this would add the project to the list
+            }
+        });
+    </script>
+</body>
+</html>
